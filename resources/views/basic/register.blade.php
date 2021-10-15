@@ -6,14 +6,13 @@
 @endsection
 
 @section('script')
-    <script src="{{ URL::asset('/js/performance.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-zh_CN.min.js"></script>
 @endsection
 
 @section('content')
 <div class="container" style="margin-top:5%">
-    <h2>业绩事项申报</h2>
+    <h2>基础项目申报</h2>
 
     <form action="post-duty"method="post">
         @csrf
@@ -41,7 +40,7 @@
                 <div class="col" style="margin-top: 20px">
                     <label>难度</label><br/>
                     <label class="radio-inline">
-                        <input type="radio" class="form-control" name="difficulty" id="inlineradio1" value="easy">&nbsp&nbsp简单&nbsp&nbsp
+                        <input type="radio" class="form-control" name="difficulty" id="inlineradio1" value="easy" required>&nbsp&nbsp简单&nbsp&nbsp
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio2" value="normal">&nbsp&nbsp普通&nbsp&nbsp
@@ -50,15 +49,12 @@
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio3" value="difficult">&nbsp&nbsp困难&nbsp&nbsp
                     </label>
                 </div>
-                
-                <div class="col" style="margin-top: 20px">
-                    <label for="node-no">项目编号</label><br/>
-                    <input type="input" class="form-control" name="node-no" id="node-no" required>
-                </div>
             </div>
 
             <div class="row">
-                <button type="submit" class="btn btn-success">提交</button>
+                <div class="col" style="margin-top: 20px; text-align:right">
+                    <button type="submit" class="btn btn-success">提交</button>
+                </div>
             </div>
 
             </div>

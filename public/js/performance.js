@@ -69,7 +69,7 @@ window.onload = function(){
                     '<div class="row" style="margin-top:15px">' +
                     '<div class="col">' +
                     '<label for="date">节点考核日期</label>' +
-                    '<input type="date" id="date" name="date_' + i + '" class="form-control date" min="" max="" required></input>' +
+                    '<input type="date" id="date_' + i + '" name="date_' + i + '" class="form-control date" min="" max="" required></input>' +
                     '</div>' +
                     '</div>' +
                     '<div class="row" style="margin-top:15px">' +
@@ -82,13 +82,15 @@ window.onload = function(){
                     '</div>' +
                     '</div>'
                 );
+                
+                $('#nodes-row').on('input', function(){
+                    for(var i = 1; i <= $("#node-no").val(); i++){
+                        document.getElementById("date_"+i).min = start;
+                        document.getElementById("date_"+i).max = end;
+                    }
+                });
             }
             
-            $('#nodes-row').on('input', function(){
-                document.getElementById("date").min = start;
-                document.getElementById("date").max = end;
-                console.log("asdf: "+start+"  "+end);
-            });
 
             $('#nodes-row').on('input', '.percentage', function(){
                 amountSum = [...$('.percentage')]

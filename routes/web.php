@@ -109,6 +109,9 @@ Route::get('/basic/register', function(){
     return view('basic.register');
 })->middleware('auth');
 
+//Post request to create a new basic work
+Route::post('/basic/post-duty', 'App\Http\Controllers\BasicController@PostDuty')->middleware('auth');
+
 //---- End of Routers for basic work----
 
 //---- Routers for daily report ----
