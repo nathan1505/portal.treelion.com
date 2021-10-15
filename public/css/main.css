@@ -1,0 +1,87 @@
+.out-div {
+    width: 100%;
+    height: 200px;
+    margin: auto;
+    overflow: hidden;
+}
+
+table {
+    width: 100%;
+}
+
+/* tbody设置 */
+#announcement-body tbody {
+ display: block; /* 重要代码 */
+ height: 200px;
+ width: 100%;
+ overflow-y: scroll;
+ overflow-x: hidden;
+ position: relative;
+}
+
+table tbody tr {
+    width: 100%;
+    display: table; /* 重要代码 */ 
+}
+
+table tbody tr td {
+    text-align: left;
+    line-height: 40px;
+    box-sizing: border-box;
+}
+
+/* 隐藏滚动条 */
+tbody::-webkit-scrollbar {
+ display: none;
+}
+
+#performance-table tbody {
+ display: block; /* 重要代码 */
+ height: 100%;
+ width: 100%;
+ overflow-y: scroll;
+ overflow-x: hidden;
+ position: relative;
+}
+
+#announcement-table td{
+    font-size: 70%;
+    text-align: left;
+    line-height: 20px;
+    box-sizing: border-box;
+}
+
+#news-table tbody tr td{
+    font-size: 70%;
+    text-align: left;
+    line-height: 20px;
+    box-sizing: border-box;
+}
+
+#news-table tbody {
+    display: block; /* 重要代码 */
+    height: 400px;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#performance-card{
+    height: 510px;
+}
+
+#performance-table {
+    display: block; /* 重要代码 */
+    height: 410px;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#performance-table td{
+    font-size: 60%;
+    line-height: 20px;
+    box-sizing: border-box;
+}
