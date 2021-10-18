@@ -19,9 +19,9 @@ function ToNumString(string $str){
 
 //To generate the performance_no of the job
 function GenerateDutyNum(){
-    $current_duties = DB::table('performance_duty')->orderBy('create_timestamp','desc')->get();
+    $current_duties = DB::table('basic_duty')->orderBy('create_timestamp','desc')->get();
     if (isset((json_decode(json_encode($current_duties), true))[0])){
-        $last_duty_no = (json_decode(json_encode($current_duties), true))[0]['performance_no'];
+        $last_duty_no = (json_decode(json_encode($current_duties), true))[0]['basic_no'];
         $last_duty_Month = substr($last_duty_no, 1, 2);
         $last_duty_no = (int)substr($last_duty_no, 3);
         if ($last_duty_Month == date('m')){
@@ -29,9 +29,9 @@ function GenerateDutyNum(){
         }else{
             $last_duty_no = "001";
         }
-        return "D".date('m').$last_duty_no;
+        return "G".date('m').$last_duty_no;
     }else{
-        return "D".date('m')."001";
+        return "G".date('m')."001";
     }
 }
 
@@ -131,17 +131,11 @@ function CalculateBasicPoints ($bp, $type, $difficulty){
     $difficultyCoefficient = 1.0;
 
     switch ($type){
-        case '一类积分':
-            $typeCoefficient = 1.8;
+        case '五类积分（管理类）':
+            $typeCoefficient = 1.2;
             break;
-        case '二类积分':
-            $typeCoefficient = 1.4;
-            break;
-        case '三类积分':
-            $typeCoefficient = 1;
-            break;
-        case '四类积分':
-            $typeCoefficient = 0.8;
+        case '六类积分（日常类）':
+            $typeCoefficient = 1.0;
             break;
     }
 
@@ -183,46 +177,45 @@ function UpdateGainedPoints($dutyNo){
     return $basicPoints*$coefficient;
 }
 
-class PerformancesController extends Controller
+class BasicController extends Controller
 {
-        //Create a new performance duty, together with its nodes
-        public function PostDuty(Request $request){
-            $postContent = $request->all();
-            if (isset($postContent['members'])){
-                $leader = json_encode($postContent['members']);
-            } else {
-                $leader = "";
-            }
     
-            $basic_points = CalculateBasicPoints(10.0, $postContent['type'], $postContent['difficulty']);
-    
-            $performance_no = GenerateDutyNum();
-            DB::table('basic_duty')->insert([
-                'performance_content' => $postContent["content"],
-                'performance_no' => $performance_no,
-                'type' => $postContent['type'],
-                'property' => $postContent['property'],
-                'difficulty' => $postContent['difficulty'],
-                'leader' => (int)$postContent['leader'],
-                'members' => $leader,
-                'start_date' => $postContent['start-date'],
-                'end_date' => $postContent['end-date'],
-                'node_no' => (int)$postContent['node-no'],
-                'total_points' => $basic_points,
-                'latest_progress' => "",
-                'declarant_id' => (int)$postContent['declarant-id'],
-            ]);
+    public function GetAllBasic(Request $request){
+        $basicDuties = DB::table('basic_duty')->orderBy('timestamp','desc')->get();
+        return $basicDuties;
+    }
 
-    
-            //Create Announcement for the duty
-            $announcementContent = '【'.Auth::user()->name.'】 创建了基础项目 【'.$performance_no.'】，请主管领导尽快审批';
-            DB::table('announcements')->insert([
-                'name' => Auth::user()->name,
-                'content' =>  $announcementContent,
-                'is_important' => 1,
-            ]);
-    
-            return redirect('/')
-            ->with('status', "您已成功提交业绩事项 ".$performance_no."！");
+    //Create a new performance duty, together with its nodes
+    public function PostDuty(Request $request){
+        $postContent = $request->all();
+        if (isset($postContent['members'])){
+            $leader = json_encode($postContent['members']);
+        } else {
+            $leader = "";
         }
+
+        $total_points = CalculateBasicPoints(10.0, $postContent['type'], $postContent['difficulty']);
+
+        $basic_no = GenerateDutyNum();
+        DB::table('basic_duty')->insert([
+            'basic_content' => $postContent["basic-content"],
+            'basic_no' => $basic_no,
+            'type' => $postContent['type'],
+            'difficulty' => $postContent['difficulty'],
+            'member' => (int)$postContent['member'],
+            'total_points' => $total_points,
+        ]);
+
+
+        //Create Announcement for the duty
+        $announcementContent = '【'.Auth::user()->name.'】 创建了基础项目 【'.$basic_no.'】，请主管领导尽快审批';
+        DB::table('announcements')->insert([
+            'name' => Auth::user()->name,
+            'content' =>  $announcementContent,
+            'is_important' => 1,
+        ]);
+
+        return redirect('/')
+        ->with('status', "您已成功提交业绩事项 ".$basic_no."！");
+    }
 }

@@ -20,12 +20,12 @@
             <div style="margin-top: 20px">
                 <label for="declarant">申报人</label>
                 <input id="declarant" type="input" class="form-control" readonly placeholder="{{Auth::user()->name}}">
-                <input style="visibility: hidden" name="declarant-id" type="input" value="{{Auth::user()->id}}">
+                <input style="visibility: hidden" name="member" type="input" value="{{Auth::user()->id}}">
             </div>
 
             <div style="margin-top: 20px">
                 <label for="content">项目内容</label>
-                <textarea id="content" name="content" type="input" class="form-control" rows="4" required></textarea>
+                <textarea id="content" name="basic-content" type="input" class="form-control" rows="4" required></textarea>
             </div>
 
             <div class="row">

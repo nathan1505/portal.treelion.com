@@ -25,14 +25,16 @@
 
         <!--Row 1-->
         <div class="row">
-            <div class="col-4">
+            <div class="col">
                 <div class="card" style="height:100%">
                     <div class="card-header">
                         员工：{{Auth::user()->name}}
                     </div>
-                    <div class="card-body">
-                        <h5 class="card-title">Title</h5>
-                        <p class="card-text">Content</p>
+                    <div class="card-body performance-div">
+                        <table class="table table-striped">
+                            <tbody id="basic-duties-table">
+                            </tbody> 
+                        </table>
                     </div>
                     <div style="position: absolute; bottom:20px; left: 20px">
                         <a class="btn btn-success" type="button" href="/daily-register">早间申报</a>
@@ -42,7 +44,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-8">
+            <div class="col">
                 <div class="card">
                     <div class="card">
                         <div class="card-body">

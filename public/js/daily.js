@@ -75,6 +75,36 @@ window.onload = function () {
             }
         });
     });
+    
+    $.get('/get-basic-duties',function(data){
+        var color = "";
+        var status = "";
+        
+        console.log(data);
+
+        for (var i = 0; i < 10; i++){
+            
+            if (data[i].status == "done") {
+                color = "table-primary";
+                status = "完成";
+            } else if (data[i].status == "rejected") {
+                color = "table-danger";
+                status = "未通过";
+            } else {
+                color = "table-warning";
+                status = "待审批";
+            }
+
+            $('#basic-duties-table').append(
+                '<tr><td style="width:25%">' + data[i].basic_no + '</td>' + 
+                '<td style="width:50%">' + data[i].basic_content + '</td>' + 
+                '<td style="width:25%;text-align:center;" class="'+ color +'">' + status + '</td>' +
+                '<td>' + '<button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
+                '</td></tr>'
+            );
+
+        }
+    });
 
     $.get("/get-performance/" + userId,
         function (data) {
@@ -88,7 +118,7 @@ window.onload = function () {
             var color = "";
             var status = "";
 
-            for (var i = 0; i < 10; i++) {
+            for (var i = 0; i < 100; i++) {
 
                 if (data[i].status == "processing") {
                     color = "table-success";

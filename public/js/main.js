@@ -39,21 +39,21 @@ window.onload = function(){
         var color = "";
         var status = "";
 
-        for (var i = 0; i < 10; i++){
+        data.forEach((element) => {
 
-            if (data[i].status == "processing") {
+            if (element.status == "processing") {
                 color = "table-success";
                 status = "进行中";
-            } else if (data[i].status == "done") {
+            } else if (element.status == "done") {
                 color = "table-primary";
                 status = "完成";
-            } else if (data[i].status == "delayed") {
+            } else if (element.status == "delayed") {
                 color = "table-danger";
                 status = "延迟";
-            } else if (data[i].status == "postponed"){
+            } else if (element.status == "postponed"){
                 color = "table-secondary";
                 status = "暂缓";
-            } else if (data[i].status == "rejected") {
+            } else if (element.status == "rejected") {
                 color = "table-danger";
                 status = "未通过";
             } else {
@@ -63,16 +63,16 @@ window.onload = function(){
 
             $('#performance-table').append(
                 '<tr><td style="width:5%">' +
-                data[i].performance_no + '</td><td style="width:25%">' +
-                data[i].performance_content + '</td><td style="width:10%">' +
-                data[i].property + '</td><td style="width:17%">' +
-                data[i].start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
+                element.performance_no + '</td><td style="width:25%">' +
+                element.performance_content + '</td><td style="width:10%">' +
+                element.property + '</td><td style="width:17%">' +
+                element.start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
                 status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
-                data[i].completeness + '%</td><td>' +
-                '<a href="/duties/' +data[i].id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                element.completeness + '%</td><td>' +
+                '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                 '</td></tr>'
             );
-        }
+        });
     });
 
     $.get('/get-hsi', function (data) {
