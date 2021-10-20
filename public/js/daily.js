@@ -99,7 +99,7 @@ window.onload = function () {
                 '<tr><td style="width:25%">' + data[i].basic_no + '</td>' + 
                 '<td style="width:50%">' + data[i].basic_content + '</td>' + 
                 '<td style="width:25%;text-align:center;" class="'+ color +'">' + status + '</td>' +
-                '<td>' + '<button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> View</button>' +
+                '<td>' + '<a href="/basic/' + data[i].id + '"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i> 查看</button></a>' +
                 '</td></tr>'
             );
 
