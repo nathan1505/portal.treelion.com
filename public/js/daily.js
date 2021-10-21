@@ -96,17 +96,14 @@ window.onload = function () {
             }
 
             $('#basic-duties-table').append(
-                '<tr><td style="width:25%">' + data[i].basic_no + '</td>' + 
-                '<td style="width:50%">' + data[i].basic_content + '</td>' + 
-                '<td style="width:25%;text-align:center;" class="'+ color +'">' + status + '</td>' +
-                '<td><a href="/basic/' + data[i].id + '"><button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>查看</button></a></td></tr>'
+                '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
+                '<td style="width:20%">' + data[i].basic_content + '</td>' + 
+                '<td style="width:20%;text-align:center;" class="'+ color +'">' + status + '</td>' +
+                '<td style="width:20%"><a href="/basic/' + data[i].id + '"><button class="btn btn-secondary">查看</button></a></td>' + 
+                '<td style="width:20%"><a href="/basic/edit/' + data[i].id + '"><button class="btn btn-success">修改</button></a><td>' + 
+                '<td style="width:10%"><button class="btn btn-success">456</button><td>' + 
+                '</tr>'
             );
-
-            $('#basic-duties-table').append(
-                '<button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>查看</button>' + 
-                '<button class="btn btn-info btn-sm"><i class="fa fa-eye" aria-hidden="true"></i>查看</button>'
-            );
-
         }
     });
 

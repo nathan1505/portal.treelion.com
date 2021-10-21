@@ -112,13 +112,23 @@ Route::get('/basic/register', function(){
 Route::get('/basic/{duty_id}', function(){
     return view('basic.duty');
 })->middleware('auth')->whereNumber('duty_id');
-
+//Render page of evening daily report
+/*
+Route::get('/basic/edit/{duty_id}', function(){
+    return view('basic.edit');
+})->middleware('auth');
+*/
 //Post request to create a new basic duty
 Route::post('/basic/post-duty', 'App\Http\Controllers\BasicController@PostDuty')->middleware('auth');
 //Get all basic duties
 Route::get('/get-basic-duties', 'App\Http\Controllers\BasicController@GetAllBasic');
 //Get basic duty by duty ID
 Route::get('/get-basic-duty/{duty_id?}', 'App\Http\Controllers\BasicController@SeeBasicDuty');
+//Showing page to edit basic duty
+Route::get('/basic/edit/{duty_id?}', 'App\Http\Controllers\BasicController@ShowBasicDuty');
+
+//Edit basic duty
+Route::post('/get-basic-duty/edit', 'App\Http\Controllers\BasicController@EditBasicDuty');
 
 //---- End of Routers for basic duty----
 

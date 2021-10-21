@@ -15,7 +15,7 @@
     <div class="container" style="margin-top:5%">
     <h2>员工日内工作申报（早间）</h2>
 
-    <form action="/daily/post-duty" method="post">
+    <form action="post-duty" method="post">
         @csrf
         <div class="form-group">
             <div style="margin-top: 20px">

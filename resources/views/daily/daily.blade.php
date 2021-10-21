@@ -34,8 +34,6 @@
                         <table class="table table-striped">
                             <tbody id="basic-duties-table">
                             </tbody>
-                            <tbody id="edit-delete-basic-buttons">
-                            </tbody>
                         </table>
                     </div>
                     <div style="position: absolute; bottom:20px; left: 20px">
