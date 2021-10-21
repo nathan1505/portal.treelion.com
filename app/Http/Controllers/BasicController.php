@@ -179,6 +179,15 @@ function UpdateGainedPoints($dutyNo){
 
 class BasicController extends Controller
 {
+
+    //Get the info of some duty by its ID
+    public function SeeBasicDuty(Request $request, $arg){
+        //Get id of performance duty as $dutyId
+        $dutyId = (int)$arg;
+        $response = DB::table('basic_duty')->where('id',$dutyId)->get();
+        $array = json_decode(json_encode($response), true);
+        return $array;
+    }
     
     public function GetAllBasic(Request $request){
         $basicDuties = DB::table('basic_duty')->orderBy('timestamp','desc')->get();
@@ -188,11 +197,6 @@ class BasicController extends Controller
     //Create a new performance duty, together with its nodes
     public function PostDuty(Request $request){
         $postContent = $request->all();
-        if (isset($postContent['members'])){
-            $leader = json_encode($postContent['members']);
-        } else {
-            $leader = "";
-        }
 
         $total_points = CalculateBasicPoints(10.0, $postContent['type'], $postContent['difficulty']);
 

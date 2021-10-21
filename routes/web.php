@@ -103,8 +103,8 @@ Route::post('/duties/check-duty', 'App\Http\Controllers\PerformancesController@C
 
 //---- End of Routers for performance duty ---
 
-//---- Routers for basic work ---
-//Render the page of creating a basic work
+//---- Routers for basic duty ---
+//Render the page of creating a basic duty
 Route::get('/basic/register', function(){
     return view('basic.register');
 })->middleware('auth');
@@ -113,12 +113,14 @@ Route::get('/basic/{duty_id}', function(){
     return view('basic.duty');
 })->middleware('auth')->whereNumber('duty_id');
 
-//Post request to create a new basic work
+//Post request to create a new basic duty
 Route::post('/basic/post-duty', 'App\Http\Controllers\BasicController@PostDuty')->middleware('auth');
-//Get all performance duties
+//Get all basic duties
 Route::get('/get-basic-duties', 'App\Http\Controllers\BasicController@GetAllBasic');
+//Get basic duty by duty ID
+Route::get('/get-basic-duty/{duty_id?}', 'App\Http\Controllers\BasicController@SeeBasicDuty');
 
-//---- End of Routers for basic work----
+//---- End of Routers for basic duty----
 
 //---- Routers for daily report ----
 

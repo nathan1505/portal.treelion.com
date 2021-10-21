@@ -12,12 +12,10 @@
 @endsection
 
 @section('script')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5/locales-all.min.js"></script>
-    <script>
-        var userId = {{$userId}};
-    </script>
-    <script src="{{ URL::asset('/js/daily.js') }}"></script>
+    <script src="{{ URL::asset('/js/basic.js') }}"></script>
 @endsection
 
 @section('content')
@@ -26,8 +24,8 @@
     <div class="card-body">
     
         <div class="card-body">
-            <tbody id="basic-table">
-            </tbody>
+            <div id="basic-table">
+            </div>
         </div>
         
         </hr>
