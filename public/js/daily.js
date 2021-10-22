@@ -94,16 +94,18 @@ window.onload = function () {
                 color = "table-warning";
                 status = "待审批";
             }
-
-            $('#basic-duties-table').append(
-                '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
-                '<td style="width:20%">' + data[i].basic_content + '</td>' + 
-                '<td style="width:20%;text-align:center;" class="'+ color +'">' + status + '</td>' +
-                '<td style="width:20%"><a href="/basic/' + data[i].id + '"><button class="btn btn-secondary">查看</button></a></td>' + 
-                '<td style="width:20%"><a href="/basic/edit/' + data[i].id + '"><button class="btn btn-success">修改</button></a><td>' + 
-                '<td style="width:10%"><button class="btn btn-success">456</button><td>' + 
-                '</tr>'
-            );
+            
+            if(data[i].status != "end"){
+                $('#basic-duties-table').append(
+                    '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
+                    '<td style="width:20%">' + data[i].basic_content + '</td>' + 
+                    '<td style="width:20%;text-align:center;" class="'+ color +'">' + status + '</td>' +
+                    '<td style="width:20%"><a href="/basic/' + data[i].id + '"><button class="btn btn-secondary">查看</button></a></td>' + 
+                    '<td style="width:20%"><a href="/basic/edit/' + data[i].id + '"><button class="btn btn-success">修改</button></a><td>' + 
+                    '<td style="width:10%"><a href="/basic/hide/' + data[i].id + '"><button class="btn btn-danger">删除</button></a><td>' + 
+                    '</tr>'
+                );
+            }
         }
     });
 

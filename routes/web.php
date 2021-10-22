@@ -128,7 +128,10 @@ Route::get('/get-basic-duty/{duty_id?}', 'App\Http\Controllers\BasicController@S
 Route::get('/basic/edit/{duty_id?}', 'App\Http\Controllers\BasicController@ShowBasicDuty');
 
 //Edit basic duty
-Route::post('/get-basic-duty/edit', 'App\Http\Controllers\BasicController@EditBasicDuty');
+Route::post('/basic/edit', 'App\Http\Controllers\BasicController@EditBasicDuty');
+
+//Hide a basic duty
+Route::get('/basic/hide/{duty_id?}', 'App\Http\Controllers\BasicController@HideBasicDuty');
 
 //---- End of Routers for basic duty----
 

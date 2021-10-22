@@ -14,13 +14,15 @@
 <div class="container" style="margin-top:5%">
     <h2>基础项目申报</h2>
 
-    <form action="" method="post">
+    <form action="/basic/edit" method="post">
         @csrf
         <div class="form-group">
             <div style="margin-top: 20px">
                 <label for="declarant">申报人</label>
                 <input id="declarant" type="input" class="form-control" readonly placeholder="{{Auth::user()->name}}">
                 <input style="visibility: hidden" name="member" type="input" value="{{Auth::user()->id}}">
+                <input style="visibility: hidden" name="duty_id" type="input" value="{{$data[0]['id']}}">
+                <input style="visibility: hidden" name="basic_no" type="input" value="{{$data[0]['basic_no']}}">
             </div>
 
             <div style="margin-top: 20px">
@@ -32,22 +34,36 @@
                 <div class="col" style="margin-top: 20px">
                     <label for="type">项目类别</label>
                     <select id="type" name="type" type="input" class="form-control">
-                        <option>五类积分（管理类）</option>
-                        <option>六类积分（日常类）</option>
+                        <option value="五类积分（管理类）" <?php if($data[0]['type'] =="五类积分（管理类）") echo 'selected="selected"'; ?>>五类积分（管理类）</option>
+                        <option value="六类积分（日常类）" <?php if($data[0]['type'] =="六类积分（日常类）") echo 'selected="selected"'; ?>>六类积分（日常类）</option>
                     </select>
                 </div>
                 
                 <div class="col" style="margin-top: 20px">
                     <label>难度</label><br/>
                     <label class="radio-inline">
-                        <input type="radio" class="form-control" name="difficulty" id="inlineradio1" value="easy" required>&nbsp&nbsp简单&nbsp&nbsp
+                        <input type="radio" class="form-control" name="difficulty" id="inlineradio1" value="easy" 
+                        <?php echo ($data[0]['difficulty'] == "easy" ? 'checked="checked"': ''); ?> required>&nbsp&nbsp简单&nbsp&nbsp
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" class="form-control" name="difficulty" id="inlineradio2" value="normal">&nbsp&nbsp普通&nbsp&nbsp
+                        <input type="radio" class="form-control" name="difficulty" id="inlineradio2" value="normal"
+                        <?php echo ($data[0]['difficulty'] == "middle" ? 'checked="checked"': ''); ?>>&nbsp&nbsp普通&nbsp&nbsp
                     </label>
                     <label class="radio-inline">
-                        <input type="radio" class="form-control" name="difficulty" id="inlineradio3" value="difficult">&nbsp&nbsp困难&nbsp&nbsp
+                        <input type="radio" class="form-control" name="difficulty" id="inlineradio3" value="difficult"
+                        <?php echo ($data[0]['difficulty'] == "difficult" ? 'checked="checked"': ''); ?>>&nbsp&nbsp困难&nbsp&nbsp
                     </label>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-5" style="margin-top: 20px">
+                    <label for="status">项目类别</label>
+                    <select id="status" name="status" type="input" class="form-control">
+                        <option value="approved" <?php if($data[0]['status'] =="approved") echo 'selected="selected"'; ?>>通过</option>
+                        <option value="pending" <?php if($data[0]['status'] =="pending") echo 'selected="selected"'; ?>>待审批</option>
+                        <option value="rejected" <?php if($data[0]['status'] =="rejected") echo 'selected="selected"'; ?>>未通过</option>
+                    </select>
                 </div>
             </div>
 

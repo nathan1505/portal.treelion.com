@@ -179,7 +179,49 @@ function UpdateGainedPoints($dutyNo){
 
 class BasicController extends Controller
 {
-    //Edit the info of basic duty by its IO
+    //Hide basic duty
+    public function HideBasicDuty(Request $request, $arg){
+        $dutyId = (int)$arg;
+        DB::table('basic_duty')
+                ->where('id', $dutyId)
+                ->update([
+                    'status' => "end",
+                ]);
+                
+        return redirect('/daily/{$dutyId}')
+        ->with('status', "您已成功删除基础项目！");
+    }
+    
+    //Edit basic duty
+    public function EditBasicDuty(Request $request){
+        $total_points = CalculateBasicPoints(10.0, $request["type"], $request["difficulty"]);
+        $basic_no = $request["basic_no"];
+        
+        DB::table('basic_duty')
+                ->where('id', $request["duty_id"])
+                ->update([
+                    'basic_content' => $request["basic-content"],
+                    'type' => $request["type"],
+                    'difficulty' => $request["difficulty"],
+                    'status' => $request["status"],
+                    'total_points' => $total_points,
+                ]);
+        //testing output
+        //return $request->input();
+        
+        //Create Announcement for the duty
+        $announcementContent = '【'.Auth::user()->name.'】 更改了基础项目 【'.$basic_no.'】，请主管领导尽快审批';
+        DB::table('announcements')->insert([
+            'name' => Auth::user()->name,
+            'content' =>  $announcementContent,
+            'is_important' => 1,
+        ]);
+
+        return redirect('/')
+        ->with('status', "您已成功更改基础项目 ".$basic_no."！");
+    }
+    
+    //Show the edit page of basic duty by its ID
     public function ShowBasicDuty(Request $request, $arg){
         $dutyId = (int)$arg;
         $array = DB::table('basic_duty')->where('id',$dutyId)->get();
@@ -228,6 +270,6 @@ class BasicController extends Controller
         ]);
 
         return redirect('/')
-        ->with('status', "您已成功提交业绩事项 ".$basic_no."！");
+        ->with('status', "您已成功提交基础项目 ".$basic_no."！");
     }
 }
