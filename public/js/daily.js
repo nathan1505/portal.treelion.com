@@ -82,11 +82,11 @@ window.onload = function () {
         
         console.log(data);
 
-        for (var i = 0; i < 10; i++){
+        for (var i = 0; i < data.length; i++){
             
-            if (data[i].status == "done") {
-                color = "table-primary";
-                status = "完成";
+            if (data[i].status == "approved") {
+                color = "table-success";
+                status = "通过";
             } else if (data[i].status == "rejected") {
                 color = "table-danger";
                 status = "未通过";

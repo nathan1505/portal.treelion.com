@@ -36,6 +36,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/daily/{{Auth::user()->id}}">工作跟踪</a>
                     </li>
+                    <li>
+                        <a class="nav-link">每月积分</a>
+                    </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/logout') }}">登出</a>
                     </li>

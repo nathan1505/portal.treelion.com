@@ -19,17 +19,19 @@
 @endsection
 
 @section('content')
-    <div class="card">
-    <div class="card-header">Basic Page</div>
-    <div class="card-body">
-    
+    <div class="container-fluid" style="margin-top:2%; align-content: center">
+        <div class="card">
+        <div class="card-header">基础项目內容</div>
         <div class="card-body">
-            <div id="basic-table">
-            </div>
-        </div>
         
-        </hr>
-    
-    </div>
+            <div class="card-body">
+                <div id="basic-table">
+                </div>
+            </div>
+            
+            </hr>
+        
+        </div>
+        </div>
     </div>
 @endsection

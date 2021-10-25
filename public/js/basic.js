@@ -82,4 +82,42 @@ window.onload = function(){
         });
 
     });
+    
+    $.get('/get-approved-basic-duties',function(data){
+        
+        var diff = "";
+        
+        $('#basic-duties-approved').append(
+            '<tr>' +
+            '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>更新日期</td><td>积分</td>' +
+            '</tr>'
+        );
+        
+        console.log(data);
+
+        for (var i = 0; i < data.length; i++){
+            
+            switch (data[i].difficulty) {
+                case "difficult":
+                    diff = "困难";
+                    break;
+                case "normal":
+                    diff = "中等";
+                    break;
+                default:
+                    diff = "简单"
+                    // code
+            }
+            
+            $('#basic-duties-approved').append(
+                '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
+                '<td style="width:25%">' + data[i].basic_content + '</td>' + 
+                '<td style="width:20%">' + data[i].type + '</td>' + 
+                '<td style="width:20%">' + diff + '</td>' + 
+                '<td style="width:15%">' + data[i].timestamp.substring(0,10) + '</td>' + 
+                '<td style="width:%">' + data[i].total_points + '</td>' + 
+                '</tr>'
+            );
+        }
+    });
 }

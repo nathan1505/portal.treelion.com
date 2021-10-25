@@ -174,7 +174,18 @@ Route::post('/daily/update-daily', 'App\Http\Controllers\DailyController@UpdateD
 
 //---- End of Routers for performance duty ---
 
+//---- Routers for monthly points ----
+//Render the daily page of the current user
+Route::get('/points/{id?}', function ($id) {
+    return view('points.page')->with('userId', $id);
+})->middleware('auth');
+
+//Get all basic duties
+Route::get('/get-approved-basic-duties', 'App\Http\Controllers\BasicController@GetAllBasic');
+//---- End of Routers for monthly points ----
+
 //---- Routers for PDF view page ----
 //Get the contact list in pdf form
 Route::get('/pdf_contact_list', 'App\Http\Controllers\PDFsController@pdfContactList');
-
+//Get the day off application in pdf form
+Route::get('/pdf_dayoff_application', 'App\Http\Controllers\PDFsController@pdfDayoff');
