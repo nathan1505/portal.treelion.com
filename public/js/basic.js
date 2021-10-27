@@ -120,4 +120,9 @@ window.onload = function(){
             );
         }
     });
+    
+        
+    $.get('/get-monthly-performance', function (data){
+        console.log(data);
+    });
 }

@@ -183,6 +183,29 @@ function UpdateGainedPoints($dutyNo){
     return $basicPoints*$coefficient;
 }
 
+function MonthlyPoints($dutyNo){
+    $basicPoints = DB::table('performance_duty')
+                        ->where('performance_no', $dutyNo)
+                        ->value('basic_points');
+
+    $currentMonth = date('m');
+
+    $response = DB::table('duty_node')
+                    ->where('duty_performance_no', $dutyNo)
+                    ->whereRaw('MONTH(node_date) = ?',[$currentMonth])
+                    ->orderBy('node_id')
+                    ->get();
+    $array = json_decode(json_encode($response), true);
+
+    $coefficient = 0.0;
+    
+    foreach($array as $node){
+        $coefficient += ((float)$node['node_point_percentage'])/100 * $node['node_completeness_coefficient'];
+    }
+    
+    return $basicPoints*$coefficient;
+}
+
 class PerformancesController extends Controller
 {
     //Get all duties
@@ -656,6 +679,27 @@ class PerformancesController extends Controller
                     ['total_points' => $total_points]
                 );
         }
+    }
+
+    public function MonthlyPerformancePoint(Request $request){
+        $user_id = Auth::user()->id;
+        
+        $dutyArray = DB::table('performance_duty')->where('leader', $user_id)->
+                         orWhere('members', 'like', "%\"{$user_id}\"%")->get();
+
+        $performanceArray = array();
+        
+        foreach ($dutyArray as $element){
+            array_push($performanceArray, $element->performance_no);
+        }
+        
+        $currentMonth = date('m');
+
+        $monthlyNodes = DB::table('duty_node')->whereIn('duty_performance_no', $performanceArray)->
+        whereRaw('MONTH(node_date) = ?',[$currentMonth])->get();
+        
+        //$groupByDate = DB::table('duty_node')->groupBy('confirmed_date')->get();
+        return $monthlyNodes;
     }
 
     /**

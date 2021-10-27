@@ -239,8 +239,17 @@ class BasicController extends Controller
         return $array;
     }
     
+    //Get all basic duty
     public function GetAllBasic(Request $request){
         $basicDuties = DB::table('basic_duty')->orderBy('timestamp','desc')->get();
+        return $basicDuties;
+    }
+
+    //Get all approved basic duty
+    public function GetAllApprovedBasic(Request $request){
+        $basicDuties = DB::table('basic_duty')->where('member', Auth::user()->id)
+        ->where('status', "approved")
+        ->orderBy('timestamp','desc')->get();
         return $basicDuties;
     }
 
