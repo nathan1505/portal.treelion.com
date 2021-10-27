@@ -685,21 +685,42 @@ class PerformancesController extends Controller
         $user_id = Auth::user()->id;
         
         $dutyArray = DB::table('performance_duty')->where('leader', $user_id)->
-                         orWhere('members', 'like', "%\"{$user_id}\"%")->get();
+                         orWhere('members', 'like', "%\"{$user_id}\"%")->
+                         select(['*', DB::raw("0 as leader_month, 0 as member_month")])->get();
 
-        $performanceArray = array();
+        //$performanceArray = array();
+        //$dutyArray = $dutyArray->DB::raw('0 AS leader_month, 0 AS member_month');
+        
+        $monthlyPoint = array();
         
         foreach ($dutyArray as $element){
-            array_push($performanceArray, $element->performance_no);
+            $members_no = (float) CountMembers($element->performance_no);
+
+            $total_points = (float) MonthlyPoints($element->performance_no);
+    
+            $leader_points = bcmul($total_points, 0.2, 2) + bcdiv( bcmul($total_points, 0.8, 2) , $members_no, 2);
+    
+            $member_points;
+            if ($members_no == 1.0){
+                $member_points = 0.0;
+            } else {
+                $member_points = (float)bcdiv(($total_points - $leader_points) , ($members_no - 1), 2);
+            }
+            
+            //array_push($monthlyPoint, [$leader_points, $member_points]);
+            //$element = $element->addSelect(DB::raw("{$leader_points} as leader_month"));
+            //$element = $element->addSelect(DB::raw("{$member_points} as member_month"));
+            $element->leader_month = $leader_points;
+            $element->member_month = $member_points;
         }
         
-        $currentMonth = date('m');
+        //$currentMonth = date('m');
 
-        $monthlyNodes = DB::table('duty_node')->whereIn('duty_performance_no', $performanceArray)->
-        whereRaw('MONTH(node_date) = ?',[$currentMonth])->get();
+        //$monthlyNodes = DB::table('duty_node')->whereIn('duty_performance_no', $performanceArray)->
+        //whereRaw('MONTH(node_date) = ?',[$currentMonth])->get();
         
         //$groupByDate = DB::table('duty_node')->groupBy('confirmed_date')->get();
-        return $monthlyNodes;
+        return $dutyArray;
     }
 
     /**

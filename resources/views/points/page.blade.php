@@ -39,10 +39,25 @@
                         今月业绩项目得分
                     </div>
                     <div class="card-body">
+                            <table class="table table-striped">
+                            <tbody id="monthly-performance-table">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
         <!--Row 2 ends-->
+        <!--Row 3-->
+        <div class="row">
+            <div class="col">
+                <div class="card">
+                    <div class="card-header">
+                        今月总得分
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Row 3 ends-->
     </div>
 @endsection

@@ -51,8 +51,8 @@ window.onload = function(){
     //GET the detail of performance duty 
     //response data as the duty detail
     $.get(path, function(data){
-        console.log(data);
-        console.log(token);
+        //console.log(data);
+        //console.log(token);
         
         var diff = "";
         
@@ -86,14 +86,6 @@ window.onload = function(){
     $.get('/get-approved-basic-duties',function(data){
         
         var diff = "";
-        
-        $('#basic-duties-approved').append(
-            '<tr>' +
-            '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>更新日期</td><td>积分</td>' +
-            '</tr>'
-        );
-        
-        console.log(data);
 
         for (var i = 0; i < data.length; i++){
             
@@ -123,6 +115,32 @@ window.onload = function(){
     
         
     $.get('/get-monthly-performance', function (data){
-        console.log(data);
+        var role;
+        var userID = dutyId;
+        data.foreach((element) =>{
+
+            $('#monthly-performance-table').append(
+                '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
+                '<td style="width:25%">' + data[i].basic_content + '</td>' + 
+                '<td style="width:20%">' + data[i].type + '</td>' + 
+                '<td style="width:20%">' + diff + '</td>' + 
+                '<td style="width:15%">' + data[i].timestamp.substring(0,10) + '</td>' + 
+                '<td style="width:%">' + data[i].total_points + '</td>' + 
+                '</tr>'
+            );
+        });
+
     });
+    
+    $('#monthly-performance-table').append(
+        '<tr>' +
+        '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>基本积分</td><td>今月得分</td>' +
+        '</tr>'
+    );
+    
+    $('#basic-duties-approved').append(
+        '<tr>' +
+        '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>更新日期</td><td>积分</td>' +
+        '</tr>'
+    );
 }

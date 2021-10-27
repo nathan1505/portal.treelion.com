@@ -4,9 +4,17 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5/main.min.css" />
     <link href='https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.13.1/css/all.css' rel='stylesheet' />
     <style type="text/css">
+        .tableFixHead {
+            overflow-y: auto;
+            height: 500px;
+        }
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
         td,th{
             text-align:center;/** 设置水平方向居中 */
-            vertical-align:middle/** 设置垂直方向居中 */
+            vertical-align:middle;/** 设置垂直方向居中 */
         }
     </style>
 @endsection
@@ -30,11 +38,13 @@
                     <div class="card-header">
                         员工：{{Auth::user()->name}}
                     </div>
+                    <div class="tableFixHead">
                     <div class="card-body performance-div">
                         <table class="table table-striped">
                             <tbody id="basic-duties-table">
                             </tbody>
                         </table>
+                    </div>
                     </div>
                     <div style="position: absolute; bottom:20px; left: 20px">
                         <a class="btn btn-success" type="button" href="/daily-register">早间申报</a>
