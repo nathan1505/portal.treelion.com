@@ -39,7 +39,7 @@
                         今月业绩项目得分
                     </div>
                     <div class="card-body">
-                            <table class="table table-striped">
+                        <table class="table table-striped">
                             <tbody id="monthly-performance-table">
                             </tbody>
                         </table>
@@ -54,6 +54,14 @@
                 <div class="card">
                     <div class="card-header">
                         今月总得分
+                    </div>
+                    <div class="card-body">
+                        <table>
+                            <th>基础项目得分：<span id="month-basic-points"></span></th>
+                            <th>业绩項目得分：<span id="month-performance-points"></span></th>
+                            <th>总得分：<span id="month-total-points"></span></span></th>
+                        </table>
+                        <sc>
                     </div>
                 </div>
             </div>

@@ -730,4 +730,28 @@ class PerformancesController extends Controller
         $date = Carbon::now()->firstOfMonth();
         echo $date;
     }
+    
+    public function getTotalMonthlyPoints(Request $request){
+        $BasicEvents = DB::table('basic_duty')->where('member', Auth::user()->id)
+        ->where('status', "approved")
+        ->orderBy('timestamp','desc')->get();
+        $basic_total = 0.0;
+        foreach ($BasicEvents as $element){
+            $basic_total += $element->total_points;
+        }
+        
+        $PerformanceEvents = self::MonthlyPerformancePoint($request);
+        
+        $performance_total = 0.0;
+        foreach ($PerformanceEvents as $element){
+            if($element->leader == Auth::user()->id){
+                $performance_total += $element->leader_points;
+            }
+            else{
+                $performance_total += $element->member_points;
+            }
+        }
+        
+        return $performance_total+$basic_total;
+    }
 }

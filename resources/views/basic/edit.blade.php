@@ -47,7 +47,7 @@
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio2" value="normal"
-                        <?php echo ($data[0]['difficulty'] == "middle" ? 'checked="checked"': ''); ?>>&nbsp&nbsp普通&nbsp&nbsp
+                        <?php echo ($data[0]['difficulty'] == "normal" ? 'checked="checked"': ''); ?>>&nbsp&nbsp普通&nbsp&nbsp
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio3" value="difficult"

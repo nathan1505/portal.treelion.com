@@ -184,6 +184,8 @@ Route::get('/points/{id?}', function ($id) {
 Route::get('/get-approved-basic-duties', 'App\Http\Controllers\BasicController@GetAllApprovedBasic');
 //Get all the performance points within the current month
 Route::get('/get-monthly-performance', 'App\Http\Controllers\PerformancesController@MonthlyPerformancePoint');
+//Get monthly total points
+Route::get('/get-total-monthly', 'App\Http\Controllers\PerformancesController@getTotalMonthlyPoints');
 //---- End of Routers for monthly points ----
 
 //---- Routers for PDF view page ----
