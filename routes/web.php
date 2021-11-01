@@ -93,6 +93,8 @@ Route::get('/duties/update-duty-table', 'App\Http\Controllers\PerformancesContro
 Route::get('/duties/update-total-points', 'App\Http\Controllers\PerformancesController@UpdateTotalPoints');
 //Update the month points gained by all users
 Route::get('/duties/update-month-points', 'App\Http\Controllers\PerformancesController@UpdateMonthPoints');
+//Showing page to edit performance duty
+Route::get('/performance/edit/{duty_id?}', 'App\Http\Controllers\PerformancesController@ShowPerformanceDuty');
 
 //Post request to create a new Performance duty
 Route::post('/performance/post-duty', 'App\Http\Controllers\PerformancesController@PostDuty')->middleware('auth');
@@ -100,6 +102,8 @@ Route::post('/performance/post-duty', 'App\Http\Controllers\PerformancesControll
 Route::post('/duties/post-node', 'App\Http\Controllers\PerformancesController@UpdateNode');
 //Post method for approve or reject a performance duty
 Route::post('/duties/check-duty', 'App\Http\Controllers\PerformancesController@CheckDuty');
+//Edit the details of performance duty
+Route::post('/performance/edit', 'App\Http\Controllers\PerformanceController@EditPerformanceDuty');
 
 //---- End of Routers for performance duty ---
 

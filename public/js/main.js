@@ -70,6 +70,7 @@ window.onload = function(){
                 status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
                 element.completeness + '%</td><td>' +
                 '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
                 '</td></tr>'
             );
         });

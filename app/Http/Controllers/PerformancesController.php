@@ -730,6 +730,15 @@ class PerformancesController extends Controller
         $date = Carbon::now()->firstOfMonth();
         echo $date;
     }
+
+    //Show the edit page of performance duty by its ID
+    public function ShowPerformanceDuty(Request $request, $arg){
+        $dutyId = (int)$arg;
+        $array = DB::table('performance_duty')->where('id',$dutyId)->get();
+        $performancedata = json_decode(json_encode($array), true);
+        //return $array;
+        return view('performance.edit', ['performancedata' => $performancedata]);
+    }
     
     public function getTotalMonthlyPoints(Request $request){
         $BasicEvents = DB::table('basic_duty')->where('member', Auth::user()->id)
