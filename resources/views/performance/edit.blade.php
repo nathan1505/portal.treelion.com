@@ -79,20 +79,46 @@
 
                 <div class="col" style="margin-top: 20px">
                     <label for="node-no">节点数</label><br/>
-                    <input type="number" class="form-control" name="node-no" id="node-no" min=1 max=4 step=1 required>
+                    <input type="number" class="form-control" name="node-no" id="node-no" min=1 max=4 step=1 value="{{$performancedata[0]['node_no']}}" required>
                 </div>
             </div>
 
             <div class="row">
                 <div class="col-md-4" style="margin-top: 20px">
-                    <label for="leader">组长</label>
-                    <select id="leader" name="leader" type="input" class="form-control" required>
+                    <label for="leader-edit">组长</label>
+                    <select id="leader-edit" name="leader" type="input" class="form-control" required>
+                        <?php
+                        $selected = $performancedata[0]['leader']; // Put value from database here.
+
+                        foreach ($user as $key) {
+                        ?>
+                            <option value="{{$key['id']}}" <?php
+                            if ($key['id'] == $selected) {
+                                echo 'selected="selected"';
+                            }
+                            ?> > {{$key['name']}}</option>
+                        <?php
+                        }
+                        ?>
                     </select>
                 </div>
 
                 <div class="col-md-8" style="margin-top: 20px">
                     <label for="members">组员</label>
                     <select id="members" name="members[]" type="checkbox" class="form-control selectpicker" data-live-search="true" multiple data-style="btn-light">
+                        <?php
+                        $selected = $performancedata[0]['members']; // Put value from database here.
+
+                        foreach ($user as $key) {
+                        ?>
+                            <option value="{{$key['id']}}" <?php
+                            if ($key['id'] == $selected) {
+                                echo 'selected="selected"';
+                            }
+                            ?> > {{$key['name']}}</option>
+                        <?php
+                        }
+                        ?>
                     </select>
                 </div>
             </div>
@@ -100,15 +126,15 @@
             <div class="row" id="date-range" style="margin-top: 20px">
                 <div class="col">
                     <label for="start-date">开始考核日期</label><br/>
-                    <input type="date" name="start-date" id="startdate" class="form-control startdate" onblur="findEndDateMin()" required>
+                    <input type="date" name="start-date" id="startdate" class="form-control startdate" onblur="findEndDateMin()" value="{{$performancedata[0]['start_date']}}" required>
                 </div>
                 <div class="col">
                     <label for="end-date">结束考核日期</label><br/>
-                    <input type="date" name="end-date" id="enddate" class="form-control enddate" required>
+                    <input type="date" name="end-date" id="enddate" class="form-control enddate" value="{{$performancedata[0]['end_date']}}" required>
                 </div>
                 <script>
                     var minToDate;
-                    $("#enddate").attr("disabled", "true");
+                    //$("#enddate").attr("disabled", "true");
 
                     function findEndDateMin() {
                       minToDate = document.getElementById("startdate").value;

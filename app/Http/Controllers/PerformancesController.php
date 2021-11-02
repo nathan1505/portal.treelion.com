@@ -736,8 +736,11 @@ class PerformancesController extends Controller
         $dutyId = (int)$arg;
         $array = DB::table('performance_duty')->where('id',$dutyId)->get();
         $performancedata = json_decode(json_encode($array), true);
+
+        $response = DB::table('users')->get();
+        $user = json_decode(json_encode($response), true);
         //return $array;
-        return view('performance.edit', ['performancedata' => $performancedata]);
+        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user]);
     }
     
     public function getTotalMonthlyPoints(Request $request){
