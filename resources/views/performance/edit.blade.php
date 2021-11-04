@@ -1,11 +1,13 @@
 @extends('layouts.main')
 
+
 @section('css')
     <link href="/css/main.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css" rel="stylesheet" />
 @endsection
 
 @section('script')
+    <script src="{{ URL::asset('/js/performance.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/i18n/defaults-zh_CN.min.js"></script>
 @endsection
@@ -22,7 +24,7 @@
                 <input id="declarant" type="input" class="form-control" readonly placeholder="{{Auth::user()->name}}">
                 <input style="visibility: hidden" name="member" type="input" value="{{Auth::user()->id}}">
                 <input style="visibility: hidden" name="duty_id" type="input" value="{{$performancedata[0]['id']}}">
-                <input style="visibility: hidden" name="basic_no" type="input" value="{{$performancedata[0]['performance_no']}}">
+                <input style="visibility: hidden" name="performance_no" type="input" value="{{$performancedata[0]['performance_no']}}">
             </div>
 
             <div style="margin-top: 20px">
@@ -104,18 +106,22 @@
                 </div>
 
                 <div class="col-md-8" style="margin-top: 20px">
-                    <label for="members">组员</label>
-                    <select id="members" name="members[]" type="checkbox" class="form-control selectpicker" data-live-search="true" multiple data-style="btn-light">
+                    <label for="members-edit">组员</label>
+                    <select id="members-edit" name="members[]" type="checkbox" class="form-control selectpicker" data-live-search="true" multiple data-style="btn-light">
                         <?php
-                        $selected = $performancedata[0]['members']; // Put value from database here.
+                        $selected = json_decode($performancedata[0]['members']);
 
                         foreach ($user as $key) {
                         ?>
                             <option value="{{$key['id']}}" <?php
-                            if ($key['id'] == $selected) {
+                            //var_dump($selected);
+                            $int2str = strval($key['id']);
+                            if($selected == null){
+                                echo '';
+                            }else if (in_array($int2str, $selected)) {
                                 echo 'selected="selected"';
                             }
-                            ?> > {{$key['name']}}</option>
+                            ?>>{{$key['name']}}</option>
                         <?php
                         }
                         ?>

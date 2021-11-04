@@ -1,3 +1,11 @@
+function GetCurrentDutyId(){
+    var path = window.location.pathname;
+    var pathSplited = path.split('/');
+    var dutyId = parseInt(pathSplited[3]);
+    console.log(dutyId);
+    return dutyId;
+}
+
 window.onload = function(){
 
     $.get('/get-hsi', function (data) {
@@ -44,6 +52,71 @@ window.onload = function(){
         end = $('.enddate').val();
         // do something with values
     });
+    
+    dutyId = GetCurrentDutyId();
+    //Start of request of nodes
+    path = "/get-duty-detail/" + dutyId;
+    $.get(path, function(data){
+        //console.log(data);
+        
+        performance_no = data[0].performance_no;
+        //Start of request of nodes
+        path = "/get-nodes/" + performance_no;
+        $.get(path, data,
+            function (data) {
+                console.log(data);
+                
+                for (var i=1; i<=data.length;i++){
+                    $('#nodes-row').append(
+                    '<div class="col-6">' +
+                    '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
+                    '<div class="card-header" id="duty_card_header_' + i + '">' +
+                    '<h5>节点#' + i + '</h5>' +
+                    '</div>' +
+
+                    '<div class="card-body" id="duty_card_body_' + i + '">' +
+                    '<div class="form-group">' +
+                    '<div class="row">' +
+                    '<div class="col">' +
+                    '<label for="percentage">积分比例(%)</label>' +
+                    '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="'+data[i-1].node_point_percentage+'">' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="row" style="margin-top:15px">' +
+                    '<div class="col">' +
+                    '<label for="date">节点考核日期</label>' +
+                    '<input type="date" id="date_' + i + '" name="date_' + i + '" class="form-control date" min="" max="" value="'+data[i-1].node_date+'" required></input>' +
+                    '</div>' +
+                    '</div>' +
+                    '<div class="row" style="margin-top:15px">' +
+                    '<div class="col">' +
+                    '<label for="goal">节点目标</label>' +
+                    '<textarea type="input" name="goal_' + i + '" class="form-control" required rows="3">'+data[i-1].node_goal+'</textarea>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>' +
+                    '</div>'
+                );
+            }
+            
+            $('#nodes-row').on('input', '.percentage', function(){
+                amountSum = [...$('.percentage')]
+                    .map(input => Number(input.value))
+                    .reduce((a, b) => a + b, 0);
+                if(amountSum == 100){
+                    $('#button-div').html(
+                        '<button type="submit" class="btn btn-success">提交</button>'
+                    );
+                }else{
+                    $('#button-div').html(
+                        '<p><b>提示：</b>积分比总和必须为100%才能提交项目</p>'
+                    );
+                }
+            });
+        });
+    });
+    
 
     $('#node-no').change(function () {
         $("#nodes-row").empty();
@@ -90,7 +163,6 @@ window.onload = function(){
                     }
                 });
             }
-            
 
             $('#nodes-row').on('input', '.percentage', function(){
                 amountSum = [...$('.percentage')]

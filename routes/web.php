@@ -103,7 +103,7 @@ Route::post('/duties/post-node', 'App\Http\Controllers\PerformancesController@Up
 //Post method for approve or reject a performance duty
 Route::post('/duties/check-duty', 'App\Http\Controllers\PerformancesController@CheckDuty');
 //Edit the details of performance duty
-Route::post('/performance/edit', 'App\Http\Controllers\PerformanceController@EditPerformanceDuty');
+Route::post('/performance/edit', 'App\Http\Controllers\PerformancesController@EditPerformanceDuty');
 
 //---- End of Routers for performance duty ---
 

@@ -192,11 +192,12 @@ function MonthlyPoints($dutyNo){
 
     $response = DB::table('duty_node')
                     ->where('duty_performance_no', $dutyNo)
-                    ->whereRaw('MONTH(node_date) = ?',[$currentMonth])
+                    ->whereMonth('node_date', '=' , $currentMonth)
                     ->orderBy('node_id')
                     ->get();
-    $array = json_decode(json_encode($response), true);
 
+    $array = json_decode(json_encode($response), true);
+    //var_dump($array);
     $coefficient = 0.0;
     
     foreach($array as $node){
@@ -697,6 +698,7 @@ class PerformancesController extends Controller
             $members_no = (float) CountMembers($element->performance_no);
 
             $total_points = (float) MonthlyPoints($element->performance_no);
+            //echo "AAAAAAA"+$total_points;
     
             $leader_points = bcmul($total_points, 0.2, 2) + bcdiv( bcmul($total_points, 0.8, 2) , $members_no, 2);
     
@@ -737,10 +739,14 @@ class PerformancesController extends Controller
         $array = DB::table('performance_duty')->where('id',$dutyId)->get();
         $performancedata = json_decode(json_encode($array), true);
 
-        $response = DB::table('users')->get();
-        $user = json_decode(json_encode($response), true);
+        $array2 = DB::table('users')->get();
+        $user = json_decode(json_encode($array2), true);
+        
+        $array3 = DB::table('duty_node')->where('duty_performance_no',$performancedata[0]['performance_no'])
+        ->orderBy('node_id')->get();
+        $nodedata = json_decode(json_encode($array3), true);
         //return $array;
-        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user]);
+        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user, 'nodedata' => $nodedata]);
     }
     
     public function getTotalMonthlyPoints(Request $request){
@@ -757,13 +763,54 @@ class PerformancesController extends Controller
         $performance_total = 0.0;
         foreach ($PerformanceEvents as $element){
             if($element->leader == Auth::user()->id){
-                $performance_total += $element->leader_points;
+                $performance_total += $element->leader_month;
             }
             else{
-                $performance_total += $element->member_points;
+                $performance_total += $element->member_month;
             }
         }
         
         return $performance_total+$basic_total;
+    }
+    
+    public function EditPerformanceDuty(Request $request){
+        if (isset($request['members'])){
+            $members = json_encode($request['members']);
+        } else {
+            $members = "";
+        }
+        
+        DB::table('performance_duty')
+                ->where('performance_no', $request["performance_no"])
+                ->update([
+                    'performance_content' => $request["content"],
+                    'type' => $request["type"],
+                    'property' => $request["property"],
+                    'difficulty' => $request["difficulty"],
+                    'node_no' => (int) $request["node-no"],
+                    'leader' => (int) $request["leader"],
+                    'members' => $members,
+                    'start_date' => $request["start-date"],
+                    'end_date' => $request["end-date"],
+                ]);
+        
+        //Update the table `duty_node` by the request info
+        DB::table('duty_node')
+        ->where('duty_performance_no', $request['performance_no'])
+        ->delete();
+        
+        //Generate nodes
+        for ($i=1; $i<= (int)$request['node-no']; $i++){
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => $request["performance_no"],
+                'node_id' => $i,
+                'node_date' => $request['date_'.$i],
+                'node_point_percentage' => $request['percentage_'.$i],
+                'node_goal' => $request['goal_'.$i]
+            ]);
+        }
+
+        return redirect('/')
+        ->with('status', "您已更新【".$request['performance_no']."】！");
     }
 }

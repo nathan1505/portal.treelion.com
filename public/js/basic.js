@@ -122,11 +122,11 @@ window.onload = function(){
         
     $.get('/get-monthly-performance', function (data){
         var role;
-        var points;
         var userID = dutyId;
         var total_point2 = 0.0;
         //console.log(data);
         for (var i = 0; i < data.length; i++){
+            var points;
             
             switch (data[i].difficulty) {
                 case "difficult":
@@ -142,11 +142,11 @@ window.onload = function(){
             
             if(data[i].leader == userID){
                 role = "组长";
-                points = data[i].leader_points;
+                points = data[i].leader_month;
             }
             else{
                 role = "组員";
-                points = data[i].member_points;
+                points = data[i].member_month;
             }
 
             $('#monthly-performance-table').append(
