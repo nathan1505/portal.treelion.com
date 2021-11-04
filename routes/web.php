@@ -104,6 +104,8 @@ Route::post('/duties/post-node', 'App\Http\Controllers\PerformancesController@Up
 Route::post('/duties/check-duty', 'App\Http\Controllers\PerformancesController@CheckDuty');
 //Edit the details of performance duty
 Route::post('/performance/edit', 'App\Http\Controllers\PerformancesController@EditPerformanceDuty');
+//Hide a performance duty
+Route::get('/performance/hide/{duty_id?}', 'App\Http\Controllers\PerformancesController@HidePerformanceDuty');
 
 //---- End of Routers for performance duty ---
 

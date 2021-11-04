@@ -209,9 +209,23 @@ function MonthlyPoints($dutyNo){
 
 class PerformancesController extends Controller
 {
+    //Hide performance duty
+    public function HidePerformanceDuty(Request $request, $arg){
+        $dutyId = (int)$arg;
+        DB::table('performance_duty')
+                ->where('id', $dutyId)
+                ->update([
+                    'status' => "end",
+                ]);
+                
+        return redirect('/')
+        ->with('status', "您已成功删除业绩事项！");
+    }
+    
     //Get all duties
     public function GetAllPerformances(Request $request){
-        $performances = DB::table('performance_duty')->orderBy('timestamp','desc')->get();
+        $performances = DB::table('performance_duty')
+        ->where('status',"!=","end")->orderBy('timestamp','desc')->get();
         return $performances;
     }
 
@@ -683,11 +697,18 @@ class PerformancesController extends Controller
     }
 
     public function MonthlyPerformancePoint(Request $request){
-        $user_id = Auth::user()->id;
         
-        $dutyArray = DB::table('performance_duty')->where('leader', $user_id)->
-                         orWhere('members', 'like', "%\"{$user_id}\"%")->
-                         select(['*', DB::raw("0 as leader_month, 0 as member_month")])->get();
+        $dutyArray_demo = DB::table('performance_duty')->
+                         where(function ($query){
+                            $user_id = Auth::user()->id;
+                            $query->where('leader', $user_id)->
+                                    orWhere('members', 'like', "%\"{$user_id}\"%");
+                         });
+        
+        $dutyArray_demo2 = $dutyArray_demo->
+                        whereNotIn('status', ['rejected', 'end']);
+
+        $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month")])->get();
 
         //$performanceArray = array();
         //$dutyArray = $dutyArray->DB::raw('0 AS leader_month, 0 AS member_month');
