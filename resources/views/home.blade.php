@@ -89,8 +89,32 @@
                                 <div>
                                     <h5 style="display:inline-block;float:left;">业绩事项</h5>
                                 </div>
-                                <a class="btn btn-success" type="button" href='{{url('/performance/register')}}' style="margin-left:15px">创建事项</a>
-                                <a class="btn btn-success" type="button" href='{{url('/duties')}}' style="margin-left:15px">查看积分总表</a>
+                                <a class="btn btn-success" type="button" href='{{url('/performance/register')}}' style="float:left;margin-left:15px">创建事项</a>
+                                <a class="btn btn-success" type="button" href='{{url('/duties')}}' style="float:left;margin-left:15px">查看积分总表</a>
+                                <select id='performance-status' name='performance-status' class="form-control" style="float:left;width:20%;margin-left:15px">
+                                    <option value="">--选择状态--</option>
+                                    <option value="pending">待审批</option>
+                                    <option value="processing">进行中</option>
+                                    <option value="done">完成</option>
+                                    <option value="delayed">延迟</option>
+                                    <option value="rejected">未通过</option>
+                                    <option value="postponed">暂缓</option>
+                                </select>
+                                <select id="performance-property" name="performance-property" type="input" class="form-control" style="float:left;width:20%;margin-left:15px">
+                                    <option value="">--选择类别属性--</option>
+                                    <option value="宣发">宣发</option>
+                                    <option value="销售">销售</option>
+                                    <option value="商务拓展">商务拓展</option>
+                                    <option value="融资">融资</option>
+                                    <option value="行业研究">行业研究</option>
+                                    <option value="证件申请">证件申请</option>
+                                    <option value="商标注册">商标注册</option>
+                                    <option value="中介服务">中介服务</option>
+                                    <option value="技术开发">技术开发</option>
+                                    <option value="技术测试">技术测试</option>
+                                    <option value="文件编写">文件编写</option>
+                                    <option value="参会">参会</option>
+                                </select>
                             </div>
                             <div class="card-body performance-div">
                                 <table class="table table-striped">

@@ -2,11 +2,12 @@ function GetCurrentDutyId(){
     var path = window.location.pathname;
     var pathSplited = path.split('/');
     var dutyId = parseInt(pathSplited[3]);
-    console.log(dutyId);
     return dutyId;
 }
 
 window.onload = function(){
+    
+    //let original;
 
     $.get('/get-hsi', function (data) {
         if (data.rise_fall > 0) {
@@ -58,15 +59,17 @@ window.onload = function(){
     path = "/get-duty-detail/" + dutyId;
     $.get(path, function(data){
         //console.log(data);
-        
+        let datasum = 0;
         performance_no = data[0].performance_no;
         //Start of request of nodes
         path = "/get-nodes/" + performance_no;
         $.get(path, data,
             function (data) {
-                console.log(data);
-                
+                //console.log(data);
+                //original = $('#node-no').val()
+                //console.log(original);
                 for (var i=1; i<=data.length;i++){
+                    datasum += data[i-1].node_point_percentage;
                     $('#nodes-row').append(
                     '<div class="col-6">' +
                     '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
@@ -99,88 +102,189 @@ window.onload = function(){
                     '</div>'
                 );
             }
-            
-            $('#nodes-row').on('input', '.percentage', function(){
-                amountSum = [...$('.percentage')]
-                    .map(input => Number(input.value))
-                    .reduce((a, b) => a + b, 0);
-                if(amountSum == 100){
-                    $('#button-div').html(
-                        '<button type="submit" class="btn btn-success">提交</button>'
-                    );
-                }else{
-                    $('#button-div').html(
-                        '<p><b>提示：</b>积分比总和必须为100%才能提交项目</p>'
-                    );
-                }
-            });
+            $('#button-div').html(
+                '<button type="submit" class="btn btn-success">提交</button>'
+            );
         });
     });
     
-
     $('#node-no').change(function () {
-        $("#nodes-row").empty();
-        $("#button-div").empty();
-        if (($(this).val() <= 4) && ($(this).val() >= 1)){
-            let amountSum;
-            for (var i = 1; i <= $("#node-no").val(); i++) {
-                $('#nodes-row').append(
-                    '<div class="col-6">' +
-                    '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
-                    '<div class="card-header" id="duty_card_header_' + i + '">' +
-                    '<h5>节点#' + i + '</h5>' +
-                    '</div>' +
+        if(window.location.pathname == "/performance/register"){
+            $("#nodes-row").empty();
+            $("#button-div").empty();
 
-                    '<div class="card-body" id="duty_card_body_' + i + '">' +
-                    '<div class="form-group">' +
-                    '<div class="row">' +
-                    '<div class="col">' +
-                    '<label for="percentage">积分比例(%)</label>' +
-                    '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%">' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="row" style="margin-top:15px">' +
-                    '<div class="col">' +
-                    '<label for="date">节点考核日期</label>' +
-                    '<input type="date" id="date_' + i + '" name="date_' + i + '" class="form-control date" min="" max="" required></input>' +
-                    '</div>' +
-                    '</div>' +
-                    '<div class="row" style="margin-top:15px">' +
-                    '<div class="col">' +
-                    '<label for="goal">节点目标</label>' +
-                    '<textarea type="input" name="goal_' + i + '" class="form-control" required rows="3"></textarea>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>' +
-                    '</div>'
-                );
-                
-                $('#nodes-row').on('input', function(){
-                    for(var i = 1; i <= $("#node-no").val(); i++){
-                        document.getElementById("date_"+i).min = start;
-                        document.getElementById("date_"+i).max = end;
+            if (($(this).val() <= 4) && ($(this).val() >= 1)){
+                //let amountSum;
+                //let difference = $("#node-no").val() - original;
+                //console.log(difference);
+                for (var i = 1; i <= $("#node-no").val(); i++) {
+                    $('#nodes-row').append(
+                        '<div class="col-6">' +
+                        '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
+                        '<div class="card-header" id="duty_card_header_' + i + '">' +
+                        '<h5>节点#' + i + '</h5>' +
+                        '</div>' +
+    
+                        '<div class="card-body" id="duty_card_body_' + i + '">' +
+                        '<div class="form-group">' +
+                        '<div class="row">' +
+                        '<div class="col">' +
+                        '<label for="percentage">积分比例(%)</label>' +
+                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%">' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row" style="margin-top:15px">' +
+                        '<div class="col">' +
+                        '<label for="date">节点考核日期</label>' +
+                        '<input type="date" id="date_' + i + '" name="date_' + i + '" class="form-control date" min="" max="" required></input>' +
+                        '</div>' +
+                        '</div>' +
+                        '<div class="row" style="margin-top:15px">' +
+                        '<div class="col">' +
+                        '<label for="goal">节点目标</label>' +
+                        '<textarea type="input" name="goal_' + i + '" class="form-control" required rows="3"></textarea>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>' +
+                        '</div>'
+                    );
+                    
+                    $('#nodes-row').on('input', function(){
+                        for(var i = 1; i <= $("#node-no").val(); i++){
+                            document.getElementById("date_"+i).min = start;
+                            document.getElementById("date_"+i).max = end;
+                        }
+                    });
+                }
+    
+                $('#nodes-row').on('input', '.percentage', function(){
+                    amountSum = [...$('.percentage')]
+                        .map(input => Number(input.value))
+                        .reduce((a, b) => a + b, 0);
+                    if(amountSum == 100){
+                        $('#button-div').html(
+                            '<button type="submit" class="btn btn-success">提交</button>'
+                        );
+                    }else{
+                        $('#button-div').html(
+                            '<p><b>提示：</b>积分比总和必须为100%才能提交项目</p>'
+                        );
                     }
                 });
+    
+            }else{
+                window.alert("请输入有效节点数：1-4");
             }
-
-            $('#nodes-row').on('input', '.percentage', function(){
-                amountSum = [...$('.percentage')]
-                    .map(input => Number(input.value))
-                    .reduce((a, b) => a + b, 0);
-                if(amountSum == 100){
-                    $('#button-div').html(
-                        '<button type="submit" class="btn btn-success">提交</button>'
-                    );
-                }else{
-                    $('#button-div').html(
-                        '<p><b>提示：</b>积分比总和必须为100%才能提交项目</p>'
-                    );
-                }
-            });
-
         }else{
-            window.alert("请输入有效节点数：1-4");
+            //$("#nodes-row").empty();
+            //$("#button-div").empty();
+            dutyId = GetCurrentDutyId();
+            //Start of request of nodes
+            path = "/get-duty-detail/" + dutyId;
+            $.get(path, function(data){
+                //console.log(data);
+                let datasum = 0;
+                performance_no = data[0].performance_no;
+                //Start of request of nodes
+                path = "/get-nodes/" + performance_no;
+                $.get(path, data,
+                    function (data) {
+                        //console.log(data);
+                        //original = $('#node-no').val()
+                        //console.log(original);
+                        //let nodeno;
+                        $("#nodes-row").empty();
+                        $("#button-div").empty();
+                        if (($('#node-no').val() <= 4) && ($('#node-no').val() >= 1)){
+                            let amountSum;
+                            nodeno = $("#node-no").val();
+                            for (var i = 1; i <= $("#node-no").val(); i++) {
+                                if(data[i-1]){
+                                    $('#nodes-row').append(
+                                        '<div class="col-6">' +
+                                        '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
+                                        '<div class="card-header" id="duty_card_header_' + i + '">' +
+                                        '<h5>节点#' + i + '</h5>' +
+                                        '</div>' +
+                    
+                                        '<div class="card-body" id="duty_card_body_' + i + '">' +
+                                        '<div class="form-group">' +
+                                        '<div class="row">' +
+                                        '<div class="col">' +
+                                        '<label for="percentage">积分比例(%)</label>' +
+                                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="'+data[i-1].node_point_percentage+'">' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                        '<label for="date">节点考核日期</label>' +
+                                        '<input type="date" id="date_' + i + '" name="date_' + i + '" class="form-control date" min="" max="" value="'+data[i-1].node_date+'" required></input>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                        '<label for="goal">节点目标</label>' +
+                                        '<textarea type="input" name="goal_' + i + '" class="form-control" required rows="3">'+data[i-1].node_goal+'</textarea>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }else{
+                                    $('#nodes-row').append(
+                                        '<div class="col-6">' +
+                                        '<div class="card" id="duty_card_' + nodeno + '1" style="margin-top:20px">' +
+                                        '<div class="card-header" id="duty_card_header_' + nodeno + '">' +
+                                        '<h5>节点#' + nodeno + '</h5>' +
+                                        '</div>' +
+                        
+                                        '<div class="card-body" id="duty_card_body_' + nodeno + '">' +
+                                        '<div class="form-group">' +
+                                        '<div class="row">' +
+                                        '<div class="col">' +
+                                        '<label for="percentage">积分比例(%)</label>' +
+                                        '<input type="number" id="percentage" name="percentage_' + nodeno + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="">' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                        '<label for="date">节点考核日期</label>' +
+                                        '<input type="date" id="date_' + nodeno + '" name="date_' + nodeno + '" class="form-control date" min="" max="" value="" required></input>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                        '<label for="goal">节点目标</label>' +
+                                        '<textarea type="input" name="goal_' + nodeno + '" class="form-control" required rows="3"></textarea>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>' +
+                                        '</div>'
+                                    );
+                                }
+                                
+                                $('#nodes-row').on('input', '.percentage', function(){
+                                    amountSum = [...$('.percentage')]
+                                        .map(input => Number(input.value))
+                                        .reduce((a, b) => a + b, 0);
+                                    if(amountSum == 100){
+                                        $('#button-div').html(
+                                            '<button type="submit" class="btn btn-success">提交</button>'
+                                        );
+                                    }else{
+                                        $('#button-div').html(
+                                            '<p><b>提示：</b>积分比总和必须为100%才能提交项目</p>'
+                                        );
+                                    }
+                                });
+
+                            }
+                        }
+                });
+            });
         }
     });
 }

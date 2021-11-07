@@ -38,43 +38,90 @@ window.onload = function(){
     $.get('/get-performances',function(data){
         var color = "";
         var status = "";
-
-        data.forEach((element) => {
-
-            if (element.status == "processing") {
-                color = "table-success";
-                status = "进行中";
-            } else if (element.status == "done") {
-                color = "table-primary";
-                status = "完成";
-            } else if (element.status == "delayed") {
-                color = "table-danger";
-                status = "延迟";
-            } else if (element.status == "postponed"){
-                color = "table-secondary";
-                status = "暂缓";
-            } else if (element.status == "rejected") {
-                color = "table-danger";
-                status = "未通过";
-            } else {
-                color = "table-warning";
-                status = "待审批";
-            }
-
-            $('#performance-table').append(
-                '<tr><td style="width:5%">' +
-                element.performance_no + '</td><td style="width:25%">' +
-                element.performance_content + '</td><td style="width:10%">' +
-                element.property + '</td><td style="width:17%">' +
-                element.start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
-                status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
-                element.completeness + '%</td><td>' +
-                '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
-                '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
-                '</td></tr>'
-            );
+        
+        //console.log($('#performance-status').val());
+        if(!$('#performance-status').val()){
+            data.forEach((element) => {
+    
+                if (element.status == "processing") {
+                    color = "table-success";
+                    status = "进行中";
+                } else if (element.status == "done") {
+                    color = "table-primary";
+                    status = "完成";
+                } else if (element.status == "delayed") {
+                    color = "table-danger";
+                    status = "延迟";
+                } else if (element.status == "postponed"){
+                    color = "table-secondary";
+                    status = "暂缓";
+                } else if (element.status == "rejected") {
+                    color = "table-danger";
+                    status = "未通过";
+                } else {
+                    color = "table-warning";
+                    status = "待审批";
+                }
+    
+                $('#performance-table').append(
+                    '<tr><td style="width:5%">' +
+                    element.performance_no + '</td><td style="width:25%">' +
+                    element.performance_content + '</td><td style="width:10%">' +
+                    element.property + '</td><td style="width:17%">' +
+                    element.start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
+                    status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
+                    element.completeness + '%</td><td>' +
+                    '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                    '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
+                    '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
+                    '</td></tr>'
+                );
+            });
+        }
+        
+        $('#performance-status').change(function () {
+            console.log($(this).val());
+            $('#performance-table').empty();
+            data.forEach((element) => {
+                if($(this).val() == element.status || !($(this).val())){
+                    if (element.status == "processing") {
+                        color = "table-success";
+                        status = "进行中";
+                    } else if (element.status == "done") {
+                        color = "table-primary";
+                        status = "完成";
+                    } else if (element.status == "delayed") {
+                        color = "table-danger";
+                        status = "延迟";
+                    } else if (element.status == "postponed"){
+                        color = "table-secondary";
+                        status = "暂缓";
+                    } else if (element.status == "rejected") {
+                        color = "table-danger";
+                        status = "未通过";
+                    } else {
+                        color = "table-warning";
+                        status = "待审批";
+                    }
+                    
+                    
+                    $('#performance-table').append(
+                        '<tr><td style="width:5%">' +
+                        element.performance_no + '</td><td style="width:25%">' +
+                        element.performance_content + '</td><td style="width:10%">' +
+                        element.property + '</td><td style="width:17%">' +
+                        element.start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
+                        status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
+                        element.completeness + '%</td><td>' +
+                        '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                        '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
+                        '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
+                        '</td></tr>'
+                    );
+                }
+            });
         });
+
     });
 
     $.get('/get-hsi', function (data) {
