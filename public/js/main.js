@@ -40,7 +40,7 @@ window.onload = function(){
         var status = "";
         
         //console.log($('#performance-status').val());
-        if(!$('#performance-status').val()){
+        if(!$('#performance-status').val() && !$('#performance-property').val()){
             data.forEach((element) => {
     
                 if (element.status == "processing") {
@@ -79,11 +79,12 @@ window.onload = function(){
             });
         }
         
-        $('#performance-status').change(function () {
-            console.log($(this).val());
+        $("#performance-status, #performance-property").change(function () {
+            console.log($('#performance-property').val());
             $('#performance-table').empty();
             data.forEach((element) => {
-                if($(this).val() == element.status || !($(this).val())){
+                if(($('#performance-status').val() == element.status || !($('#performance-status').val())) &&
+                ($('#performance-property').val() == element.property || !($('#performance-property').val()))){
                     if (element.status == "processing") {
                         color = "table-success";
                         status = "进行中";

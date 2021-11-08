@@ -100,7 +100,7 @@
                                     <option value="rejected">未通过</option>
                                     <option value="postponed">暂缓</option>
                                 </select>
-                                <select id="performance-property" name="performance-property" type="input" class="form-control" style="float:left;width:20%;margin-left:15px">
+                                <select id='performance-property' name='performance-property' type="input" class="form-control" style="float:left;width:20%;margin-left:15px">
                                     <option value="">--选择类别属性--</option>
                                     <option value="宣发">宣发</option>
                                     <option value="销售">销售</option>
