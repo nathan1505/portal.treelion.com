@@ -76,6 +76,10 @@ Route::get('/duties/{duty_id}', function(){
 Route::get('/duties', function(){
     return view('performance.all-duties');
 })->middleware('auth');
+//Render the page of sending profit prove
+Route::get('/performance/profit', function(){
+    return view('performance.profit');
+})->middleware('auth');
 
 //Get all performance duties
 Route::get('/get-performances', 'App\Http\Controllers\PerformancesController@GetAllPerformances');
@@ -106,6 +110,8 @@ Route::post('/duties/check-duty', 'App\Http\Controllers\PerformancesController@C
 Route::post('/performance/edit', 'App\Http\Controllers\PerformancesController@EditPerformanceDuty');
 //Hide a performance duty
 Route::get('/performance/hide/{duty_id?}', 'App\Http\Controllers\PerformancesController@HidePerformanceDuty');
+//Post request to post profit of a performance duty
+Route::post('/performance/profit', 'App\Http\Controllers\PerformancesController@PostProfit')->middleware('auth');
 
 //---- End of Routers for performance duty ---
 

@@ -65,15 +65,16 @@ window.onload = function(){
     
                 $('#performance-table').append(
                     '<tr><td style="width:5%">' +
-                    element.performance_no + '</td><td style="width:25%">' +
+                    element.performance_no + '</td><td style="width:20%">' +
                     element.performance_content + '</td><td style="width:10%">' +
-                    element.property + '</td><td style="width:17%">' +
-                    element.start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
-                    status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
+                    element.property + '</td><td style="width:10%">' +
+                    element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
+                    status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
                     element.completeness + '%</td><td>' +
                     '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                     '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
                     '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
+                    '<button class="btn btn-warning btn-sm" style="float:right">获利</button>' +
                     '</td></tr>'
                 );
             });
@@ -108,15 +109,16 @@ window.onload = function(){
                     
                     $('#performance-table').append(
                         '<tr><td style="width:5%">' +
-                        element.performance_no + '</td><td style="width:25%">' +
+                        element.performance_no + '</td><td style="width:20%">' +
                         element.performance_content + '</td><td style="width:10%">' +
-                        element.property + '</td><td style="width:17%">' +
-                        element.start_date + '</td><td style="width:12%;text-align:center;" class="'+ color +'">' +
-                        status + '</td><td style="width:4%;text-align:center;" class="' + color + '">' +
+                        element.property + '</td><td style="width:10%">' +
+                        element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
+                        status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
                         element.completeness + '%</td><td>' +
                         '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                         '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
                         '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
+                        '<button class="btn btn-warning btn-sm" style="float:right">获利</button>' +
                         '</td></tr>'
                     );
                 }

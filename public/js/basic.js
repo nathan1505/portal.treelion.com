@@ -148,17 +148,19 @@ window.onload = function(){
                 role = "组員";
                 points = data[i].member_month;
             }
-
-            $('#monthly-performance-table').append(
-                '<tr><td>' + data[i].performance_no + '</td>' + 
-                '<td>' + data[i].performance_content + '</td>' + 
-                '<td>' + data[i].type + '</td>' + 
-                '<td>' + diff + '</td>' + 
-                '<td>' + role + '</td>' + 
-                '<td>' + data[i].basic_points + '</td>' + 
-                '<td>' + points + '</td>' + 
-                '</tr>'
-            );
+            
+            if(points != 0){
+                $('#monthly-performance-table').append(
+                    '<tr><td>' + data[i].performance_no + '</td>' + 
+                    '<td>' + data[i].performance_content + '</td>' + 
+                    '<td>' + data[i].type + '</td>' + 
+                    '<td>' + diff + '</td>' + 
+                    '<td>' + role + '</td>' + 
+                    '<td>' + data[i].basic_points + '</td>' + 
+                    '<td>' + points + '</td>' + 
+                    '</tr>'
+                );
+            }
             
             total_point2+=points;
         }

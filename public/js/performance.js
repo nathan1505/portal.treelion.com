@@ -45,6 +45,20 @@ window.onload = function(){
         }
         $('#members').selectpicker('refresh');
     });
+
+    $.get("/get-performances",function (dutyResponse) {
+
+            $('#performance-no').append(
+                '<option value="" selected=""selected>请选择业绩事项</option>'
+            );
+
+            for (i in dutyResponse){
+                $('#performance-no').append(
+                    '<option value="'+dutyResponse[i].performance_no+'">'+dutyResponse[i].performance_no + ' ' + dutyResponse[i].performance_content.substr(0, 15) + '</option>'
+                );
+            }
+        }
+    );
     
     var start, end;
     
@@ -60,7 +74,7 @@ window.onload = function(){
     $.get(path, function(data){
         //console.log(data);
         let datasum = 0;
-        performance_no = data[0].performance_no;
+        var performance_no = data[0].performance_no;
         //Start of request of nodes
         path = "/get-nodes/" + performance_no;
         $.get(path, data,

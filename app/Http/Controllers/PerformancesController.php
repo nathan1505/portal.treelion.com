@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
+use App\Models\File;
 
 function ToNumString(string $str){
     $arrayToString = explode(' ',$str);
@@ -801,6 +802,8 @@ class PerformancesController extends Controller
             $members = "";
         }
         
+        echo $request;
+        
         DB::table('performance_duty')
                 ->where('performance_no', $request["performance_no"])
                 ->update([
@@ -834,4 +837,53 @@ class PerformancesController extends Controller
         return redirect('/')
         ->with('status', "您已更新【".$request['performance_no']."】！");
     }
+    
+    public function PostProfit(Request $request){
+        $request->validate([
+            'file' => 'required|mimes:docx,jpeg,pdf,png|max:2048'
+        ]);
+        
+        if($request->event_image instanceof \Illuminate\Http\UploadedFile) {
+
+            $event->event_image = $request->event_image->store('event_images', 'public');
+        }
+
+        if($request->hasFile('file')){
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+    
+            DB::table('performance_duty')
+                    ->where('performance_no', $request["performance-no"])
+                    ->update([
+                        'file_name' => time().'_'.$request->file->getClientOriginalName(),
+                        'file_path' => '/storage/'.$filePath,
+                        'upload_at' => Carbon::now(),
+                        'direction' => $request["direction"],
+                        'amount' => $request["amount"]
+                    ]);
+        }
+
+        //$fileModel = new File;
+        return redirect('/')
+        ->with('status', "您已申报业绩事项获利【".$request["performance-no"]."】！");
+/*
+        return back()
+        ->with('success','File has been uploaded.')
+        ->with('file', $fileName);
+        //return $request;
+
+        if($request->file()) {
+            $fileName = time().'_'.$request->file->getClientOriginalName();
+            $filePath = $request->file('file')->storeAs('uploads', $fileName, 'public');
+
+            $fileModel->name = time().'_'.$request->file->getClientOriginalName();
+            $fileModel->file_path = '/storage/' . $filePath;
+            $fileModel->save();
+
+            return back()
+            ->with('success','File has been uploaded.')
+            ->with('file', $fileName);
+        }
+*/
+   }
 }

@@ -91,6 +91,7 @@
                                 </div>
                                 <a class="btn btn-success" type="button" href='{{url('/performance/register')}}' style="float:left;margin-left:15px">创建事项</a>
                                 <a class="btn btn-success" type="button" href='{{url('/duties')}}' style="float:left;margin-left:15px">查看积分总表</a>
+                                <a class="btn btn-warning" type="button" href='{{url('/performance/profit')}}' style="float:left;margin-left:15px">申报获利</a>
                                 <select id='performance-status' name='performance-status' class="form-control" style="float:left;width:20%;margin-left:15px">
                                     <option value="">--选择状态--</option>
                                     <option value="pending">待审批</option>
