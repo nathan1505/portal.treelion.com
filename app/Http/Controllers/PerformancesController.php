@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\File;
+use Illuminate\Support\Facades\Storage;
 
 function ToNumString(string $str){
     $arrayToString = explode(' ',$str);
@@ -859,7 +860,8 @@ class PerformancesController extends Controller
                         'file_path' => '/storage/'.$filePath,
                         'upload_at' => Carbon::now(),
                         'direction' => $request["direction"],
-                        'amount' => $request["amount"]
+                        'amount' => $request["amount"],
+                        'profit_status' => "pending"
                     ]);
         }
 
@@ -886,4 +888,34 @@ class PerformancesController extends Controller
         }
 */
    }
+   
+    //Show the edit page of performance no by its ID
+    public function ShowProfitDuty(Request $request, $arg){
+        $dutyId = (int)$arg;
+        $array = DB::table('performance_duty')->where('id',$dutyId)->get();
+        $data = json_decode(json_encode($array), true);
+
+        //return $array;
+        return view('performance.profit-approval', ['data' => $data]);
+    }
+    
+    public function DownloadProfit(Request $request, $arg){
+        $dutyId = (int)$arg;
+        $array = DB::table('performance_duty')->where('id',$dutyId)->get();
+        $data = json_decode(json_encode($array), true);
+        
+        //echo "uploads/".$data[0]['file_name'];
+        //print_r("uploads/".$data[0]['file_name']);
+        if(Storage::disk('public')->exists("uploads/".$data[0]['file_name'])){
+            $path = Storage::disk('public')->path("uploads/".$data[0]['file_name']);
+            print_r($path);
+            //return response()->file("/www/wwwroot/portal.treelion.com/resources/views/dayoff_application.pdf");
+            $content = file_get_contents($path);
+            return response()->file("/www/wwwroot/portal.treelion.com/storage/app/public/uploads/1636508891_Strapi Optimization.png");
+            return response($content)->withHeaders([
+                'Content-Types'->mime_content_type($path)
+            ]);
+        }
+        return redirect('/404');
+    }
 }

@@ -99,7 +99,15 @@ Route::get('/duties/update-total-points', 'App\Http\Controllers\PerformancesCont
 Route::get('/duties/update-month-points', 'App\Http\Controllers\PerformancesController@UpdateMonthPoints');
 //Showing page to edit performance duty
 Route::get('/performance/edit/{duty_id?}', 'App\Http\Controllers\PerformancesController@ShowPerformanceDuty');
+//Hide a performance duty
+Route::get('/performance/hide/{duty_id?}', 'App\Http\Controllers\PerformancesController@HidePerformanceDuty');
+//Showing page to approve profit
+Route::get('/performance/edit-approval/{duty_id?}', 'App\Http\Controllers\PerformancesController@ShowProfitDuty');
+//Download attachment from profit application
+Route::get('/performance/profit/download/{duty_id?}', 'App\Http\Controllers\PerformancesController@DownloadProfit');
 
+//Approve profit application
+Route::post('/performance/edit-approval', 'App\Http\Controllers\BasicController@EditProfitDuty');
 //Post request to create a new Performance duty
 Route::post('/performance/post-duty', 'App\Http\Controllers\PerformancesController@PostDuty')->middleware('auth');
 //Post method for update the node of one Performance duty
@@ -108,8 +116,6 @@ Route::post('/duties/post-node', 'App\Http\Controllers\PerformancesController@Up
 Route::post('/duties/check-duty', 'App\Http\Controllers\PerformancesController@CheckDuty');
 //Edit the details of performance duty
 Route::post('/performance/edit', 'App\Http\Controllers\PerformancesController@EditPerformanceDuty');
-//Hide a performance duty
-Route::get('/performance/hide/{duty_id?}', 'App\Http\Controllers\PerformancesController@HidePerformanceDuty');
 //Post request to post profit of a performance duty
 Route::post('/performance/profit', 'App\Http\Controllers\PerformancesController@PostProfit')->middleware('auth');
 

@@ -57,6 +57,14 @@ window.onload = function(){
                     '<option value="'+dutyResponse[i].performance_no+'">'+dutyResponse[i].performance_no + ' ' + dutyResponse[i].performance_content.substr(0, 15) + '</option>'
                 );
             }
+
+            for (i in dutyResponse){
+                $('#performance-no-edit').append(
+                    '<option value="'+dutyResponse[i].performance_no+
+                    '" <?php if($data[0][\'performance_no\'] =="中介服务") echo \'selected="selected"\'; ?>'+
+                    dutyResponse[i].performance_no + ' ' + dutyResponse[i].performance_content.substr(0, 15) + '</option>'
+                );
+            }
         }
     );
     
