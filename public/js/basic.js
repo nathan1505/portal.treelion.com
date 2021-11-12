@@ -127,6 +127,7 @@ window.onload = function(){
         //console.log(data);
         for (var i = 0; i < data.length; i++){
             var points;
+            var whole_project;
             
             switch (data[i].difficulty) {
                 case "difficult":
@@ -143,24 +144,26 @@ window.onload = function(){
             if(data[i].leader == userID){
                 role = "组长";
                 points = data[i].leader_month;
+                whole_project = data[i].leader_points;
             }
             else{
                 role = "组員";
                 points = data[i].member_month;
+                whole_project = data[i].member_points;
             }
             
-            if(points != 0){
-                $('#monthly-performance-table').append(
-                    '<tr><td>' + data[i].performance_no + '</td>' + 
-                    '<td>' + data[i].performance_content + '</td>' + 
-                    '<td>' + data[i].type + '</td>' + 
-                    '<td>' + diff + '</td>' + 
-                    '<td>' + role + '</td>' + 
-                    '<td>' + data[i].basic_points + '</td>' + 
-                    '<td>' + points + '</td>' + 
-                    '</tr>'
-                );
-            }
+            $('#monthly-performance-table').append(
+                '<tr><td style="width:8%">' + data[i].performance_no + '</td>' + 
+                '<td style="width:12%">' + data[i].performance_content + '</td>' + 
+                '<td style="width:12%">' + data[i].type + '</td>' + 
+                '<td style="width:7%">' + diff + '</td>' + 
+                '<td style="width:8%">' + role + '</td>' + 
+                '<td style="width:12%">' + data[i].basic_points + '</td>' + 
+                '<td style="width:12%">' + points + '</td>' + 
+                '<td style="width:15%">' + whole_project + '</td>' + 
+                '<td>' + data[i].profit_coefficient + '</td>' + 
+                '</tr>'
+            );
             
             total_point2+=points;
         }
@@ -175,7 +178,7 @@ window.onload = function(){
     
     $('#monthly-performance-table').append(
         '<tr>' +
-        '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>基本积分</td><td>今月得分</td>' +
+        '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>基本积分</td><td>今月得分</td><td>項目總得分</td><td>貢獻度系數</td>' +
         '</tr>'
     );
     

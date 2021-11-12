@@ -235,6 +235,7 @@ class PerformancesController extends Controller
     public function GetPerformanceDutiesByUserId(Request $request, $arg){
         $userId = (int)$arg;
         $response = DB::table('performance_duty')
+                            ->where('status',"!=","end")
                             ->orderBy('timestamp','desc')
                             ->get();
         $array = json_decode(json_encode($response), true);
@@ -907,15 +908,112 @@ class PerformancesController extends Controller
         //echo "uploads/".$data[0]['file_name'];
         //print_r("uploads/".$data[0]['file_name']);
         if(Storage::disk('public')->exists("uploads/".$data[0]['file_name'])){
-            $path = Storage::disk('public')->path("uploads/".$data[0]['file_name']);
-            print_r($path);
-            //return response()->file("/www/wwwroot/portal.treelion.com/resources/views/dayoff_application.pdf");
-            $content = file_get_contents($path);
-            return response()->file("/www/wwwroot/portal.treelion.com/storage/app/public/uploads/1636508891_Strapi Optimization.png");
-            return response($content)->withHeaders([
-                'Content-Types'->mime_content_type($path)
-            ]);
+            //$path = Storage::disk('public')->path("uploads/".$data[0]['file_name']);
+            
+            return response()->file("/www/wwwroot/portal.treelion.com/storage/app/public/uploads/".$data[0]['file_name']);
+            
+            //$content = file_get_contents($path);
+            //return response()->file("/www/wwwroot/portal.treelion.com/storage/app/public/uploads/1636508891_Strapi Optimization.png");
+            //return response($content)->withHeaders([
+            //    'Content-Types'=>mime_content_type($path)
+            //]);
         }
         return redirect('/404');
+    }
+    
+    public function EditProfitDuty(Request $request){
+        $money = $request["amount"];
+        $direction = $request["direction"];
+        $coefficient = 1.0;
+        
+        if($direction == "direct"){
+            if($money>=50000001 && $money<100000000)
+                $coefficient = 5000;
+            else if($money>=20000001 && $money<50000000)
+                $coefficient = 2000;
+            else if($money>=10000001 && $money<20000000)
+                $coefficient = 1000;
+            else if($money>=5000001 && $money<10000000)
+                $coefficient = 500;
+            else if($money>=2000001 && $money<5000000)
+                $coefficient = 200;
+            else if($money>=1000001 && $money<2000000)
+                $coefficient = 100;
+            else if($money>=500001 && $money<1000000)
+                $coefficient = 50;
+            else if($money>=200001 && $money<500000)
+                $coefficient = 20;
+            else if($money>=100001 && $money<200000)
+                $coefficient = 10;
+            else if($money>=50001 && $money<100000)
+                $coefficient = 5;
+            else if($money>=20001 && $money<50000)
+                $coefficient = 2;
+            else if($money>=10001 && $money<20000)
+                $coefficient = 1;
+            else if($money>=5001 && $money<10000)
+                $coefficient = 0.9;
+            else if($money>=1001 && $money<5000)
+                $coefficient = 0.8;
+            else if($money>=1 && $money<1000)
+                $coefficient = 0.7;
+            else
+                $coefficient = 0.0;
+        }else{
+            if($money>=50000001 && $money<100000000)
+                $coefficient = 500;
+            else if($money>=20000001 && $money<50000000)
+                $coefficient = 200;
+            else if($money>=10000001 && $money<20000000)
+                $coefficient = 100;
+            else if($money>=5000001 && $money<10000000)
+                $coefficient = 50;
+            else if($money>=2000001 && $money<5000000)
+                $coefficient = 20;
+            else if($money>=1000001 && $money<2000000)
+                $coefficient = 10;
+            else if($money>=500001 && $money<1000000)
+                $coefficient = 5;
+            else if($money>=200001 && $money<500000)
+                $coefficient = 2;
+            else if($money>=10001 && $money<200000)
+                $coefficient = 1;
+            else if($money>=5001 && $money<10000)
+                $coefficient = 0.9;
+            else if($money>=1001 && $money<5000)
+                $coefficient = 0.8;
+            else if($money>=1 && $money<1000)
+                $coefficient = 0.7;
+            else
+                $coefficient = 0.0;
+        }
+        //return $request;
+  
+        if($request["profit_status"] == "approved"){
+            $statement = "【".$request["performance_no"]."】的获利申报已经批准";
+            $announcementContent = '【'.Auth::user()->name.'】 已经批准 【'.$request["performance_no"].'】的获利申报';
+            $color = 'status';
+        }else{
+            $statement = "【".$request["performance_no"]."】的获利申报已被驳回";
+            $announcementContent = '【'.Auth::user()->name.'】 已经驳回 【'.$request["performance_no"].'】的获利申报，请重新填写';
+            $color = 'danger';
+            $coefficient = 0;
+        }
+        
+        DB::table('performance_duty')
+                ->where('performance_no', $request["performance_no"])
+                ->update([
+                    'profit_status' => $request["profit_status"],
+                    'profit_coefficient' => $coefficient
+                ]);
+        
+        //Create Announcement for the duty
+        DB::table('announcements')->insert([
+            'name' => Auth::user()->name,
+            'content' =>  $announcementContent,
+            'is_important' => 1,
+        ]);
+        return redirect('/')
+        ->with($color, $statement);
     }
 }

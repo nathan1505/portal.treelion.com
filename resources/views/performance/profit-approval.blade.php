@@ -22,9 +22,13 @@
                 <label for="declarant">申报人</label>
                 <input id="declarant" type="input" class="form-control" readonly placeholder="{{Auth::user()->name}}">
                 <input style="visibility: hidden" name="declarant-id" type="input" value="{{Auth::user()->id}}">
+                <input style="visibility: hidden" name="duty_id" type="input" value="{{$data[0]['id']}}">
+                <input style="visibility: hidden" name="performance_no" type="input" value="{{$data[0]['performance_no']}}">
+                <input style="visibility: hidden" name="amount" type="input" value="{{$data[0]['amount']}}">
+                <input style="visibility: hidden" name="direction" type="input" value="{{$data[0]['direction']}}">
             </div>
 
-            
+            <?php if ($data[0]['amount']): ?>
             <div class="row">
                 <div class="col" style="margin-top: 20px">
                     <label for="performance-no-edit">项目编号</label>
@@ -56,15 +60,15 @@
                     <label>上载文件</label><br/>
                     @csrf
                     <?php if ($data[0]['file_path']): ?>
-                        <a href={{url('download?filename=/www/wwwroot/portal.treelion.com/storage/app/public/uploads/1636508891_Strapi Optimization.png')}}>
-                            <label>上载文件</label><br/>
+                        <a href='/performance/profit/download/{{$data[0]['id']}}' target="_blank">
+                            <label>查看文件</label><br/>
                         </a>
                     <?php endif; ?>
                 </div>
                 @if (Auth::user()->role != "employee")
                     <div class="col" style="margin-top: 20px">
                         <label for="type">審批状况</label>
-                        <select id="type" name="type" type="input" class="form-control">
+                        <select id="type" name="profit_status" type="input" class="form-control">
                             <option value="">-----</option>
                             <option value="pending" <?php if($data[0]['profit_status'] =="pending") echo 'selected="selected"'; ?>>待审批</option>
                             <option value="rejected" <?php if($data[0]['profit_status'] =="rejected") echo 'selected="selected"'; ?>>未通过</option>
@@ -80,6 +84,13 @@
                     </button>
                 </div>
             </div>
+            <?php else: ?>
+            <div class="row">
+                <div class="col" style="margin-top: 20px">
+                    <label>请先输入业绩事项获利表格</label><br/>
+                </div>
+            </div>
+            <?php endif; ?>
         </div>
     </form>
 </div>

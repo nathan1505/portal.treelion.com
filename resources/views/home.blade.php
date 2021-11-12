@@ -20,6 +20,14 @@
                             </div>
                         </div>
                     </div>
+                @elseif (session('danger'))
+                    <div class="row" style="margin-top: 30px">
+                        <div class="col-md-4">
+                            <div class="alert alert-danger">
+                                {{ session('danger') }}
+                            </div>
+                        </div>
+                    </div>
                 @endif
 
                 <div class="row">
@@ -34,8 +42,8 @@
                                     <a href={{url('/daily-register')}}><button class="btn btn-primary" style="margin-top: 5px">早间工作申报</button></a>
                                     <a href="https://exmail.qq.com/login"><button class="btn btn-info" style="margin-top: 5px">工作邮箱</button></a>
                                     <button class="btn btn-warning" style="margin-top: 5px">报销申请</button>
-                                    <a href={{url('/pdf_contact_list')}}><button class="btn btn-success" style="margin-top: 5px">公司通讯录</button></a>
-                                    <a href={{url('/pdf_dayoff_application')}}><button class="btn btn-danger" style="margin-top: 5px">请假申请</button></a>
+                                    <a href={{url('/pdf_contact_list')}}><button class="btn btn-success" style="margin-top: 5px" target="_blank">公司通讯录</button></a>
+                                    <a href={{url('/pdf_dayoff_application')}}><button class="btn btn-danger" style="margin-top: 5px" target="_blank">请假申请</button></a>
                                 </div>
                             </div>
                         </div>

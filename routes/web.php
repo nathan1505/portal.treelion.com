@@ -107,7 +107,7 @@ Route::get('/performance/edit-approval/{duty_id?}', 'App\Http\Controllers\Perfor
 Route::get('/performance/profit/download/{duty_id?}', 'App\Http\Controllers\PerformancesController@DownloadProfit');
 
 //Approve profit application
-Route::post('/performance/edit-approval', 'App\Http\Controllers\BasicController@EditProfitDuty');
+Route::post('/performance/edit-approval', 'App\Http\Controllers\PerformancesController@EditProfitDuty');
 //Post request to create a new Performance duty
 Route::post('/performance/post-duty', 'App\Http\Controllers\PerformancesController@PostDuty')->middleware('auth');
 //Post method for update the node of one Performance duty
