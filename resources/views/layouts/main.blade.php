@@ -37,7 +37,10 @@
                         <a class="nav-link" href="/daily/{{Auth::user()->id}}">工作跟踪</a>
                     </li>
                     <li>
-                        <a class="nav-link">每月积分</a>
+                        <a class="nav-link" href="/points/{{Auth::user()->id}}">每月积分</a>
+                    </li>
+                    <li>
+                        <a class="nav-link" href="/other">其他</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/logout') }}">登出</a>
@@ -55,9 +58,11 @@
                 @endauth
             @endif
         </ul>
+        <!--hide it
         <div class="card-text" id="trn" style="position: absolute; right:600px"></div>
         <div class="card-text" id="hsi" style="position: absolute; right:400px"></div>
         <div class="card-text" id="elion-stock" style="position: absolute; right:200px"></div>
+        -->
         <img class="navbar-brand" src="/images/elion-logo.png" height="25px" style="position: absolute; right: 30px">
     </nav>
 

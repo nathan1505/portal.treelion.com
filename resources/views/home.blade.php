@@ -31,25 +31,8 @@
                 @endif
 
                 <div class="row">
-                    <!--block1-->
-                    <div class="col-md-3 col-lg-3 col-xl-3">
-                        <div class="card" style="height:100%" id="card-1">
-                            <div class="card-body" id="block1">
-                                <h5 class="card-text" id="currentDate" hidden></h5>
-                                <h5 class="card-text" id="currentTime" hidden></h5>
-                                <div class="card-text" id="weather" style="margin-top:10px"></div>
-                                <div style="position: absolute; bottom:20px">
-                                    <a href={{url('/daily-register')}}><button class="btn btn-primary" style="margin-top: 5px">早间工作申报</button></a>
-                                    <a href="https://exmail.qq.com/login"><button class="btn btn-info" style="margin-top: 5px">工作邮箱</button></a>
-                                    <button class="btn btn-warning" style="margin-top: 5px">报销申请</button>
-                                    <a href={{url('/pdf_contact_list')}}><button class="btn btn-success" style="margin-top: 5px" target="_blank">公司通讯录</button></a>
-                                    <a href={{url('/pdf_dayoff_application')}}><button class="btn btn-danger" style="margin-top: 5px" target="_blank">请假申请</button></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                     <!--block2 Annoucements-->
-                    <div class="col-md-6 col-lg-5 col-xl-5">
+                    <div class="col-md col-lg col-xl">
                         <div class="card" style="height:100%">
                             <div class="card-header">
                                 <h5 class="card-text" style="display: inline-block; height: 15px">公告</h5>
@@ -76,6 +59,7 @@
                     </div>
                     <!--block2 ends-->
                     <!--block3-->
+                    <!--
                     <div class="col-md-3 col-lg-4 col-xl-4">
                         <div class="card" style="height:100%" id="card-3">
                             <div class="card-body out-div">
@@ -86,12 +70,13 @@
                             </div>
                         </div>
                     </div>
+                    -->
                 </div>
 
                 <!--row2-->
                 <div class="row" style="margin-top:20px">
                     <!--block3-->
-                    <div class="col-8">
+                    <div class="col">
                         <div class="card" id="performance-card">
                             <div class="card-header">
                                 <div>
@@ -134,6 +119,7 @@
                         </div>
                     </div>
                     <!--block 4-->
+                    <!--
                     <div class="col-4">
                         <div class="card" style="height:100%" id="daily-post">
                             <div class="card-header">
@@ -145,6 +131,7 @@
                             </div>
                         </div>
                     </div>
+                    -->
                 </div>
 
             </div>

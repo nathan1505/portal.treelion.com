@@ -198,6 +198,11 @@ Route::get('/points/{id?}', function ($id) {
     return view('points.page')->with('userId', $id);
 })->middleware('auth');
 
+//Get other attachment
+Route::get('/other', function(){
+    return view('other');
+})->middleware('auth');
+
 //Get all the approved basic duties
 Route::get('/get-approved-basic-duties', 'App\Http\Controllers\BasicController@GetAllApprovedBasic');
 //Get all the performance points within the current month

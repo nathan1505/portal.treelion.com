@@ -47,13 +47,16 @@
                     </div>
                     </div>
                     <div style="position: absolute; bottom:20px; left: 20px">
+                        <!--
                         <a class="btn btn-success" type="button" href="/daily-register">早间申报</a>
                         <a class="btn btn-success" type="button" href='/daily/update/{{Auth::user()->id}}/{{date("Y-m-d")}}'>晚间申报</a>
+                        -->
                         <a class="btn btn-success" type="button" href='{{url('/duties')}}'>查看积分总表</a>
                         <a class="btn btn-success" type="button" href="/basic/register">基础项目申报</a>
                     </div>
                 </div>
             </div>
+            <!--
             <div class="col">
                 <div class="card">
                     <div class="card">
@@ -63,11 +66,13 @@
                     </div>
                 </div>
             </div>
+            -->
         </div>
         <!--Row 1 ends-->
         <!--Row 2-->
         <div class="row" style="margin-top:20px; margin-bottom:30px">
             <!--Daily Records-->
+            <!--
             <div class="col-6">
                 <div class="card">
                     <div class="card-header">
@@ -91,6 +96,7 @@
                     </div>
                 </div>
             </div>
+            -->
             <!--End of daily records-->
             <!--Performance Duty-->
             <div class="col">
