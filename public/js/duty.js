@@ -27,6 +27,13 @@ function filterById(array, id) {
     }
 }
 
+function filterByIdBoolean(array, id) {
+    for (user in array) {
+        if (array[user].id == id)
+            return true;
+    }
+}
+
 /**
  * @description JQuery deferred to get the infomation of all users
  * @returns the array containing all users' info
@@ -117,232 +124,239 @@ window.onload = function(){
     //GET the detail of performance duty 
     //response data as the duty detail
     $.get(path, function(data){
-        console.log(data);
-
-        //determine the color of difficulty, etc.
-        var difficultyColor = "";
-        var difficulty = "";
-        var statusColor = "";
-        var status = "";
-
-        switch (data[0].difficulty) {
-            case "difficult":
-                difficultyColor = "red";
-                difficulty = "困难";
-                break;
-            case "normal":
-                difficultyColor = "#D4AC0D";
-                difficulty = "中等";
-                break;
-            default:
-                difficultyColor = "green";
-                difficulty = "简单";
-                break;
-        }
-
-        switch (data[0].status) {
-            case "postponed":
-                status = "暂缓";
-                statusColor = "#6c757d";
-                break;
-            case "processing":
-                status = "进行中";
-                statusColor = "#28a745";
-                break;
-            case "done":
-                status = "已完成";
-                statusColor = "#007bff";
-                break;
-            case "rejected":
-                status = "审批未通过";
-                statusColor = "#dc3545";
-                break;
-            case "delayed":
-                status = "延迟";
-                statusColor = "#dc3545";
-                break;
-            //Case 'pending'
-            default:
-                status = "待审批";
-                statusColor = "#fd7e14";
-                break;
-        }
-
-        $('#duty-header').append(
-            '<h5 style="display: inline - block; float: left;">业绩事项&nbsp' + data[0].performance_no +"</h5>"
-        );
-
-        $('#duty-table').append(
-            '<tr><td style="width:15%">项目编号</td><td style="width:35%">' + data[0].performance_no + '</td><td style="width:15%">难度</td><td><span style="color:' + difficultyColor + '">'+ difficulty + '</span></td></tr>' +
-            '<tr><td>项目内容</td><td colspan=3>' + data[0].performance_content + '</td></tr>' +
-            '<tr><td>项目类别</td><td>' + data[0].type + '</td><td>类别属性</td><td>' + data[0].property + '</td></tr>'
-        );
-        
-        //Append leader and members
-        memberIdArray = GetMemberId(data[0].members);
-        $.when(getUserArray()).done(function(response){
-            $('#duty-table').append(
-                '<tr><td>组长</td><td>' + filterById(response, data[0].leader) + '</td>' +
-                '<td>组员</td><td>' + GetMemberNameString(response, memberIdArray) + '</td></tr>'+
-                '<tr><td>开始日期</td><td>' + data[0].start_date + '</td><td>结束日期</td><td>' + data[0].end_date + '</td></tr>' +
-                '<tr><td>节点数</td><td>' + data[0].node_no + '</td><td>完成度</td><td>' + data[0].completeness + '%</td></tr>' +
-                '<tr><td>基础赋分</td><td>' + data[0].basic_points + '</td><td>已获得积分</td><td>' + data[0].gained_points + '</td></tr>' +
-                '<tr><td>最新进展</td><td colspan=3>' + data[0].latest_progress + '</td></tr>' +
-                '<tr><td>状态</td><td><span style="color:'+ statusColor +'">' + status + '</td><td>申报人</td><td>' + filterById(response, data[0].declarant_id) + '</td></tr>'
-            );
-
-            $('#check-duty').append(
-                '<input hidden name="performance_id" value="'+ data[0].id +'">'
-            );
-
-            if (data[0].status != "pending"){
-                $('#duty-footer').remove();
-                $("#duty-change-status").append(
-
-                    '<div class="form-group">' +
-                        '<form method="post" action="check-duty" id="check-duty">' +
-                        '<input hidden name="performance_id" value="' + data[0].id + '">' +
-                        '<input name="_token" value="' + token + '" hidden>' +
-
-                            '<div class="row">' + 
-                                '<div class="col-8">' +
-                                    '<select class="form-control" required name="check">' +
-                                        '<option selected disable hidden>更改工作状态</option>' +
-                                        '<option value="processing">进行中</option>' +
-                                        '<option value="done">已完成</option>' +
-                                        '<option value="delayed">延迟</option>' +
-                                        '<option value="postponed">暂缓</option>' +
-                                    '</select>' +
-                                '</div>' +
-
-                                '<div class="col">' + 
-                                    '<button class="btn btn-success" type="submit">更改</button>' +
-                                '</div>' +
-                            '</div>' +
-                        '</from>' +
-                    '</div>'
-                );
+        var disableTrue = "";
+        $.get('/get-user',function(userDetail){
+            if(!(userDetail.id == data[0].leader || userDetail.id == data[0].declarant_id || filterByIdBoolean(data[0].members, userDetail.id)) && userDetail.role == "employee"){
+                disableTrue = "disabled=\"true\"";
             }
-        });
-
-        var typeCoefficient = 1.0;
-        switch (data[0].type) {
-            case '一类积分':
-                typeCoefficient = typeCoefficientsList[0];
-                break;
-            case '二类积分':
-                typeCoefficient = typeCoefficientsList[1];
-                break;
-            case '三类积分':
-                typeCoefficient = typeCoefficientsList[2];
-                break;
-            case '四类积分':
-                typeCoefficient = typeCoefficientsList[3];
-                break;
-        }
-
-        var difficultyCoefficient = 1.0;
-        switch (data[0].difficulty){
-            case 'difficult':
-                difficultyCoefficient = difficultyCoefficientsList[0];
-                break;
-            case 'normal':
-                difficultyCoefficient = difficultyCoefficientsList[1];
-                break;
-            case 'easy':
-                difficultyCoefficient = difficultyCoefficientsList[2];
-                break;
-        }
-
-        //Show the tabel of coefficients
-        $('#point-table-body').append(
-            '<tr>' +
-            '<td style="width:50%">基础分值</td><td>18</td>' +
-            '</tr><tr>' +
-            '<td>类别系数</td><td>' + typeCoefficient + '</td>' +
-            '</tr><tr>' +
-            '<td>难易系数</td><td>' + difficultyCoefficient + '</td>' +
-            '</tr><tr>' +
-            '<td>基础赋分</td><td>' + data[0].basic_points + '</td>' +
-            '</tr>'
-        );
-
-        $('#gained-table-body').append(
-            '<tr>' +
-            '<td>已获取积分</td>' +
-            '<td>' + data[0].gained_points + '</td>' +
-            '</tr><tr>' +
-            '<td>组长分配</td><td>' + data[0].leader_points + '</td>' +
-            '</tr><tr>' +
-            '<td>组员分配</td><td>' + data[0].member_points + '</td>' +
-            '</tr>'
-        );
-
-        performance_no = data[0].performance_no;
-        //Start of request of nodes
-        path = "/get-nodes/" + performance_no;
-        $.get(path, data,
-            function (data, textStatus, jqXHR) {
-                console.log(data);
-
-                for (i in data){
-                    //append the completeness table
-                    $('#nodes-table-body').append(
-                        '<tr>' +
-                        '<td>节点#' + data[i].node_id + '</td><td>' + data[i].node_point_percentage + '%</td>' +
-                        '<td>' + data[i].node_completeness_coefficient +'</td>' +
-                        '</tr>'
-                    );
-
-                    $('#nodes-row').append(
-                        '<div class="col-6">' +
-                        '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
-                        '<div class="card-header" id="duty_card_header_' + i + '">' +
-                        '<h5>节点#' + data[i].node_id + '&nbsp&nbsp&nbsp&nbsp节点完成度: ' + data[i].node_completeness + '%</h5>' +
-                        '</div>' +
-                        '<div class="card-body" id="duty_card_body_' + i + '">' +
-                        //Print the table of nodes info
-                        '<table class="table table-bordered">' +
-                            '<tbody>' +
-                                '<tr><td>积分比例</td><td>' +  data[i].node_point_percentage + '%</td></tr>' +
-                                '<tr><td>考核时间</td><td>' + data[i].node_date + '</td></tr>' +
-                                '<tr><td>节点目标</td><td>' + data[i].node_goal + '</td></tr>' +
-                                '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
-                            '</tbody>' +
-                        '</table>'+
-
-                        '<form action="post-node" method="post">' +
-                            '<div class="form-group">' +
-                                '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
-                                '<div class="row">' +
-                                    '<div class="col">' +
-                                        '<label for="completeness">节点完成度</label>' +
-                                        '<input type="number" id="completeness" name="completeness" class="form-control" min=0 max=100 value="' + data[i].node_completeness+'">' +
+            
+            console.log(userDetail);
+    
+            //determine the color of difficulty, etc.
+            var difficultyColor = "";
+            var difficulty = "";
+            var statusColor = "";
+            var status = "";
+    
+            switch (data[0].difficulty) {
+                case "difficult":
+                    difficultyColor = "red";
+                    difficulty = "困难";
+                    break;
+                case "normal":
+                    difficultyColor = "#D4AC0D";
+                    difficulty = "中等";
+                    break;
+                default:
+                    difficultyColor = "green";
+                    difficulty = "简单";
+                    break;
+            }
+    
+            switch (data[0].status) {
+                case "postponed":
+                    status = "暂缓";
+                    statusColor = "#6c757d";
+                    break;
+                case "processing":
+                    status = "进行中";
+                    statusColor = "#28a745";
+                    break;
+                case "done":
+                    status = "已完成";
+                    statusColor = "#007bff";
+                    break;
+                case "rejected":
+                    status = "审批未通过";
+                    statusColor = "#dc3545";
+                    break;
+                case "delayed":
+                    status = "延迟";
+                    statusColor = "#dc3545";
+                    break;
+                //Case 'pending'
+                default:
+                    status = "待审批";
+                    statusColor = "#fd7e14";
+                    break;
+            }
+    
+            $('#duty-header').append(
+                '<h5 style="display: inline - block; float: left;">业绩事项&nbsp' + data[0].performance_no +"</h5>"
+            );
+    
+            $('#duty-table').append(
+                '<tr><td style="width:15%">项目编号</td><td style="width:35%">' + data[0].performance_no + '</td><td style="width:15%">难度</td><td><span style="color:' + difficultyColor + '">'+ difficulty + '</span></td></tr>' +
+                '<tr><td>项目内容</td><td colspan=3>' + data[0].performance_content + '</td></tr>' +
+                '<tr><td>项目类别</td><td>' + data[0].type + '</td><td>类别属性</td><td>' + data[0].property + '</td></tr>'
+            );
+            
+            //Append leader and members
+            memberIdArray = GetMemberId(data[0].members);
+            $.when(getUserArray()).done(function(response){
+                $('#duty-table').append(
+                    '<tr><td>组长</td><td>' + filterById(response, data[0].leader) + '</td>' +
+                    '<td>组员</td><td>' + GetMemberNameString(response, memberIdArray) + '</td></tr>'+
+                    '<tr><td>开始日期</td><td>' + data[0].start_date + '</td><td>结束日期</td><td>' + data[0].end_date + '</td></tr>' +
+                    '<tr><td>节点数</td><td>' + data[0].node_no + '</td><td>完成度</td><td>' + data[0].completeness + '%</td></tr>' +
+                    '<tr><td>基础赋分</td><td>' + data[0].basic_points + '</td><td>已获得积分</td><td>' + data[0].gained_points + '</td></tr>' +
+                    '<tr><td>最新进展</td><td colspan=3>' + data[0].latest_progress + '</td></tr>' +
+                    '<tr><td>状态</td><td><span style="color:'+ statusColor +'">' + status + '</td><td>申报人</td><td>' + filterById(response, data[0].declarant_id) + '</td></tr>'
+                );
+    
+                $('#check-duty').append(
+                    '<input hidden name="performance_id" value="'+ data[0].id +'">'
+                );
+    
+                if (data[0].status != "pending"){
+                    $('#duty-footer').remove();
+                    $("#duty-change-status").append(
+    
+                        '<div class="form-group">' +
+                            '<form method="post" action="check-duty" id="check-duty">' +
+                            '<input hidden name="performance_id" value="' + data[0].id + '">' +
+                            '<input name="_token" value="' + token + '" hidden>' +
+    
+                                '<div class="row">' + 
+                                    '<div class="col-8">' +
+                                        '<select class="form-control" required name="check">' +
+                                            '<option selected disable hidden>更改工作状态</option>' +
+                                            '<option value="processing">进行中</option>' +
+                                            '<option value="done">已完成</option>' +
+                                            '<option value="delayed">延迟</option>' +
+                                            '<option value="postponed">暂缓</option>' +
+                                        '</select>' +
+                                    '</div>' +
+    
+                                    '<div class="col">' + 
+                                        '<button class="btn btn-success" type="submit">更改</button>' +
                                     '</div>' +
                                 '</div>' +
-                                '<div class="row" style="margin-top:15px">' +
-                                    '<div class="col">' +
-                                        '<label for="progress">节点进展描述</label>' +
-                                        '<textarea type="input" name="progress" class="form-control" rows="3" required></textarea>' +
-                                        '<input name="performance_no" value="'+ data[i].duty_performance_no +'" hidden>' +
-                                        '<input name="node_id" value="' + data[i].node_id + '" hidden>' +
-                                        '<input name="_token" value="' + token + '" hidden>' +
-                                    '</div>' +
-                                '</div>' +
-                                '<div class="row" style="margin-top:15px">' +
-                                    '<div class="col" class="node-update-submit-div">' +
-                                        '<button type="submit" class="btn btn-warning node-update-submit-button">确认完成</button>' +
-                                    '</div>' +
-                                '</div>' +
-                            '</div>' +
-                        '</form>' +
-                        '</div>' +
-                        '</div>' +
+                            '</from>' +
                         '</div>'
                     );
                 }
-            },
-        );
+            });
+    
+            var typeCoefficient = 1.0;
+            switch (data[0].type) {
+                case '一类积分':
+                    typeCoefficient = typeCoefficientsList[0];
+                    break;
+                case '二类积分':
+                    typeCoefficient = typeCoefficientsList[1];
+                    break;
+                case '三类积分':
+                    typeCoefficient = typeCoefficientsList[2];
+                    break;
+                case '四类积分':
+                    typeCoefficient = typeCoefficientsList[3];
+                    break;
+            }
+    
+            var difficultyCoefficient = 1.0;
+            switch (data[0].difficulty){
+                case 'difficult':
+                    difficultyCoefficient = difficultyCoefficientsList[0];
+                    break;
+                case 'normal':
+                    difficultyCoefficient = difficultyCoefficientsList[1];
+                    break;
+                case 'easy':
+                    difficultyCoefficient = difficultyCoefficientsList[2];
+                    break;
+            }
+    
+            //Show the tabel of coefficients
+            $('#point-table-body').append(
+                '<tr>' +
+                '<td style="width:50%">基础分值</td><td>18</td>' +
+                '</tr><tr>' +
+                '<td>类别系数</td><td>' + typeCoefficient + '</td>' +
+                '</tr><tr>' +
+                '<td>难易系数</td><td>' + difficultyCoefficient + '</td>' +
+                '</tr><tr>' +
+                '<td>基础赋分</td><td>' + data[0].basic_points + '</td>' +
+                '</tr>'
+            );
+    
+            $('#gained-table-body').append(
+                '<tr>' +
+                '<td>已获取积分</td>' +
+                '<td>' + data[0].gained_points + '</td>' +
+                '</tr><tr>' +
+                '<td>组长分配</td><td>' + data[0].leader_points + '</td>' +
+                '</tr><tr>' +
+                '<td>组员分配</td><td>' + data[0].member_points + '</td>' +
+                '</tr>'
+            );
+    
+            performance_no = data[0].performance_no;
+            //Start of request of nodes
+            path = "/get-nodes/" + performance_no;
+            $.get(path, data,
+                function (data, textStatus, jqXHR) {
+                    console.log(data);
+    
+                    for (i in data){
+                        //append the completeness table
+                        $('#nodes-table-body').append(
+                            '<tr>' +
+                            '<td>节点#' + data[i].node_id + '</td><td>' + data[i].node_point_percentage + '%</td>' +
+                            '<td>' + data[i].node_completeness_coefficient +'</td>' +
+                            '</tr>'
+                        );
+    
+                        $('#nodes-row').append(
+                            '<div class="col-6">' +
+                            '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
+                            '<div class="card-header" id="duty_card_header_' + i + '">' +
+                            '<h5>节点#' + data[i].node_id + '&nbsp&nbsp&nbsp&nbsp节点完成度: ' + data[i].node_completeness + '%</h5>' +
+                            '</div>' +
+                            '<div class="card-body" id="duty_card_body_' + i + '">' +
+                            //Print the table of nodes info
+                            '<table class="table table-bordered">' +
+                                '<tbody>' +
+                                    '<tr><td>积分比例</td><td>' +  data[i].node_point_percentage + '%</td></tr>' +
+                                    '<tr><td>考核时间</td><td>' + data[i].node_date + '</td></tr>' +
+                                    '<tr><td>节点目标</td><td>' + data[i].node_goal + '</td></tr>' +
+                                    '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
+                                '</tbody>' +
+                            '</table>'+
+    
+                            '<form action="post-node" method="post">' +
+                                '<div class="form-group">' +
+                                    '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
+                                    '<div class="row">' +
+                                        '<div class="col">' +
+                                            '<label for="completeness">节点完成度</label>' +
+                                            '<input type="number" id="completeness" name="completeness" class="form-control" min=0 max=100 value="' + data[i].node_completeness+'">' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                            '<label for="progress">节点进展描述</label>' +
+                                            '<textarea type="input" name="progress" class="form-control" rows="3" required></textarea>' +
+                                            '<input name="performance_no" value="'+ data[i].duty_performance_no +'" hidden>' +
+                                            '<input name="node_id" value="' + data[i].node_id + '" hidden>' +
+                                            '<input name="_token" value="' + token + '" hidden>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col" class="node-update-submit-div">' +
+                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>确认完成</button>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</form>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
+                    }
+                },
+            );
+        });
 
         /*
         console.log(data);

@@ -85,3 +85,18 @@ tbody::-webkit-scrollbar {
     line-height: 20px;
     box-sizing: border-box;
 }
+
+#performance-table-employee {
+    display: block; /* 重要代码 */
+    height: 410px;
+    width: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    position: relative;
+}
+
+#performance-table-employee td{
+    font-size: 60%;
+    line-height: 20px;
+    box-sizing: border-box;
+}

@@ -81,6 +81,8 @@ Route::get('/performance/profit', function(){
     return view('performance.profit');
 })->middleware('auth');
 
+//Get user details
+Route::get('/get-user', 'App\Http\Controllers\PerformancesController@GetUserDetails');
 //Get all performance duties
 Route::get('/get-performances', 'App\Http\Controllers\PerformancesController@GetAllPerformances');
 //Get performance duties by user ID

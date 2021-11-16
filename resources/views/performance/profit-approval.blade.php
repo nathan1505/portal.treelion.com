@@ -75,14 +75,26 @@
                             <option value="approved" <?php if($data[0]['profit_status'] =="approved") echo 'selected="selected"'; ?>>通过</option>
                         </select>
                     </div>
+                @else
+                    <div class="col" style="margin-top: 20px">
+                        <label for="type">審批状况</label>
+                        <select id="type" name="profit_status" type="input" class="form-control" disabled="true">
+                            <option value="">-----</option>
+                            <option value="pending" <?php if($data[0]['profit_status'] =="pending") echo 'selected="selected"'; ?>>待审批</option>
+                            <option value="rejected" <?php if($data[0]['profit_status'] =="rejected") echo 'selected="selected"'; ?>>未通过</option>
+                            <option value="approved" <?php if($data[0]['profit_status'] =="approved") echo 'selected="selected"'; ?>>通过</option>
+                        </select>
+                    </div>
                 @endif
             </div>
             <div class="row">
+                @if (Auth::user()->role != "employee")
                 <div class="col" style="margin-top: 20px">
                     <button type="submit" name="submit" class="btn btn-primary btn-block mt-4">
                         提交
                     </button>
                 </div>
+                @endif
             </div>
             <?php else: ?>
             <div class="row">

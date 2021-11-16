@@ -261,6 +261,12 @@ class PerformancesController extends Controller
         return $returnArray;
     }
 
+    //Get User Details
+    public function GetUserDetails(Request $request){
+        $userArray = Auth::user();
+        return $userArray;
+    }
+
     //Create a new performance duty, together with its nodes
     public function PostDuty(Request $request){
         $postContent = $request->all();

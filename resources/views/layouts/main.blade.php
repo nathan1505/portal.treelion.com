@@ -23,28 +23,32 @@
 </head>
 <body>
     
-    <nav class="navbar navbar-expand-sm bg-light navbar-light" id="navbar">
+    <nav class="navbar navbar-expand-sm bg-light navbar-light" id="navbar" >
         <ul class="navbar-nav">
             @if (Route::has('login'))
                 @auth
-                    <li class="nav-item">
-                        <span class="navbar-text">欢迎，{{Auth::user()->name}}！</span>
-                    </li>
-                    <li class="nav-item">
+                <!--div class="topnav-right"-->
+                    <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="{{ url('/') }}">主页</a>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/daily/{{Auth::user()->id}}">工作跟踪</a>
                     </li>
-                    <li>
+                    <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/points/{{Auth::user()->id}}">每月积分</a>
                     </li>
-                    <li>
+                    <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/other">其他</a>
                     </li>
-                    <li class="nav-item">
+                <!--/div-->
+                <!--div style="float: right;"-->
+                    <li class="nav-item" style="position: absolute; right: 80px">
+                        <span class="navbar-text">欢迎，{{Auth::user()->name}}！</span>
+                    </li>
+                    <li class="nav-item" style="position: absolute; right: 30px">
                         <a class="nav-link" href="{{ url('/logout') }}">登出</a>
                     </li>
+                <!--/div-->
                 @else
                     <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}">登入</a>
@@ -63,7 +67,7 @@
         <div class="card-text" id="hsi" style="position: absolute; right:400px"></div>
         <div class="card-text" id="elion-stock" style="position: absolute; right:200px"></div>
         -->
-        <img class="navbar-brand" src="/images/elion-logo.png" height="25px" style="position: absolute; right: 30px">
+        <img class="navbar-brand" src="/images/elion-logo.png" height="25px" style="position: absolute; left: 30px">
     </nav>
 
 

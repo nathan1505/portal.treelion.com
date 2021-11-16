@@ -59,11 +59,19 @@
             <div class="row">
                 <div class="col-5" style="margin-top: 20px">
                     <label for="status">项目类别</label>
+                    @if (Auth::user()->role != "employee")
                     <select id="status" name="status" type="input" class="form-control">
                         <option value="approved" <?php if($data[0]['status'] =="approved") echo 'selected="selected"'; ?>>通过</option>
                         <option value="pending" <?php if($data[0]['status'] =="pending") echo 'selected="selected"'; ?>>待审批</option>
                         <option value="rejected" <?php if($data[0]['status'] =="rejected") echo 'selected="selected"'; ?>>未通过</option>
                     </select>
+                    @else
+                    <select id="status" name="status" type="input" class="form-control" disabled="true">
+                        <option value="approved" <?php if($data[0]['status'] =="approved") echo 'selected="selected"'; ?>>通过</option>
+                        <option value="pending" <?php if($data[0]['status'] =="pending") echo 'selected="selected"'; ?>>待审批</option>
+                        <option value="rejected" <?php if($data[0]['status'] =="rejected") echo 'selected="selected"'; ?>>未通过</option>
+                    </select>
+                    @endif
                 </div>
             </div>
 

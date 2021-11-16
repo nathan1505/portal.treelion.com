@@ -37,12 +37,15 @@
                             <div class="card-header">
                                 <h5 class="card-text" style="display: inline-block; height: 15px">公告</h5>
                                 <img src="images/announcement.png" style="display: inline-block;vertical-align: middle;width:15px"></img>
+                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" style="float: right;">放大／縮小</button>
                             </div>
-                            <div class="card-body out-div" id="announcement-body">
-                                <table class="table">
-                                    <tbody id="announcement-table">
-                                    </tbody> 
-                                </table>
+                            <div id="demo" class="collapse">
+                                <div class="card-body out-div" id="announcement-body">
+                                    <table class="table">
+                                        <tbody id="announcement-table">
+                                        </tbody> 
+                                    </table>
+                                </div>
                             </div>
                             <div class="card-footer">
                                 <form action="post-announcement" method="POST">
@@ -111,9 +114,24 @@
                                 </select>
                             </div>
                             <div class="card-body performance-div">
+                                <table>
+                                <tr>
+                                    <td style="width:5%">编号</td>
+                                    <td style="width:20%">项目内容</td>
+                                    <td style="width:11%">项目类别</td>
+                                    <td style="width:12%">难度</td>
+                                    <td style="width:11%">更新日期</td>
+                                    <td>积分</td>
+                                </tr>
+                                </table>
                                 <table class="table table-striped">
-                                    <tbody id="performance-table">
-                                    </tbody> 
+                                    @if ((Auth::user()->role != "employee"))
+                                        <tbody id="performance-table">
+                                        </tbody>
+                                    @else
+                                        <tbody id="performance-table-employee">
+                                        </tbody>
+                                    @endif
                                 </table>
                             </div>
                         </div>

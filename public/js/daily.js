@@ -76,37 +76,51 @@ window.onload = function () {
         });
     });
     
-    $.get('/get-basic-duties',function(data){
-        var color = "";
-        var status = "";
-        
-        console.log(data);
-
-        for (var i = 0; i < data.length; i++){
-            
-            if (data[i].status == "approved") {
-                color = "table-success";
-                status = "通过";
-            } else if (data[i].status == "rejected") {
-                color = "table-danger";
-                status = "未通过";
-            } else {
-                color = "table-warning";
-                status = "待审批";
+    $.get('/get-user',function(userDetail){
+        $.get('/get-basic-duties',function(data){
+            var color = "";
+            var status = "";
+    
+            for (var i = 0; i < data.length; i++){
+                
+                if (data[i].status == "approved") {
+                    color = "table-success";
+                    status = "通过";
+                } else if (data[i].status == "rejected") {
+                    color = "table-danger";
+                    status = "未通过";
+                } else {
+                    color = "table-warning";
+                    status = "待审批";
+                }
+                
+                if(userDetail.role != "employee"){
+                    if(data[i].status != "end"){
+                        $('#basic-duties-table').append(
+                            '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
+                            '<td style="width:30%">' + data[i].basic_content + '</td>' + 
+                            '<td style="width:20%;text-align:center;" class="'+ color +'">' + status + '</td>' +
+                            '<td><a href="/basic/' + data[i].id + '"><button class="btn btn-secondary">查看</button></a>' + 
+                            '<a href="/basic/edit/' + data[i].id + '"><button class="btn btn-success">修改</button></a>' + 
+                            '<a href="/basic/hide/' + data[i].id + '"><button class="btn btn-danger">删除</button></a><td>' + 
+                            '</tr>'
+                        );
+                    }
+                }else if(userDetail.id == data[i].member){
+                    if(data[i].status != "end"){
+                        $('#basic-duties-table').append(
+                            '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
+                            '<td style="width:30%">' + data[i].basic_content + '</td>' + 
+                            '<td style="width:20%;text-align:center;" class="'+ color +'">' + status + '</td>' +
+                            '<td><a href="/basic/' + data[i].id + '"><button class="btn btn-secondary">查看</button></a>' + 
+                            '<a href="/basic/edit/' + data[i].id + '"><button class="btn btn-success">修改</button></a>' + 
+                            '<a href="/basic/hide/' + data[i].id + '"><button class="btn btn-danger">删除</button></a><td>' + 
+                            '</tr>'
+                        );
+                    }
+                }
             }
-            
-            if(data[i].status != "end"){
-                $('#basic-duties-table').append(
-                    '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
-                    '<td style="width:30%">' + data[i].basic_content + '</td>' + 
-                    '<td style="width:20%;text-align:center;" class="'+ color +'">' + status + '</td>' +
-                    '<td><a href="/basic/' + data[i].id + '"><button class="btn btn-secondary">查看</button></a>' + 
-                    '<a href="/basic/edit/' + data[i].id + '"><button class="btn btn-success">修改</button></a>' + 
-                    '<a href="/basic/hide/' + data[i].id + '"><button class="btn btn-danger">删除</button></a><td>' + 
-                    '</tr>'
-                );
-            }
-        }
+        });
     });
 
     $.get("/get-performance/" + userId,
