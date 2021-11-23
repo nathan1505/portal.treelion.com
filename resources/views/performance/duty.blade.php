@@ -64,10 +64,8 @@
                                 </table>
                             </div>
                         </div>
-                        @if ((Auth::user()->role != "employee"))
                             <div id="duty-change-status" style="margin-bottom: 15px">
                             </div>
-                        @endif
                     </div>
                 </div>
             </div>

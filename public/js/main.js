@@ -46,6 +46,7 @@ window.onload = function(){
         $.get('/get-performances',function(data){
             var color = "";
             var status = "";
+            
             //console.log(userDetail);
             //console.log(data);
             
@@ -72,7 +73,11 @@ window.onload = function(){
                         color = "table-warning";
                         status = "待审批";
                     }
-        
+                    
+                    var disableTrue = "";    
+                    if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id) && element.status == "pending")){
+                        disableTrue = "disabled=\"true\"";
+                    };
                     $('#performance-table').append(
                         '<tr><td style="width:5%">' +
                         element.performance_no + '</td><td style="width:20%">' +
@@ -82,41 +87,26 @@ window.onload = function(){
                         status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
                         element.completeness + '%</td><td>' +
                         '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                        '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
-                        '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
+                        '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
+                        '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
                         '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                         '</td></tr>'
                     );
-
-                    if(userDetail.id == element.leader || userDetail.id == element.declarant_id || filterById(element.members, userDetail.id)){
-                        $('#performance-table-employee').append(
-                            '<tr><td style="width:5%">' +
-                            element.performance_no + '</td><td style="width:20%">' +
-                            element.performance_content + '</td><td style="width:10%">' +
-                            element.property + '</td><td style="width:10%">' +
-                            element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                            status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                            element.completeness + '%</td><td>' +
-                            '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
-                            '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
-                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                            '</td></tr>'
-                        );
-                    }else{
-                        $('#performance-table-employee').append(
-                            '<tr><td style="width:5%">' +
-                            element.performance_no + '</td><td style="width:20%">' +
-                            element.performance_content + '</td><td style="width:10%">' +
-                            element.property + '</td><td style="width:10%">' +
-                            element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                            status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                            element.completeness + '%</td><td>' +
-                            '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                            '</td></tr>'
-                        );
-                    }
+                    
+                    $('#performance-table-employee').append(
+                        '<tr><td style="width:5%">' +
+                        element.performance_no + '</td><td style="width:20%">' +
+                        element.performance_content + '</td><td style="width:10%">' +
+                        element.property + '</td><td style="width:10%">' +
+                        element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
+                        status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
+                        element.completeness + '%</td><td>' +
+                        '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                        '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
+                        '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
+                        '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
+                        '</td></tr>'
+                    );
     
                 });
             }
@@ -147,7 +137,10 @@ window.onload = function(){
                             color = "table-warning";
                             status = "待审批";
                         }
-                        
+                        var disableTrue = "";    
+                        if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id) && element.status == "pending")){
+                            disableTrue = "disabled=\"true\"";
+                        };
                         
                         $('#performance-table').append(
                             '<tr><td style="width:5%">' +
@@ -158,41 +151,27 @@ window.onload = function(){
                             status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
                             element.completeness + '%</td><td>' +
                             '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
-                            '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
+                            '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
+                            '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
                             '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                             '</td></tr>'
                         );
+
                         
-                        if(userDetail.id == element.leader || userDetail.id == element.declarant_id){
-                            $('#performance-table-employee').append(
-                                '<tr><td style="width:5%">' +
-                                element.performance_no + '</td><td style="width:20%">' +
-                                element.performance_content + '</td><td style="width:10%">' +
-                                element.property + '</td><td style="width:10%">' +
-                                element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                                status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                                element.completeness + '%</td><td>' +
-                                '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                                '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right">修改</button></a>' +
-                                '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right">刪除</button></a>' +
-                                '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                                '</td></tr>'
-                            );
-                        }else{
-                            $('#performance-table-employee').append(
-                                '<tr><td style="width:5%">' +
-                                element.performance_no + '</td><td style="width:20%">' +
-                                element.performance_content + '</td><td style="width:10%">' +
-                                element.property + '</td><td style="width:10%">' +
-                                element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                                status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                                element.completeness + '%</td><td>' +
-                                '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                                '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                                '</td></tr>'
-                            );
-                        }
+                        $('#performance-table-employee').append(
+                            '<tr><td style="width:5%">' +
+                            element.performance_no + '</td><td style="width:20%">' +
+                            element.performance_content + '</td><td style="width:10%">' +
+                            element.property + '</td><td style="width:10%">' +
+                            element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
+                            status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
+                            element.completeness + '%</td><td>' +
+                            '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                            '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
+                            '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
+                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
+                            '</td></tr>'
+                        );
                     }
                 });
             });

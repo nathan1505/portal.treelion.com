@@ -226,8 +226,12 @@ class BasicController extends Controller
         $dutyId = (int)$arg;
         $array = DB::table('basic_duty')->where('id',$dutyId)->get();
         $data = json_decode(json_encode($array), true);
+        $declarent = DB::table('users')->where('id',$data[0]['member'])->get();
+        $name = json_decode(json_encode($declarent), true);
+        //print_r($data);
+        //print_r($name);
         //return $array;
-        return view('basic.edit', ['data' => $data]);
+        return view('basic.edit', ['data' => $data, 'name' => $name]);
     }
 
     //Get the info of some duty by its ID
