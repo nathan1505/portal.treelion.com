@@ -11,8 +11,8 @@ window.onload = function(){
         const today = new Date();
         var currentDate = today.toLocaleDateString('zh-CN');
         var currentTime = today.toLocaleTimeString('zh-CN', { hour12: false });
-        document.getElementById('currentDate').innerText = currentDate;
-        document.getElementById('currentTime').innerText = currentTime;
+        //document.getElementById('currentDate').innerText = currentDate;
+        //document.getElementById('currentTime').innerText = currentTime;
     }, 1000);
 
     //weather

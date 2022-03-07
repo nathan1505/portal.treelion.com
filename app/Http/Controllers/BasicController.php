@@ -263,10 +263,10 @@ class BasicController extends Controller
 
         $total_points = CalculateBasicPoints(10.0, $postContent['type'], $postContent['difficulty']);
 
-        $basic_no = GenerateDutyNum();
+        //$basic_no = GenerateDutyNum();
         DB::table('basic_duty')->insert([
             'basic_content' => $postContent["basic-content"],
-            'basic_no' => $basic_no,
+            'basic_no' => $postContent["basic-no"],
             'type' => $postContent['type'],
             'difficulty' => $postContent['difficulty'],
             'member' => (int)$postContent['member'],

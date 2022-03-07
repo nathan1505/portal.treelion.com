@@ -24,17 +24,22 @@
                 <input style="visibility: hidden" name="duty_id" type="input" value="{{$data[0]['id']}}">
                 <input style="visibility: hidden" name="basic_no" type="input" value="{{$data[0]['basic_no']}}">
             </div>
+            
+            <div class="margin-top: 20px">
+                <label for="basic-no">编号</label>
+                <input id="basic-no" name="basic-no" type="input" class="form-control" value="{{$data[0]['basic_no']}}" required>
+            </div>
 
             <div style="margin-top: 20px">
                 <label for="content">项目内容</label>
                 <textarea id="content" name="basic-content" type="input" class="form-control" rows="4" required
-                <?php if(Auth::user()->name != $name[0]['name']) echo 'disabled="true"'; ?>>{{$data[0]['basic_content']}}</textarea>
+                >{{$data[0]['basic_content']}}</textarea>
             </div>
 
             <div class="row">
                 <div class="col" style="margin-top: 20px">
                     <label for="type">项目类别</label>
-                    <select id="type" name="type" type="input" class="form-control" <?php if(Auth::user()->name != $name[0]['name']) echo 'disabled="true"'; ?>>
+                    <select id="type" name="type" type="input" class="form-control">
                         <option value="五类积分（管理类）" <?php if($data[0]['type'] =="五类积分（管理类）") echo 'selected="selected"'; ?>>五类积分（管理类）</option>
                         <option value="六类积分（日常类）" <?php if($data[0]['type'] =="六类积分（日常类）") echo 'selected="selected"'; ?>>六类积分（日常类）</option>
                     </select>
@@ -44,17 +49,14 @@
                     <label>难度</label><br/>
                     <label class="radio-inline">
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio1" value="easy"
-                        <?php if(Auth::user()->name != $name[0]['name']) echo 'disabled="true"'; ?>
                         <?php echo ($data[0]['difficulty'] == "easy" ? 'checked="checked"': ''); ?> required>&nbsp&nbsp简单&nbsp&nbsp
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio2" value="normal"
-                        <?php if(Auth::user()->name != $name[0]['name']) echo 'disabled="true"'; ?>
                         <?php echo ($data[0]['difficulty'] == "normal" ? 'checked="checked"': ''); ?>>&nbsp&nbsp普通&nbsp&nbsp
                     </label>
                     <label class="radio-inline">
                         <input type="radio" class="form-control" name="difficulty" id="inlineradio3" value="difficult"
-                        <?php if(Auth::user()->name != $name[0]['name']) echo 'disabled="true"'; ?>
                         <?php echo ($data[0]['difficulty'] == "difficult" ? 'checked="checked"': ''); ?>>&nbsp&nbsp困难&nbsp&nbsp
                     </label>
                 </div>

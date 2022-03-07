@@ -158,16 +158,17 @@ window.onload = function(){
                 '<td style="width:12%">' + data[i].type + '</td>' + 
                 '<td style="width:7%">' + diff + '</td>' + 
                 '<td style="width:8%">' + role + '</td>' + 
-                '<td style="width:12%">' + data[i].basic_points + '</td>' + 
-                '<td style="width:12%">' + points + '</td>' + 
-                '<td style="width:15%">' + whole_project + '</td>' + 
-                '<td>' + data[i].profit_coefficient + '</td>' + 
+                '<td style="width:12%">' + data[i].basic_points.toFixed(1) + '</td>' + 
+                '<td style="width:12%">' + points.toFixed(2) + '</td>' + 
+                '<td style="width:15%">' + whole_project.toFixed(2) + '</td>' + 
+                '<td>' + data[i].profit_coefficient.toFixed(2) + '</td>' + 
+                
                 '</tr>'
             );
             
             total_point2+=points;
         }
-        $('#month-performance-points').append(total_point2);
+        $('#month-performance-points').append(total_point2.toFixed(2));
 
     });
     
@@ -177,7 +178,7 @@ window.onload = function(){
     
     
     $('#monthly-performance-table').append(
-        '<tr>' +
+        '<tr>' +  //<td>开始日期</td><td>结束日期</td>
         '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>基本积分</td><td>今月得分</td><td>項目總得分</td><td>貢獻度系數</td>' +
         '</tr>'
     );

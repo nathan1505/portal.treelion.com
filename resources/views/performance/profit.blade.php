@@ -35,7 +35,7 @@
             
             <div class="row">
                 <div class="col" style="margin-top: 20px">
-                    <label>利润贡献度</label><br/>
+                    <label>利润贡献度（指扣除成本後純利）（以人民幣為單位）</label><br/>
                     <input type="text" class="form-control" name="amount" placeholder="輸入金額" required>
                 </div>
                 <div class="col" style="margin-top: 20px">

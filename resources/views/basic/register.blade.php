@@ -22,6 +22,11 @@
                 <input id="declarant" type="input" class="form-control" readonly placeholder="{{Auth::user()->name}}">
                 <input style="visibility: hidden" name="member" type="input" value="{{Auth::user()->id}}">
             </div>
+            
+            <div class="margin-top: 20px">
+                <label for="basic-no">编号</label>
+                <input id="basic-no" name="basic-no" type="input" class="form-control" required>
+            </div>
 
             <div style="margin-top: 20px">
                 <label for="content">项目内容</label>

@@ -24,8 +24,13 @@
                 <input style="visibility: hidden" name="declarant-id" type="input" value="{{Auth::user()->id}}">
             </div>
 
+            <div class="margin-top: 20px">
+                <label for="performance-no">编号</label>
+                <input id="performance-no" name="performance-no" type="input" class="form-control" required>
+            </div>
+
             <div style="margin-top: 20px">
-                <label for="content">项目内容</label>
+                <label for="content">项目主题</label>
                 <textarea id="content" name="content" type="input" class="form-control" rows="4" required></textarea>
             </div>
 

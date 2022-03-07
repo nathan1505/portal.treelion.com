@@ -278,10 +278,10 @@ class PerformancesController extends Controller
 
         $basic_points = CalculateBasicPoints(18.0, $postContent['type'], $postContent['difficulty']);
 
-        $performance_no = GenerateDutyNum();
+        //$performance_no = GenerateDutyNum();
         DB::table('performance_duty')->insert([
             'performance_content' => $postContent["content"],
-            'performance_no' => $performance_no,
+            'performance_no' => $postContent["performance-no"],
             'type' => $postContent['type'],
             'property' => $postContent['property'],
             'difficulty' => $postContent['difficulty'],
@@ -298,7 +298,7 @@ class PerformancesController extends Controller
         //Generate nodes
         for ($i=1; $i<= (int)$postContent['node-no']; $i++){
             DB::table('duty_node')->insert([
-                'duty_performance_no' => $performance_no,
+                'duty_performance_no' => $postContent["performance-no"],
                 'node_id' => $i,
                 'node_date' => $postContent['date_'.$i],
                 'node_point_percentage' => $postContent['percentage_'.$i],
@@ -307,7 +307,7 @@ class PerformancesController extends Controller
         }
 
         //Create Announcement for the duty
-        $announcementContent = '【'.Auth::user()->name.'】 创建了业绩事项 【'.$performance_no.'】，请主管领导尽快审批';
+        $announcementContent = '【'.Auth::user()->name.'】 创建了业绩事项 【'.$postContent["performance-no"].'】，请主管领导尽快审批';
         DB::table('announcements')->insert([
             'name' => Auth::user()->name,
             'content' =>  $announcementContent,
@@ -315,7 +315,7 @@ class PerformancesController extends Controller
         ]);
 
         return redirect('/')
-        ->with('status', "您已成功提交业绩事项 ".$performance_no."！");
+        ->with('status', "您已成功提交业绩事项 ".$postContent["performance-no"]."！");
     }
 
     //Get the info of some duty by its ID
@@ -367,6 +367,7 @@ class PerformancesController extends Controller
         $earlyDays = $finishDate->diffInDays($expectedDate, false);
 
         $completeDegree = 1.0;
+        if($nodeDuration == 0) $nodeDuration = 1.0;
         $completeDegree = (float)($earlyDays) / (float)($nodeDuration);
 
         $completenessCoefficient = 1.0;
@@ -713,8 +714,14 @@ class PerformancesController extends Controller
                             $query->where('leader', $user_id)->
                                     orWhere('members', 'like', "%\"{$user_id}\"%");
                          });
+                         
+        $currentMonth = date('m');
         
-        $dutyArray_demo2 = $dutyArray_demo->
+        $dutyArray_demo1 = $dutyArray_demo
+                            ->whereMonth('start_date', '<=' , $currentMonth)
+                            ->whereMonth('end_date', '>=' , $currentMonth);
+        
+        $dutyArray_demo2 = $dutyArray_demo1->
                         whereNotIn('status', ['rejected', 'end']);
 
         $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month")])->get();
@@ -935,60 +942,60 @@ class PerformancesController extends Controller
         if($direction == "direct"){
             if($money>=50000001 && $money<100000000)
                 $coefficient = 5000;
-            else if($money>=20000001 && $money<50000000)
+            else if($money>=20000001 && $money<50000001)
                 $coefficient = 2000;
-            else if($money>=10000001 && $money<20000000)
+            else if($money>=10000001 && $money<20000001)
                 $coefficient = 1000;
-            else if($money>=5000001 && $money<10000000)
+            else if($money>=5000001 && $money<10000001)
                 $coefficient = 500;
-            else if($money>=2000001 && $money<5000000)
+            else if($money>=2000001 && $money<5000001)
                 $coefficient = 200;
-            else if($money>=1000001 && $money<2000000)
+            else if($money>=1000001 && $money<2000001)
                 $coefficient = 100;
-            else if($money>=500001 && $money<1000000)
+            else if($money>=500001 && $money<1000001)
                 $coefficient = 50;
-            else if($money>=200001 && $money<500000)
+            else if($money>=200001 && $money<500001)
                 $coefficient = 20;
-            else if($money>=100001 && $money<200000)
+            else if($money>=100001 && $money<200001)
                 $coefficient = 10;
-            else if($money>=50001 && $money<100000)
+            else if($money>=50001 && $money<100001)
                 $coefficient = 5;
-            else if($money>=20001 && $money<50000)
+            else if($money>=20001 && $money<50001)
                 $coefficient = 2;
-            else if($money>=10001 && $money<20000)
+            else if($money>=10001 && $money<20001)
                 $coefficient = 1;
-            else if($money>=5001 && $money<10000)
+            else if($money>=5001 && $money<10001)
                 $coefficient = 0.9;
-            else if($money>=1001 && $money<5000)
+            else if($money>=1001 && $money<5001)
                 $coefficient = 0.8;
-            else if($money>=1 && $money<1000)
+            else if($money>=1 && $money<1001)
                 $coefficient = 0.7;
             else
                 $coefficient = 0.0;
         }else{
-            if($money>=50000001 && $money<100000000)
+            if($money>=50000001 && $money<100000001)
                 $coefficient = 500;
-            else if($money>=20000001 && $money<50000000)
+            else if($money>=20000001 && $money<50000001)
                 $coefficient = 200;
-            else if($money>=10000001 && $money<20000000)
+            else if($money>=10000001 && $money<20000001)
                 $coefficient = 100;
-            else if($money>=5000001 && $money<10000000)
+            else if($money>=5000001 && $money<10000001)
                 $coefficient = 50;
-            else if($money>=2000001 && $money<5000000)
+            else if($money>=2000001 && $money<5000001)
                 $coefficient = 20;
-            else if($money>=1000001 && $money<2000000)
+            else if($money>=1000001 && $money<2000001)
                 $coefficient = 10;
-            else if($money>=500001 && $money<1000000)
+            else if($money>=500001 && $money<1000001)
                 $coefficient = 5;
-            else if($money>=200001 && $money<500000)
+            else if($money>=200001 && $money<500001)
                 $coefficient = 2;
-            else if($money>=10001 && $money<200000)
+            else if($money>=10001 && $money<200001)
                 $coefficient = 1;
-            else if($money>=5001 && $money<10000)
+            else if($money>=5001 && $money<10001)
                 $coefficient = 0.9;
-            else if($money>=1001 && $money<5000)
+            else if($money>=1001 && $money<5001)
                 $coefficient = 0.8;
-            else if($money>=1 && $money<1000)
+            else if($money>=1 && $money<1001)
                 $coefficient = 0.7;
             else
                 $coefficient = 0.0;

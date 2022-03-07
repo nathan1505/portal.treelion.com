@@ -37,7 +37,7 @@
                             <div class="card-header">
                                 <h5 class="card-text" style="display: inline-block; height: 15px">公告</h5>
                                 <img src="images/announcement.png" style="display: inline-block;vertical-align: middle;width:15px"></img>
-                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" style="float: right;">放大／縮小</button>
+                                    <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#demo" style="float: right;">↑／↓</button>
                             </div>
                             <div id="demo" class="collapse">
                                 <div class="card-body out-div" id="announcement-body">

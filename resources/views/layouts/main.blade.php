@@ -38,7 +38,7 @@
                         <a class="nav-link" href="/points/{{Auth::user()->id}}">每月积分</a>
                     </li>
                     <li class="nav-item" style="position: relative; left: 130px">
-                        <a class="nav-link" href="/other">其他</a>
+                        <a class="nav-link" href="/other">公司资料</a>
                     </li>
                 <!--/div-->
                 <!--div style="float: right;"-->
