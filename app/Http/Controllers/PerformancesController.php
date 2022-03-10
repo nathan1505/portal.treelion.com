@@ -286,6 +286,7 @@ class PerformancesController extends Controller
             'property' => $postContent['property'],
             'difficulty' => $postContent['difficulty'],
             'leader' => (int)$postContent['leader'],
+            'second_leader' => (int)$postContent['leader2'],
             'members' => $leader,
             'start_date' => $postContent['start-date'],
             'end_date' => $postContent['end-date'],
@@ -359,9 +360,10 @@ class PerformancesController extends Controller
                                     ->value('node_date');
             $nodeBeginningDate = Carbon::parse($nodeBeginningDate)->addDay();
         }
-
+        
+        
         $expectedDate = Carbon::parse($expectedDate);
-        $finishDate = Carbon::today();
+        $finishDate = Carbon::parse($postContent['finish-date']);
         $nodeDuration = $nodeBeginningDate->diffInDays($expectedDate);
 
         $earlyDays = $finishDate->diffInDays($expectedDate, false);
@@ -539,6 +541,14 @@ class PerformancesController extends Controller
                 }
             }
 
+            $second_leader = '';
+            foreach ($userArray as $user){
+                if ($user['id'] == $dutiesArray[$i]['second_leader']){
+                    $second_leader = $user['name'];
+                    break;
+                }
+            }
+
             $members = '';
             if ($dutiesArray[$i]['members'] != ""){
                 $members = parseMembers($dutiesArray[$i]['members']);
@@ -553,6 +563,7 @@ class PerformancesController extends Controller
                 'difficulty' => $difficulty,
                 'status' => $status,
                 'leader' => $leader,
+                'second_leader' => $second_leader,
                 'members' => $members,
                 'start_date' => $dutiesArray[$i]['start_date'],
                 'end_date' => $dutiesArray[$i]['end_date'],
@@ -828,6 +839,7 @@ class PerformancesController extends Controller
                     'difficulty' => $request["difficulty"],
                     'node_no' => (int) $request["node-no"],
                     'leader' => (int) $request["leader"],
+                    'second_leader' => (int)$request['leader2'],
                     'members' => $members,
                     'start_date' => $request["start-date"],
                     'end_date' => $request["end-date"],

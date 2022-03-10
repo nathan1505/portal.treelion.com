@@ -60,6 +60,10 @@
                         <option>技术测试</option>
                         <option>文件编写</option>
                         <option>参会</option>
+                        <option>政企合作</option>
+                        <option>团队搭建</option>
+                        <option>资质申请</option>
+                        <option>管理创新</option>
                     </select>
                 </div>
             </div>
@@ -97,6 +101,16 @@
                     </select>
                 </div>
             </div>
+
+            @if ((Auth::user()->role != "employee"))
+            <div class="row">
+                <div class="col-md-4" style="margin-top: 20px">
+                    <label for="leader2">第二组长</label>
+                    <select id="leader2" name="leader2" type="input" class="form-control">
+                    </select>
+                </div>
+            </div>
+            @endif
 
             <div class="row" id="date-range" style="margin-top: 20px">
                 <div class="col">

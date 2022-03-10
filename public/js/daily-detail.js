@@ -79,7 +79,7 @@ window.onload = function () {
         }
     });
 
-    console.log(dailyReportId);
+    //.log(dailyReportId);
 
     $.get("/daily/get-daily-by-id/" + dailyReportId,
         function (data) {

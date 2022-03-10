@@ -37,6 +37,11 @@
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/points/{{Auth::user()->id}}">每月积分</a>
                     </li>
+                    @if ((Auth::user()->role != "employee"))
+                    <li class="nav-item" style="position: relative; left: 130px">
+                        <a class="nav-link" href="/weekly/detail">每周得分</a>
+                    </li>
+                    @endif
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/other">公司资料</a>
                     </li>

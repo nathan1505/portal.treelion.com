@@ -53,6 +53,7 @@
                                     <th data-sortable="true" data-field="difficulty">难度</th>
                                     <th data-field="status" data-width="4" data-width-unit="%">状态</th>
                                     <th data-field="leader" data-width="4" data-width-unit="%">组长</th>
+                                    <th data-field="second_leader" data-width="4" data-width-unit="%">第二组长</th>
                                     <th data-field="members" data-width="8" data-width-unit="%">组员</th>
                                     <th data-sortable="true" data-field="start_date" data-width="5" data-width-unit="%">开始日</th>
                                     <th data-sortable="true" data-field="end_date" data-width="5" data-width-unit="%">结束日</th>

@@ -218,3 +218,13 @@ Route::get('/get-total-monthly', 'App\Http\Controllers\PerformancesController@ge
 Route::get('/pdf_contact_list', 'App\Http\Controllers\PDFsController@pdfContactList');
 //Get the day off application in pdf form
 Route::get('/pdf_dayoff_application', 'App\Http\Controllers\PDFsController@pdfDayoff');
+
+
+//---- Router for weekly report ----
+//Render detail page of every employees' weekly point
+Route::get('/weekly/detail', function(){
+    return view('weekly.detail');
+})->middleware('auth');
+
+//Get list of weekly point
+Route::get('/weekly/list-of-point', 'App\Http\Controllers\WeeklyController@GetWeeklyList');

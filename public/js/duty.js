@@ -335,6 +335,12 @@ window.onload = function(){
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
+                                            '<label for="finish-date">完成日期</label>' +
+                                            '<input type="date" name="finish-date" id="finish-date" class="form-control" value="' + data[i].confirmed_date+'" required>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
                                             '<label for="progress">节点进展描述</label>' +
                                             '<textarea type="input" name="progress" class="form-control" rows="3" required></textarea>' +
                                             '<input name="performance_no" value="'+ data[i].duty_performance_no +'" hidden>' +

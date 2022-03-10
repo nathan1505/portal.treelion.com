@@ -34,8 +34,16 @@ window.onload = function(){
     });
 
     $.get('/performance/get-users',function (data){
+        $('#leader2').append(
+            '<option></option>'
+        );
+        
         for (user in data) {
             $('#leader').append(
+                '<option value="'+ data[user].id +'">' + data[user].name + '</option>'
+            );
+
+            $('#leader2').append(
                 '<option value="'+ data[user].id +'">' + data[user].name + '</option>'
             );
 

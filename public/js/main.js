@@ -75,7 +75,7 @@ window.onload = function(){
                     }
                     
                     var disableTrue = "";    
-                    if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id) && element.status == "pending")){
+                    if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") && element.status == "pending")){
                         disableTrue = "disabled=\"true\"";
                     };
                     $('#performance-table').append(
@@ -138,7 +138,7 @@ window.onload = function(){
                             status = "待审批";
                         }
                         var disableTrue = "";    
-                        if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id) && element.status == "pending")){
+                        if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") && element.status == "pending")){
                             disableTrue = "disabled=\"true\"";
                         };
                         

@@ -27,6 +27,11 @@
                 <input style="visibility: hidden" name="performance_no" type="input" value="{{$performancedata[0]['performance_no']}}">
             </div>
 
+            <div class="margin-top: 20px">
+                <label for="performance-no">编号</label>
+                <input id="performance-no" name="performance-no" type="input" class="form-control" value="{{$performancedata[0]['performance_no']}}" required>
+            </div>
+
             <div style="margin-top: 20px">
                 <label for="content">项目内容</label>
                 <textarea id="content" name="content" type="input" class="form-control" rows="4" required>{{$performancedata[0]['performance_content']}}</textarea>
@@ -58,6 +63,10 @@
                         <option value="技术测试" <?php if($performancedata[0]['property'] =="技术测试") echo 'selected="selected"'; ?>>技术测试</option>
                         <option value="文件编写" <?php if($performancedata[0]['property'] =="文件编写") echo 'selected="selected"'; ?>>文件编写</option>
                         <option value="参会" <?php if($performancedata[0]['property'] =="参会") echo 'selected="selected"'; ?>>参会</option>
+                        <option value="政企合作" <?php if($performancedata[0]['property'] =="政企合作") echo 'selected="selected"'; ?>>政企合作</option>
+                        <option value="团队搭建" <?php if($performancedata[0]['property'] =="团队搭建") echo 'selected="selected"'; ?>>团队搭建</option>
+                        <option value="资质申请" <?php if($performancedata[0]['property'] =="资质申请") echo 'selected="selected"'; ?>>资质申请</option>
+                        <option value="管理创新" <?php if($performancedata[0]['property'] =="管理创新") echo 'selected="selected"'; ?>>管理创新</option>
                     </select>
                 </div>
             </div>
@@ -128,6 +137,31 @@
                     </select>
                 </div>
             </div>
+            
+            @if ((Auth::user()->role != "employee"))
+            <div class="row">
+                <div class="col-md-4" style="margin-top: 20px">
+                    <label for="leader2-edit">第二组长</label>
+                    <select id="leader2-edit" name="leader2" type="input" class="form-control">
+                        <?php
+                        $selected = $performancedata[0]['second_leader']; // Put value from database here.
+
+                        foreach ($user as $key) {
+                        ?>
+                            <?php
+                            if ($key['id'] == $selected) {
+                                echo '<option value="'.$key['id'].'" selected="selected">'.$key['name'].'</option>';
+                            }else if ($key['id'] == ''){
+                                echo '<option></option>';
+                            }
+                            ?>
+                        <?php
+                        }
+                        ?>
+                    </select>
+                </div>
+            </div>
+            @endif
 
             <div class="row" id="date-range" style="margin-top: 20px">
                 <div class="col">

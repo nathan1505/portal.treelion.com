@@ -111,6 +111,10 @@
                                     <option value="技术测试">技术测试</option>
                                     <option value="文件编写">文件编写</option>
                                     <option value="参会">参会</option>
+                                    <option value="政企合作">政企合作</option>
+                                    <option value="团队搭建">团队搭建</option>
+                                    <option value="资质申请">资质申请</option>
+                                    <option value="管理创新">管理创新</option>
                                 </select>
                             </div>
                             <div class="card-body performance-div">
@@ -119,8 +123,8 @@
                                     <td style="width:5%">编号</td>
                                     <td style="width:20%">项目内容</td>
                                     <td style="width:11%">项目类别</td>
-                                    <td style="width:12%">难度</td>
-                                    <td style="width:11%">更新日期</td>
+                                    <td style="width:12%">更新日期</td>
+                                    <td style="width:11%">项目状态</td>
                                     <td>积分</td>
                                 </tr>
                                 </table>
