@@ -17,7 +17,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        'App\Console\Commands\DatabaseBackUp'
     ];
 
     /**
@@ -163,6 +163,8 @@ class Kernel extends ConsoleKernel
                     ]);
             }
         })->daily();
+
+        $schedule->command('database:backup')->daily();
 
         //Create the month_points table for each user, on the first day of each month
         $schedule->call(function(){

@@ -7,7 +7,7 @@ window.onload = function(){
     );
 
     $.get('/weekly/list-of-point',function(data){
-        console.log(data);
+        //console.log(data);
         data = (Object.values(data));
         data.sort((a, b) => (a.name > b.name) ? 1 : -1);
         data.forEach((element) => {

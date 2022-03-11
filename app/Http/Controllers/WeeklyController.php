@@ -9,6 +9,25 @@ use Carbon\Carbon;
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
 
+function CountMembers($performance_no){
+
+    $memberStr = DB::table('performance_duty')
+                        ->where('performance_no', $performance_no)
+                        ->value('members');
+
+    $membersId = array();
+    $memberStrArray = json_decode($memberStr);
+
+    if (!empty($memberStrArray)){
+        foreach ($memberStrArray as $memberIdStr){
+            array_push($membersId, (int) $memberIdStr);
+        }
+    }
+
+    return count($membersId) + 1;
+
+}
+
 class WeeklyController extends Controller
 {
     public function GetWeeklyList(Request $request){
@@ -65,10 +84,25 @@ class WeeklyController extends Controller
             
             foreach($duty as $d){
                 if($d['node_date'] >= $start && $d['node_date'] <= $end){
-                    $node_point = $p['basic_points']*$d['node_point_percentage']/100*$d['node_point_percentage']/100*$d['node_completeness_coefficient'];
+                    $point = $p['basic_points']*$d['node_point_percentage']/100*$d['node_completeness']/100*$d['node_completeness_coefficient'];
+                    //var_dump($p['basic_points']);
+                    $members_no = (float)CountMembers($p['performance_no']);
+                    //echo $members_no;
+                    $leader_points = bcmul($point, 0.2, 2) + bcdiv( bcmul($point, 0.8, 2) , $members_no, 2);
+                    
+
+                    //var_dump($name['role']);
                     foreach ($name_list as $name){
+                        if($name['role'] == "组长" && $members_no == 1){
+                            $weekly_points = $point;
+                        }else if($name['role'] == "组长"){
+                            $weekly_points = $leader_points;
+                        }else if($name['role'] == "组員"){
+                            $node_points = (float)bcdiv(($point - $leader_points) , ($members_no - 1), 2);
+                            $weekly_points = $node_points;
+                        }
                         $column = array(
-                            "node_point" => $node_point,
+                            "node_point" => $weekly_points,
                             "user_id" => $name['user_id'],
                             "performance_no" => $p['performance_no'],
                             "node_no" => $d['node_id'],
