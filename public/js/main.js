@@ -75,17 +75,17 @@ window.onload = function(){
                     }
                     
                     var disableTrue = "";    
-                    if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") && element.status == "pending")){
+                    if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin")){ //element.status == "pending"
                         disableTrue = "disabled=\"true\"";
                     };
                     $('#performance-table').append(
-                        '<tr><td style="width:5%">' +
-                        element.performance_no + '</td><td style="width:20%">' +
-                        element.performance_content + '</td><td style="width:10%">' +
-                        element.property + '</td><td style="width:10%">' +
-                        element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                        status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                        element.completeness + '%</td><td>' +
+                        '<tr><td style="width:5%"><font size="2">' +
+                        element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
+                        element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
+                        element.property + '</font></td><td style="width:10%"><font size="2">' +
+                        element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
+                        status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
+                        element.completeness + '%</font></td><td>' +
                         '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                         '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                         '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
@@ -94,13 +94,13 @@ window.onload = function(){
                     );
                     
                     $('#performance-table-employee').append(
-                        '<tr><td style="width:5%">' +
-                        element.performance_no + '</td><td style="width:20%">' +
-                        element.performance_content + '</td><td style="width:10%">' +
-                        element.property + '</td><td style="width:10%">' +
-                        element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                        status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                        element.completeness + '%</td><td>' +
+                        '<tr><td style="width:5%"><font size="2">' +
+                        element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
+                        element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
+                        element.property + '</font></td><td style="width:10%"><font size="2">' +
+                        element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
+                        status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
+                        element.completeness + '%</font></td><td>' +
                         '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                         '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                         '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
@@ -138,18 +138,18 @@ window.onload = function(){
                             status = "待审批";
                         }
                         var disableTrue = "";    
-                        if(!((userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") && element.status == "pending")){
+                        if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin")){ //element.status == "pending"
                             disableTrue = "disabled=\"true\"";
                         };
                         
                         $('#performance-table').append(
-                            '<tr><td style="width:5%">' +
-                            element.performance_no + '</td><td style="width:20%">' +
-                            element.performance_content + '</td><td style="width:10%">' +
-                            element.property + '</td><td style="width:10%">' +
-                            element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                            status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                            element.completeness + '%</td><td>' +
+                            '<tr><td style="width:5%"><font size="2">' +
+                            element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
+                            element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
+                            element.property + '</font></td><td style="width:10%"><font size="2">' +
+                            element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
+                            status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
+                            element.completeness + '%</font></td><td>' +
                             '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                             '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                             '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
@@ -159,13 +159,13 @@ window.onload = function(){
 
                         
                         $('#performance-table-employee').append(
-                            '<tr><td style="width:5%">' +
-                            element.performance_no + '</td><td style="width:20%">' +
-                            element.performance_content + '</td><td style="width:10%">' +
-                            element.property + '</td><td style="width:10%">' +
-                            element.start_date + '</td><td style="width:10%;text-align:center;" class="'+ color +'">' +
-                            status + '</td><td style="width:10%;text-align:center;" class="' + color + '">' +
-                            element.completeness + '%</td><td>' +
+                            '<tr><td style="width:5%"><font size="2">' +
+                            element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
+                            element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
+                            element.property + '</font></td><td style="width:10%"><font size="2">' +
+                            element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
+                            status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
+                            element.completeness + '%</font></td><td>' +
                             '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                             '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                             '<a href="performance/hide/' +element.id+ '"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +

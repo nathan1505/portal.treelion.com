@@ -110,6 +110,14 @@
                     </select>
                 </div>
             </div>
+            @else
+            <div class="row" style="visibility: hidden">
+                <div class="col-md-4" style="margin-top: 20px">
+                    <label for="leader2">第二组长</label>
+                    <select id="leader2" name="leader2" type="input" class="form-control">
+                    </select>
+                </div>
+            </div>
             @endif
 
             <div class="row" id="date-range" style="margin-top: 20px">

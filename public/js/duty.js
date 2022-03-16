@@ -359,6 +359,62 @@ window.onload = function(){
                             '</div>' +
                             '</div>'
                         );
+                        
+                        $('#nodes-row-employee').append(
+                            '<div class="col-6">' +
+                            '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
+                            '<div class="card-header" id="duty_card_header_' + i + '">' +
+                            '<h5>节点#' + data[i].node_id + '&nbsp&nbsp&nbsp&nbsp节点完成度: ' + data[i].node_completeness + '%</h5>' +
+                            '</div>' +
+                            '<div class="card-body" id="duty_card_body_' + i + '">' +
+                            //Print the table of nodes info
+                            '<table class="table table-bordered">' +
+                                '<tbody>' +
+                                    '<tr><td>积分比例</td><td>' +  data[i].node_point_percentage + '%</td></tr>' +
+                                    '<tr><td>考核时间</td><td>' + data[i].node_date + '</td></tr>' +
+                                    '<tr><td>节点目标</td><td>' + data[i].node_goal + '</td></tr>' +
+                                    '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
+                                '</tbody>' +
+                            '</table>'+
+    
+                            '<form action="post-node" method="post">' +
+                                '<div class="form-group">' +
+                                    '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
+                                    '<div class="row">' +
+                                        '<div class="col">' +
+                                            '<label for="completeness">节点完成度</label><br>' +
+                                            '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;">' +
+                                                '<option selected="selected" value=0>未完成</option>' +
+                                                '<option value=100>已完成</option>' +
+                                            '</select>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                            '<label for="finish-date">完成日期</label>' +
+                                            '<input type="date" name="finish-date" id="finish-date" class="form-control" value="' + data[i].confirmed_date +'" readonly>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col">' +
+                                            '<label for="progress">节点进展描述</label>' +
+                                            '<textarea type="input" name="progress" class="form-control" rows="3" required></textarea>' +
+                                            '<input name="performance_no" value="'+ data[i].duty_performance_no +'" hidden>' +
+                                            '<input name="node_id" value="' + data[i].node_id + '" hidden>' +
+                                            '<input name="_token" value="' + token + '" hidden>' +
+                                        '</div>' +
+                                    '</div>' +
+                                    '<div class="row" style="margin-top:15px">' +
+                                        '<div class="col" class="node-update-submit-div">' +
+                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>确认完成</button>' +
+                                        '</div>' +
+                                    '</div>' +
+                                '</div>' +
+                            '</form>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>'
+                        );
                     }
                 },
             );

@@ -97,7 +97,6 @@ window.onload = function(){
             function (data) {
                 //console.log(data);
                 //original = $('#node-no').val()
-                //console.log(original);
                 for (var i=1; i<=data.length;i++){
                     datasum += data[i-1].node_point_percentage;
                     $('#nodes-row').append(
@@ -142,7 +141,6 @@ window.onload = function(){
         if(window.location.pathname == "/performance/register"){
             $("#nodes-row").empty();
             $("#button-div").empty();
-
             if (($(this).val() <= 4) && ($(this).val() >= 1)){
                 //let amountSum;
                 //let difference = $("#node-no").val() - original;
@@ -265,29 +263,29 @@ window.onload = function(){
                                 }else{
                                     $('#nodes-row').append(
                                         '<div class="col-6">' +
-                                        '<div class="card" id="duty_card_' + nodeno + '1" style="margin-top:20px">' +
-                                        '<div class="card-header" id="duty_card_header_' + nodeno + '">' +
-                                        '<h5>节点#' + nodeno + '</h5>' +
+                                        '<div class="card" id="duty_card_' + i + '1" style="margin-top:20px">' +
+                                        '<div class="card-header" id="duty_card_header_' + i + '">' +
+                                        '<h5>节点#' + i + '</h5>' +
                                         '</div>' +
                         
-                                        '<div class="card-body" id="duty_card_body_' + nodeno + '">' +
+                                        '<div class="card-body" id="duty_card_body_' + i + '">' +
                                         '<div class="form-group">' +
                                         '<div class="row">' +
                                         '<div class="col">' +
                                         '<label for="percentage">积分比例(%)</label>' +
-                                        '<input type="number" id="percentage" name="percentage_' + nodeno + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="">' +
+                                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="">' +
                                         '</div>' +
                                         '</div>' +
                                         '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
                                         '<label for="date">节点考核日期</label>' +
-                                        '<input type="date" id="date_' + nodeno + '" name="date_' + nodeno + '" class="form-control date" min="" max="" value="" required></input>' +
+                                        '<input type="date" id="date_' + i + '" name="date_' + i + '" class="form-control date" min="" max="" value="" required></input>' +
                                         '</div>' +
                                         '</div>' +
                                         '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
                                         '<label for="goal">节点目标</label>' +
-                                        '<textarea type="input" name="goal_' + nodeno + '" class="form-control" required rows="3"></textarea>' +
+                                        '<textarea type="input" name="goal_' + i + '" class="form-control" required rows="3"></textarea>' +
                                         '</div>' +
                                         '</div>' +
                                         '</div>' +

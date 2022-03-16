@@ -70,9 +70,14 @@
                 </div>
             </div>
         </div>
-
+        
+        @if ((Auth::user()->role != "employee"))
         <div class="row" id="nodes-row" style="margin-top: 20px">
         </div>
+        @else
+        <div class="row" id="nodes-row-employee" style="margin-top: 20px">
+        </div>
+        @endif
 
     </div>
     

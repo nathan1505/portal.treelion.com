@@ -363,7 +363,12 @@ class PerformancesController extends Controller
         
         
         $expectedDate = Carbon::parse($expectedDate);
-        $finishDate = Carbon::parse($postContent['finish-date']);
+        if($postContent['finish-date'] == null){
+            $finishDate = Carbon::today();
+        }else{
+            $finishDate = Carbon::parse($postContent['finish-date']);
+        }
+        
         $nodeDuration = $nodeBeginningDate->diffInDays($expectedDate);
 
         $earlyDays = $finishDate->diffInDays($expectedDate, false);
