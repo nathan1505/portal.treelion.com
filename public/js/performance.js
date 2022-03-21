@@ -76,6 +76,8 @@ window.onload = function(){
         }
     );
     
+    /*
+    
     var start, end;
     
     $("#date-range").change(function() {
@@ -83,6 +85,7 @@ window.onload = function(){
         end = $('.enddate').val();
         // do something with values
     });
+    */
     
     dutyId = GetCurrentDutyId();
     //Start of request of nodes
@@ -178,12 +181,14 @@ window.onload = function(){
                         '</div>'
                     );
                     
+                    /*
                     $('#nodes-row').on('input', function(){
                         for(var i = 1; i <= $("#node-no").val(); i++){
                             document.getElementById("date_"+i).min = start;
                             document.getElementById("date_"+i).max = end;
                         }
                     });
+                    */
                 }
     
                 $('#nodes-row').on('input', '.percentage', function(){

@@ -67,6 +67,7 @@
                         <option value="团队搭建" <?php if($performancedata[0]['property'] =="团队搭建") echo 'selected="selected"'; ?>>团队搭建</option>
                         <option value="资质申请" <?php if($performancedata[0]['property'] =="资质申请") echo 'selected="selected"'; ?>>资质申请</option>
                         <option value="管理创新" <?php if($performancedata[0]['property'] =="管理创新") echo 'selected="selected"'; ?>>管理创新</option>
+                        <option value="商业创新" <?php if($performancedata[0]['property'] =="商业创新") echo 'selected="selected"'; ?>>商业创新</option>
                     </select>
                 </div>
             </div>

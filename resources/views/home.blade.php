@@ -115,6 +115,7 @@
                                     <option value="团队搭建">团队搭建</option>
                                     <option value="资质申请">资质申请</option>
                                     <option value="管理创新">管理创新</option>
+                                    <option value="商业创新">商业创新</option>
                                 </select>
                             </div>
                             <div class="card-body performance-div">

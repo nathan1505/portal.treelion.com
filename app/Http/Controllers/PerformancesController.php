@@ -852,13 +852,13 @@ class PerformancesController extends Controller
         
         //Update the table `duty_node` by the request info
         DB::table('duty_node')
-        ->where('duty_performance_no', $request['performance_no'])
+        ->where('duty_performance_no', $request['performance-no'])
         ->delete();
         
         //Generate nodes
         for ($i=1; $i<= (int)$request['node-no']; $i++){
             DB::table('duty_node')->insert([
-                'duty_performance_no' => $request["performance_no"],
+                'duty_performance_no' => $request["performance-no"],
                 'node_id' => $i,
                 'node_date' => $request['date_'.$i],
                 'node_point_percentage' => $request['percentage_'.$i],
@@ -867,7 +867,7 @@ class PerformancesController extends Controller
         }
 
         return redirect('/')
-        ->with('status', "您已更新【".$request['performance_no']."】！");
+        ->with('status', "您已更新【".$request['performance-no']."】！");
     }
     
     public function PostProfit(Request $request){
