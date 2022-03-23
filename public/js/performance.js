@@ -33,25 +33,35 @@ window.onload = function(){
         }
     });
 
-    $.get('/performance/get-users',function (data){
-        $('#leader2').append(
-            '<option></option>'
-        );
-        
-        for (user in data) {
-            $('#leader').append(
-                '<option value="'+ data[user].id +'">' + data[user].name + '</option>'
-            );
-
+    $.get('/get-user',function(userDetail){
+        $.get('/performance/get-users',function (data){
             $('#leader2').append(
-                '<option value="'+ data[user].id +'">' + data[user].name + '</option>'
+                '<option></option>'
             );
-
-            $('#members').append(
-                '<option value="' + data[user].id + '">' + data[user].name + '</option>'
-            );
-        }
-        $('#members').selectpicker('refresh');
+            
+            for (user in data) {
+                
+                if(data[user].id == userDetail.id){
+                    $('#leader').append(
+                        '<option value="'+ data[user].id +'" selected="selected">' + data[user].name + '</option>'
+                    );
+                }
+                
+                $('#leader').append(
+                    '<option value="'+ data[user].id +'">' + data[user].name + '</option>'
+                );
+    
+                $('#leader2').append(
+                    '<option value="'+ data[user].id +'">' + data[user].name + '</option>'
+                );
+    
+                $('#members').append(
+                    '<option value="' + data[user].id + '">' + data[user].name + '</option>'
+                );
+            }
+            
+            $('#members').selectpicker('refresh');
+        });
     });
 
     $.get('/performance/get-categories',function (data){

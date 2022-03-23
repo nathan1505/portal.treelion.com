@@ -92,6 +92,8 @@ window.onload = function(){
                         '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                         '</td></tr>'
                     );
+
+                    /*
                     
                     $('#performance-table-employee').append(
                         '<tr><td style="width:5%"><font size="2">' +
@@ -107,6 +109,7 @@ window.onload = function(){
                         '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                         '</td></tr>'
                     );
+                    */
     
                 });
             }
@@ -157,7 +160,7 @@ window.onload = function(){
                             '</td></tr>'
                         );
 
-                        
+                        /*
                         $('#performance-table-employee').append(
                             '<tr><td style="width:5%"><font size="2">' +
                             element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
@@ -172,6 +175,7 @@ window.onload = function(){
                             '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                             '</td></tr>'
                         );
+                        */
                     }
                 });
             });

@@ -299,6 +299,12 @@ window.onload = function(){
                     console.log(data);
     
                     for (i in data){
+                        var cdate;
+                        if(data[i].confirmed_date){
+                            cdate = data[i].confirmed_date;
+                        }else{
+                            cdate = "";
+                        }
                         //append the completeness table
                         $('#nodes-table-body').append(
                             '<tr>' +
@@ -329,13 +335,16 @@ window.onload = function(){
                                     '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
                                     '<div class="row">' +
                                         '<div class="col">' +
-                                            '<label for="completeness">节点完成度</label>' +
-                                            '<input type="number" id="completeness" name="completeness" class="form-control" min=0 max=100 value="' + data[i].node_completeness+'">' +
+                                            '<label for="completeness">节点完成度</label><br>' +
+                                            '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;">' +
+                                                '<option value=0>未完成</option>' +
+                                                '<option value=100>已完成</option>' +
+                                            '</select>' +
                                         '</div>' +
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
-                                            '<label for="finish-date">完成日期</label>' +
+                                            '<label for="finish-date">完成日期：' + cdate + '</label>' +
                                             '<input type="date" name="finish-date" id="finish-date" class="form-control" value="' + data[i].confirmed_date+'" required>' +
                                         '</div>' +
                                     '</div>' +
@@ -384,15 +393,15 @@ window.onload = function(){
                                         '<div class="col">' +
                                             '<label for="completeness">节点完成度</label><br>' +
                                             '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;">' +
-                                                '<option selected="selected" value=0>未完成</option>' +
+                                                '<option value=0>未完成</option>' +
                                                 '<option value=100>已完成</option>' +
                                             '</select>' +
                                         '</div>' +
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
-                                            '<label for="finish-date">完成日期</label>' +
-                                            '<input type="date" name="finish-date" id="finish-date" class="form-control" value="' + data[i].confirmed_date +'" readonly>' +
+                                            '<label for="finish-date">完成日期：' + cdate + '</label>' +
+                                            '<input type="date" name="finish-date" id="finish-date" class="form-control" value="" style="visibility: hidden" readonly>' +
                                         '</div>' +
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
