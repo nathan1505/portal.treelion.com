@@ -23,17 +23,19 @@ function ToNumString(string $str){
 function GenerateDutyNum(){
     $current_duties = DB::table('performance_duty')->orderBy('create_timestamp','desc')->get();
     if (isset((json_decode(json_encode($current_duties), true))[0])){
-        $last_duty_no = (json_decode(json_encode($current_duties), true))[0]['performance_no'];
-        $last_duty_Month = substr($last_duty_no, 1, 2);
-        $last_duty_no = (int)substr($last_duty_no, 3);
+        $last_duty_no = (int)(json_decode(json_encode($current_duties), true))[0]['id'] + 1;
+        //$last_duty_Month = substr($last_duty_no, 1, 2);
+        //$last_duty_no = (int)substr($last_duty_no, 3);
+        /*
         if ($last_duty_Month == date('m')){
             $last_duty_no = sprintf("%03d", $last_duty_no + 1);
         }else{
             $last_duty_no = "001";
         }
-        return "D".date('m').$last_duty_no;
+        */
+        return $last_duty_no; //"D".date('m').$last_duty_no;
     }else{
-        return "D".date('m')."001";
+        return "001"; //"D".date('m')."001";
     }
 }
 
@@ -278,10 +280,10 @@ class PerformancesController extends Controller
 
         $basic_points = CalculateBasicPoints(18.0, $postContent['type'], $postContent['difficulty']);
 
-        //$performance_no = GenerateDutyNum();
+        $performance_no = $postContent["categories"].GenerateDutyNum();
         DB::table('performance_duty')->insert([
             'performance_content' => $postContent["content"],
-            'performance_no' => $postContent["performance-no"],
+            'performance_no' => $performance_no, //$postContent["performance-no"],
             'type' => $postContent['type'],
             'property' => $postContent['property'],
             'difficulty' => $postContent['difficulty'],
@@ -299,7 +301,7 @@ class PerformancesController extends Controller
         //Generate nodes
         for ($i=1; $i<= (int)$postContent['node-no']; $i++){
             DB::table('duty_node')->insert([
-                'duty_performance_no' => $postContent["performance-no"],
+                'duty_performance_no' => $performance_no, //$postContent["performance-no"],
                 'node_id' => $i,
                 'node_date' => $postContent['date_'.$i],
                 'node_point_percentage' => $postContent['percentage_'.$i],
@@ -308,7 +310,7 @@ class PerformancesController extends Controller
         }
 
         //Create Announcement for the duty
-        $announcementContent = '【'.Auth::user()->name.'】 创建了业绩事项 【'.$postContent["performance-no"].'】，请主管领导尽快审批';
+        $announcementContent = '【'.Auth::user()->name.'】 创建了业绩事项 【'.$performance_no.'】，请主管领导尽快审批';
         DB::table('announcements')->insert([
             'name' => Auth::user()->name,
             'content' =>  $announcementContent,
@@ -316,7 +318,7 @@ class PerformancesController extends Controller
         ]);
 
         return redirect('/')
-        ->with('status', "您已成功提交业绩事项 ".$postContent["performance-no"]."！");
+        ->with('status', "您已成功提交业绩事项 ".$performance_no."！");
     }
 
     //Get the info of some duty by its ID
@@ -838,6 +840,7 @@ class PerformancesController extends Controller
         DB::table('performance_duty')
                 ->where('performance_no', $request["performance_no"])
                 ->update([
+                    'performance_no' => $request["performance-no"],
                     'performance_content' => $request["content"],
                     'type' => $request["type"],
                     'property' => $request["property"],

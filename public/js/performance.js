@@ -54,6 +54,19 @@ window.onload = function(){
         $('#members').selectpicker('refresh');
     });
 
+    $.get('/performance/get-categories',function (data){
+        $('#categories').append(
+            '<option>选择类别编号</option>'
+        );
+        
+        for (user in data) {
+            $('#categories').append(
+                '<option value="'+ data[user].categories_no +'">' + data[user].description + ' - ' + data[user].categories_no + '</option>'
+            );
+
+        }
+    });
+
     $.get("/get-performances",function (dutyResponse) {
 
             $('#performance-no').append(

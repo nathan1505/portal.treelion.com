@@ -14,6 +14,12 @@ class UsersController extends Controller
         return $array;
     }
 
+    public function GetCategories(){
+        $response = DB::table('categories')->get();
+        $array = json_decode(json_encode($response), true);
+        return $array;
+    }
+
     public function GetManagers(){
         $response = DB::table('users')->where('role', 'manager')->get();
         $array = json_decode(json_encode($response), true);

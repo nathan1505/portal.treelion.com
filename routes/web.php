@@ -56,6 +56,8 @@ Route::get('/get-announcements', 'App\Http\Controllers\AnnouncementsController@G
 Route::get('/get-managers', 'App\Http\Controllers\UsersController@GetManagers');
 //Get the info of all users
 Route::get('/performance/get-users', 'App\Http\Controllers\UsersController@GetMembers');
+//Get the info of all categories
+Route::get('/performance/get-categories', 'App\Http\Controllers\UsersController@GetCategories');
 //Get the company name of specific user_id
 Route::get('/daily/get-company-name/{id}', 'App\Http\Controllers\DailyController@GetCompany');
 
