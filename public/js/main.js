@@ -44,16 +44,18 @@ window.onload = function(){
 
     $.get('/get-user',function(userDetail){
         $.get('/get-performances',function(data){
+        $.get('/get-notifications', function(notifications){
             var color = "";
             var status = "";
             
             //console.log(userDetail);
-            //console.log(data);
+            console.log(notifications);
             
             //console.log($('#performance-status').val());
             if(!$('#performance-status').val() && !$('#performance-property').val()){
-                data.forEach((element) => {
-        
+                data.forEach((element, index) => {
+                    var notif = notifications[index];
+                    
                     if (element.status == "processing") {
                         color = "table-success";
                         status = "进行中";
@@ -79,38 +81,20 @@ window.onload = function(){
                         disableTrue = "disabled=\"true\"";
                     };
                     $('#performance-table').append(
-                        '<tr><td style="width:5%"><font size="2">' +
+                        '<tr><td style="width:7%"><font size="2">' +
                         element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                        element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
-                        element.property + '</font></td><td style="width:10%"><font size="2">' +
-                        element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
+                        element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
+                        element.property + '</font></td><td style="width:12%"><font size="2">' +
+                        element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
                         status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                        element.completeness + '%</font></td><td>' +
-                        '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                        element.completeness + '%</font></td>' +
+                        '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
+                        '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                         '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                         '<a href="performance/hide/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
                         '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                         '</td></tr>'
                     );
-
-                    /*
-                    
-                    $('#performance-table-employee').append(
-                        '<tr><td style="width:5%"><font size="2">' +
-                        element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                        element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
-                        element.property + '</font></td><td style="width:10%"><font size="2">' +
-                        element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
-                        status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                        element.completeness + '%</font></td><td>' +
-                        '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                        '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
-                        '<a href="performance/hide/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
-                        '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                        '</td></tr>'
-                    );
-                    */
-    
                 });
             }
             
@@ -146,40 +130,25 @@ window.onload = function(){
                         };
                         
                         $('#performance-table').append(
-                            '<tr><td style="width:5%"><font size="2">' +
+                            '<tr><td style="width:7%"><font size="2">' +
                             element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                            element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
-                            element.property + '</font></td><td style="width:10%"><font size="2">' +
-                            element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
+                            element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
+                            element.property + '</font></td><td style="width:12%"><font size="2">' +
+                            element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
                             status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                            element.completeness + '%</font></td><td>' +
-                            '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                            element.completeness + '%</font></td>' +
+                            '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
+                            '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                             '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                             '<a href="performance/hide/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
                             '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                             '</td></tr>'
                         );
 
-                        /*
-                        $('#performance-table-employee').append(
-                            '<tr><td style="width:5%"><font size="2">' +
-                            element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                            element.performance_content + '</font></td><td style="width:10%"><font size="2">' +
-                            element.property + '</font></td><td style="width:10%"><font size="2">' +
-                            element.start_date + '</font></td><td style="width:10%;text-align:center;" class="'+ color +'"><font size="2">' +
-                            status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                            element.completeness + '%</font></td><td>' +
-                            '<a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
-                            '<a href="performance/hide/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
-                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                            '</td></tr>'
-                        );
-                        */
                     }
                 });
             });
-    
+        });
         });
     });
 

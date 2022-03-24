@@ -121,26 +121,17 @@
                             <div class="card-body performance-div">
                                 <table>
                                 <tr>
-                                    <td style="width:5%">编号</td>
+                                    <td style="width:7%">编号</td>
                                     <td style="width:20%">项目内容</td>
                                     <td style="width:11%">项目类别</td>
                                     <td style="width:12%">更新日期</td>
                                     <td style="width:11%">项目状态</td>
-                                    <td>积分</td>
+                                    <td style="width:35%">积分</td>
                                 </tr>
                                 </table>
                                 <table class="table table-striped">
                                     <tbody id="performance-table">
                                     </tbody>
-                                    <!--
-                                    @if ((Auth::user()->role != "employee"))
-                                        <tbody id="performance-table">
-                                        </tbody>
-                                    @else
-                                        <tbody id="performance-table-employee">
-                                        </tbody>
-                                    @endif
-                                    -->
                                 </table>
                             </div>
                         </div>

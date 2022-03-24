@@ -208,7 +208,7 @@ window.onload = function(){
                     '<input hidden name="performance_id" value="'+ data[0].id +'">'
                 );
     
-                if (data[0].status != "pending" && (userDetail.id == data[0].leader || userDetail.id == data[0].declarant_id)){
+                if (data[0].status != "pending" && (userDetail.id == data[0].leader || userDetail.id == data[0].declarant_id || userDetail.role == "admin")){
                     $('#duty-footer').remove();
                     $("#duty-change-status").append(
     

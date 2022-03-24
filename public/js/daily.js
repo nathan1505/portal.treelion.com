@@ -165,8 +165,9 @@ window.onload = function () {
                     data[i].performance_no + '</td><td style="width:30%">' +
                     data[i].performance_content + '</td><td style="width:17%">' +
                     data[i].start_date + '</td>' + 
-                    '<td><a href="/duties/' + data[i].id + '"><button class="btn btn-secondary btn-sm" style="float:center">查看</button></a>' +
-                    '</td></tr>'
+                    '<td><a href="/duties/' + data[i].id + '"><button class="btn btn-secondary btn-sm" style="float:center">查看</button></a></td>' +
+                    '<td><font color="#FF0000" size="2">' + data[i].notification + '</font></td>' +
+                    '</tr>'
                 );
             }
         }

@@ -232,15 +232,37 @@ class PerformancesController extends Controller
         ->where('status',"!=","end")->orderBy('timestamp','desc')->get();
         return $performances;
     }
+    
+    //Get all notification
+    public function GetAllNotifications(Request $request){
+        $performances = DB::table('performance_duty')
+        ->where('status',"!=","end")->orderBy('timestamp','desc')->get();
+        
+        $performances = json_decode($performances, true);
+        
+        $notifications = array();
+        
+        foreach ($performances as $p){
+            $today = Carbon::today()->format('Y-m-d');
+            if($p['next_date'] == $today){
+                array_push($notifications, "今天有节点申报");
+            }else{
+                array_push($notifications, "");
+            }
+        }
+        
+        return $notifications;
+    }
 
     //Get duties by user ID
     public function GetPerformanceDutiesByUserId(Request $request, $arg){
         $userId = (int)$arg;
         $response = DB::table('performance_duty')
                             ->where('status',"!=","end")
-                            ->orderBy('timestamp','desc')
+                            ->orderBy('status','desc')
                             ->get();
         $array = json_decode(json_encode($response), true);
+        $today = Carbon::today()->format('Y-m-d');
 
         $returnArray = array();
 
@@ -256,6 +278,19 @@ class PerformancesController extends Controller
             }
             
             if (in_array($userId, $userArray)){
+                $latest_node = DB::table('duty_node')
+                    ->where('duty_performance_no',"=",$duty['performance_no'])
+                    ->where('node_date',"=",$today)
+                    ->get();
+                $latest_node = json_decode(json_encode($latest_node), true);    
+                //var_dump($latest_node);
+                if($duty['next_date'] == $today && !isset($latest_node["node_completeness"])){
+                    $duty['notification'] = "今天你有节点未申报";
+                }else if($duty['next_date'] == $today && ($latest_node["node_completeness"] == 100 || $latest_node["node_completeness"] == 0)){
+                    $duty['notification'] = "今天节点已申报";
+                }else{
+                    $duty['notification'] = "";
+                }
                 array_push($returnArray, $duty);
             }
         }
@@ -280,10 +315,10 @@ class PerformancesController extends Controller
 
         $basic_points = CalculateBasicPoints(18.0, $postContent['type'], $postContent['difficulty']);
 
-        $performance_no = $postContent["categories"].GenerateDutyNum();
+        //$performance_no = $postContent["categories"].GenerateDutyNum();
         DB::table('performance_duty')->insert([
             'performance_content' => $postContent["content"],
-            'performance_no' => $performance_no, //$postContent["performance-no"],
+            'performance_no' => $postContent["performance-no"], //$performance_no,
             'type' => $postContent['type'],
             'property' => $postContent['property'],
             'difficulty' => $postContent['difficulty'],
@@ -301,7 +336,7 @@ class PerformancesController extends Controller
         //Generate nodes
         for ($i=1; $i<= (int)$postContent['node-no']; $i++){
             DB::table('duty_node')->insert([
-                'duty_performance_no' => $performance_no, //$postContent["performance-no"],
+                'duty_performance_no' => $postContent["performance-no"], //$performance_no,
                 'node_id' => $i,
                 'node_date' => $postContent['date_'.$i],
                 'node_point_percentage' => $postContent['percentage_'.$i],
@@ -310,7 +345,7 @@ class PerformancesController extends Controller
         }
 
         //Create Announcement for the duty
-        $announcementContent = '【'.Auth::user()->name.'】 创建了业绩事项 【'.$performance_no.'】，请主管领导尽快审批';
+        $announcementContent = '【'.Auth::user()->name.'】 创建了业绩事项 【'.$postContent["performance-no"].'】，请主管领导尽快审批';
         DB::table('announcements')->insert([
             'name' => Auth::user()->name,
             'content' =>  $announcementContent,
@@ -318,7 +353,7 @@ class PerformancesController extends Controller
         ]);
 
         return redirect('/')
-        ->with('status', "您已成功提交业绩事项 ".$performance_no."！");
+        ->with('status', "您已成功提交业绩事项 ".$postContent["performance-no"]."！");
     }
 
     //Get the info of some duty by its ID

@@ -162,7 +162,7 @@ class Kernel extends ConsoleKernel
                         'next_percentage' => $nodeArray[$next_id]['node_point_percentage'],
                     ]);
             }
-        })->daily();
+        })->hourly();
 
         $schedule->command('database:backup')->daily();
 

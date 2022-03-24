@@ -87,6 +87,8 @@ Route::get('/performance/profit', function(){
 Route::get('/get-user', 'App\Http\Controllers\PerformancesController@GetUserDetails');
 //Get all performance duties
 Route::get('/get-performances', 'App\Http\Controllers\PerformancesController@GetAllPerformances');
+//Get notification
+Route::get('/get-notifications', 'App\Http\Controllers\PerformancesController@GetAllNotifications');
 //Get performance duties by user ID
 Route::get('/get-performance/{id}', 'App\Http\Controllers\PerformancesController@GetPerformanceDutiesByUserId');
 //Get performance duty by duty ID
