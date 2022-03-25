@@ -299,12 +299,15 @@ window.onload = function(){
                     console.log(data);
     
                     for (i in data){
-                        var cdate;
+                        var cdate = "";
+                        var hidden = "";
                         if(data[i].confirmed_date){
                             cdate = data[i].confirmed_date;
-                        }else{
-                            cdate = "";
                         }
+                        if(data[i].node_completeness == 100){
+                            hidden = "visibility: hidden;";
+                        }
+
                         //append the completeness table
                         $('#nodes-table-body').append(
                             '<tr>' +
@@ -359,7 +362,7 @@ window.onload = function(){
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col" class="node-update-submit-div">' +
-                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>确认完成</button>' +
+                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>更新完成</button>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +
@@ -392,7 +395,7 @@ window.onload = function(){
                                     '<div class="row">' +
                                         '<div class="col">' +
                                             '<label for="completeness">节点完成度</label><br>' +
-                                            '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;">' +
+                                            '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;' + hidden + '">' +
                                                 '<option value=0>未完成</option>' +
                                                 '<option value=100>已完成</option>' +
                                             '</select>' +
@@ -415,7 +418,7 @@ window.onload = function(){
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col" class="node-update-submit-div">' +
-                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>确认完成</button>' +
+                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>更新完成</button>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +

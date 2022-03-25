@@ -128,7 +128,7 @@ window.onload = function () {
             //console.log(data);
             $('#duty-table-body').append(
                 '<tr>' +
-                '<td>状态</td><td>完成度</td><td>编号</td><td>项目内容</td><td>开始时间</td><td>详情</td>' +
+                '<font size="2"><td>状态</td><td>完成度</td><td>编号</td><td>项目内容</td><td>开始时间</td><td>详情</td></font>' +
                 '</tr>'
             );
 
