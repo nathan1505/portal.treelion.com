@@ -50,8 +50,8 @@
                         <!--
                         <a class="btn btn-success" type="button" href="/daily-register">早间申报</a>
                         <a class="btn btn-success" type="button" href='/daily/update/{{Auth::user()->id}}/{{date("Y-m-d")}}'>晚间申报</a>
-                        -->
                         <a class="btn btn-success" type="button" href='{{url('/duties')}}'>查看积分总表</a>
+                        -->
                         <a class="btn btn-success" type="button" href="/basic/register">基础项目申报</a>
                     </div>
                 </div>

@@ -214,13 +214,23 @@ function MonthlyPoints($dutyNo){
 class PerformancesController extends Controller
 {
     //Hide performance duty
-    public function HidePerformanceDuty(Request $request, $arg){
+    public function DeletePerformanceDuty(Request $request, $arg){
         $dutyId = (int)$arg;
+        
+        /*
+        $performance_no = DB::table('performance_duty')
+                            ->where('id', $dutyId)
+                            ->value('performance_no');
+        
+        DB::table('duty_node')
+            ->where('duty_performance_no');
+        */
+        
         DB::table('performance_duty')
-                ->where('id', $dutyId)
-                ->update([
-                    'status' => "end",
-                ]);
+            ->where('id', $dutyId)
+            ->update([
+                'status' => "end",
+            ]);
                 
         return redirect('/')
         ->with('status', "您已成功删除业绩事项！");
@@ -289,7 +299,7 @@ class PerformancesController extends Controller
                 }else if($duty['next_date'] == $today && ($latest_node["node_completeness"] == 100 || $latest_node["node_completeness"] == 0)){
                     $duty['notification'] = "今天节点已申报";
                 }else{
-                    $duty['notification'] = "";
+                    $duty['notification'] = "＊＊＊";
                 }
                 array_push($returnArray, $duty);
             }

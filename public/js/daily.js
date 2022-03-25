@@ -159,12 +159,11 @@ window.onload = function () {
 
                 $('#duty-table-body').append(
                     '<tr>'+
-                    '<td style="width:10%;text-align:center;" class="' + color + '">' + status + '</td>' +
-                    '<td style="width:10%;text-align:center;" class="' + color + '">' + data[i].completeness + '%</td>' +
-                    '<td style="width:5%">' +
-                    data[i].performance_no + '</td><td style="width:30%">' +
-                    data[i].performance_content + '</td><td style="width:17%">' +
-                    data[i].start_date + '</td>' + 
+                    '<td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' + status + '</font></td>' +
+                    '<td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' + data[i].completeness + '%</font></td>' +
+                    '<td style="width:5%"><font size="2">' + data[i].performance_no + '</font></td>' +
+                    '<td style="width:30%"><font size="2">' + data[i].performance_content + '</font></td>' +
+                    '<td style="width:17%"><font size="2">' + data[i].start_date + '</font></td>' + 
                     '<td><a href="/duties/' + data[i].id + '"><button class="btn btn-secondary btn-sm" style="float:center">查看</button></a></td>' +
                     '<td><font color="#FF0000" size="2">' + data[i].notification + '</font></td>' +
                     '</tr>'

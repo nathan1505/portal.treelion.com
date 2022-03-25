@@ -71,6 +71,7 @@
                         <option>团队搭建</option>
                         <option>资质申请</option>
                         <option>管理创新</option>
+                        <option>商业创新</option>
                     </select>
                 </div>
             </div>

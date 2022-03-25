@@ -137,7 +137,7 @@ window.onload = function(){
                     '<div class="row">' +
                     '<div class="col">' +
                     '<label for="percentage">积分比例(%)</label>' +
-                    '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="'+data[i-1].node_point_percentage+'">' +
+                    '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于10%" value="'+data[i-1].node_point_percentage+'">' +
                     '</div>' +
                     '</div>' +
                     '<div class="row" style="margin-top:15px">' +
@@ -184,7 +184,7 @@ window.onload = function(){
                         '<div class="row">' +
                         '<div class="col">' +
                         '<label for="percentage">积分比例(%)</label>' +
-                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%">' +
+                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于10%">' +
                         '</div>' +
                         '</div>' +
                         '<div class="row" style="margin-top:15px">' +
@@ -269,7 +269,7 @@ window.onload = function(){
                                         '<div class="row">' +
                                         '<div class="col">' +
                                         '<label for="percentage">积分比例(%)</label>' +
-                                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="'+data[i-1].node_point_percentage+'">' +
+                                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于10%" value="'+data[i-1].node_point_percentage+'">' +
                                         '</div>' +
                                         '</div>' +
                                         '<div class="row" style="margin-top:15px">' +
@@ -301,7 +301,7 @@ window.onload = function(){
                                         '<div class="row">' +
                                         '<div class="col">' +
                                         '<label for="percentage">积分比例(%)</label>' +
-                                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于20%" value="">' +
+                                        '<input type="number" id="percentage" name="percentage_' + i + '" class="form-control percentage" min=0 max=100 placeholder="原则上不低于10%" value="">' +
                                         '</div>' +
                                         '</div>' +
                                         '<div class="row" style="margin-top:15px">' +

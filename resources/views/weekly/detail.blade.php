@@ -19,7 +19,7 @@
             <div class="col">
                 <div class="card">
                     <div class="card-header">
-                        今月基础项目得分
+                        本週基础项目得分
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">

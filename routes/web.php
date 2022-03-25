@@ -106,7 +106,7 @@ Route::get('/duties/update-month-points', 'App\Http\Controllers\PerformancesCont
 //Showing page to edit performance duty
 Route::get('/performance/edit/{duty_id?}', 'App\Http\Controllers\PerformancesController@ShowPerformanceDuty');
 //Hide a performance duty
-Route::get('/performance/hide/{duty_id?}', 'App\Http\Controllers\PerformancesController@HidePerformanceDuty');
+Route::get('/performance/delete/{duty_id?}', 'App\Http\Controllers\PerformancesController@DeletePerformanceDuty');
 //Showing page to approve profit
 Route::get('/performance/edit-approval/{duty_id?}', 'App\Http\Controllers\PerformancesController@ShowProfitDuty');
 //Download attachment from profit application
