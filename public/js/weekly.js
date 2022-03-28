@@ -17,7 +17,7 @@ window.onload = function(){
                 '<td width="20%">' + element.name + '</td>' +
                 '<td width="20%">' + element.role + '</td>' +
                 '<td width="20%">' + element.node_no + '</td>' +
-                '<td width="20%">' + element.node_point + '</td>' +
+                '<td width="20%">' + Math.round(element.node_point) + '</td>' +
                 '</tr>'
             );
         });

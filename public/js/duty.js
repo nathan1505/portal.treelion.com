@@ -296,7 +296,7 @@ window.onload = function(){
             path = "/get-nodes/" + performance_no;
             $.get(path, data,
                 function (data, textStatus, jqXHR) {
-                    console.log(data);
+                    //console.log(data);
     
                     for (i in data){
                         var cdate = "";
@@ -418,7 +418,7 @@ window.onload = function(){
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col" class="node-update-submit-div">' +
-                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + '>更新完成</button>' +
+                                            '<button type="submit" class="btn btn-warning node-update-submit-button" ' + disableTrue + 'style="' + hidden + '">更新完成</button>' +
                                         '</div>' +
                                     '</div>' +
                                 '</div>' +

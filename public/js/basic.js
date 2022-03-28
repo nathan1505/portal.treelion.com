@@ -114,7 +114,7 @@ window.onload = function(){
             
             total_point1 += data[i].total_points;
         }
-        $('#month-basic-points').append(total_point1);
+        $('#month-basic-points').append(Math.round(total_point1));
         
         //$('#month-total-points').val() += total_point1;
         
@@ -158,22 +158,22 @@ window.onload = function(){
                 '<td style="width:12%">' + data[i].type + '</td>' + 
                 '<td style="width:7%">' + diff + '</td>' + 
                 '<td style="width:8%">' + role + '</td>' + 
-                '<td style="width:12%">' + data[i].basic_points.toFixed(1) + '</td>' + 
-                '<td style="width:12%">' + points.toFixed(2) + '</td>' + 
-                '<td style="width:15%">' + whole_project.toFixed(2) + '</td>' + 
-                '<td>' + data[i].profit_coefficient.toFixed(2) + '</td>' + 
+                '<td style="width:12%">' + Math.round(data[i].basic_points) + '</td>' + 
+                '<td style="width:12%">' + Math.round(points) + '</td>' + 
+                '<td style="width:15%">' + Math.round(whole_project) + '</td>' + 
+                '<td>' + data[i].profit_coefficient.toFixed(1) + '</td>' + 
                 
                 '</tr>'
             );
             
             total_point2+=points;
         }
-        $('#month-performance-points').append(total_point2.toFixed(2));
+        $('#month-performance-points').append(Math.round(total_point2));
 
     });
     
     $.get('/get-total-monthly', function (data){
-        $('#month-total-points').append(data);
+        $('#month-total-points').append(Math.round(data));
     });
     
     
