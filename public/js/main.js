@@ -77,9 +77,10 @@ window.onload = function(){
                     }
                     
                     var disableTrue = "";    
-                    if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin")){ //element.status == "pending"
+                    if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") || (element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
                         disableTrue = "disabled=\"true\"";
                     };
+
                     $('#performance-table').append(
                         '<tr><td style="width:7%"><font size="2">' +
                         element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
@@ -102,7 +103,9 @@ window.onload = function(){
                 console.log($('#performance-property').val());
                 $('#performance-table').empty();
                 $('#performance-table-employee').empty();
-                data.forEach((element) => {
+                data.forEach((element, index) => {
+                    var notif = notifications[index];
+
                     if(($('#performance-status').val() == element.status || !($('#performance-status').val())) &&
                     ($('#performance-property').val() == element.property || !($('#performance-property').val()))){
                         if (element.status == "processing") {
@@ -125,7 +128,7 @@ window.onload = function(){
                             status = "待审批";
                         }
                         var disableTrue = "";    
-                        if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin")){ //element.status == "pending"
+                        if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") || (element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
                             disableTrue = "disabled=\"true\"";
                         };
                         

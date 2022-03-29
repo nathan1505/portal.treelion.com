@@ -621,8 +621,8 @@ class PerformancesController extends Controller
                 'start_date' => $dutiesArray[$i]['start_date'],
                 'end_date' => $dutiesArray[$i]['end_date'],
                 'entire_completeness' => $dutiesArray[$i]['completeness'],
-                'basic_points' => $dutiesArray[$i]['basic_points'],
-                'gained_points' => $dutiesArray[$i]['gained_points'],
+                'basic_points' => round($dutiesArray[$i]['basic_points']),
+                'gained_points' => round($dutiesArray[$i]['gained_points']),
                 'latest_progress' => $dutiesArray[$i]['latest_progress'],
                 'node_no' => $dutiesArray[$i]['node_no'],
                 'next_date' => $dutiesArray[$i]['next_date'],
@@ -634,8 +634,9 @@ class PerformancesController extends Controller
                 //'node_completeness' => ,
                 'detail_url' => "/duties/".$dutiesArray[$i]['id'],
             );
-
-            array_push($row, $unit);
+            if($dutiesArray[$i]['status'] != 'end'){
+                array_push($row, $unit);
+            }
         }
 
         $returnJSON = array();

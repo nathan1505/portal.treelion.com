@@ -301,11 +301,13 @@ window.onload = function(){
                     for (i in data){
                         var cdate = "";
                         var hidden = "";
+                        var finish_title = "节点完成度";
                         if(data[i].confirmed_date){
                             cdate = data[i].confirmed_date;
                         }
                         if(data[i].node_completeness == 100){
                             hidden = "visibility: hidden;";
+                            finish_title = "节点已完成";
                         }
 
                         //append the completeness table
@@ -338,7 +340,7 @@ window.onload = function(){
                                     '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
                                     '<div class="row">' +
                                         '<div class="col">' +
-                                            '<label for="completeness">节点完成度</label><br>' +
+                                            '<label for="completeness">' + finish_title + '</label><br>' +
                                             '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;">' +
                                                 '<option value=0>未完成</option>' +
                                                 '<option value=100>已完成</option>' +
@@ -394,7 +396,7 @@ window.onload = function(){
                                     '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
                                     '<div class="row">' +
                                         '<div class="col">' +
-                                            '<label for="completeness">节点完成度</label><br>' +
+                                            '<label for="completeness">' + finish_title + '</label><br>' +
                                             '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;' + hidden + '">' +
                                                 '<option value=0>未完成</option>' +
                                                 '<option value=100>已完成</option>' +

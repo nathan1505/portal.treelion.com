@@ -86,7 +86,7 @@
                                     <h5 style="display:inline-block;float:left;">业绩事项</h5>
                                 </div>
                                 <a class="btn btn-success" type="button" href='{{url('/performance/register')}}' style="float:left;margin-left:15px">创建事项</a>
-                                <!--<a class="btn btn-success" type="button" href='{{url('/duties')}}' style="float:left;margin-left:15px">查看积分总表</a>-->
+                                <a class="btn btn-success" type="button" href='{{url('/duties')}}' style="float:left;margin-left:15px">查看积分总表</a>
                                 <a class="btn btn-warning" type="button" href='{{url('/performance/profit')}}' style="float:left;margin-left:15px">申报获利</a>
                                 <select id='performance-status' name='performance-status' class="form-control" style="float:left;width:20%;margin-left:15px">
                                     <option value="">--选择状态--</option>
