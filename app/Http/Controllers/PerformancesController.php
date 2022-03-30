@@ -8,6 +8,8 @@ use Illuminate\Support\Facades\Auth;
 use Carbon\Carbon;
 use App\Models\File;
 use Illuminate\Support\Facades\Storage;
+use App\Exports\Performance_DutyExport;
+use Maatwebsite\Excel\Facades\Excel;
 
 function ToNumString(string $str){
     $arrayToString = explode(' ',$str);
@@ -644,6 +646,11 @@ class PerformancesController extends Controller
         $returnJSON['totalNotFiltered'] = count($dutiesArray);
         $returnJSON['row'] = $row;
         return json_encode($returnJSON, true);
+    }
+    
+    public function ExportExcel()
+    {
+        return Excel::download(new Performance_DutyExport, 'Performance_Duty.xlsx');
     }
 
     /**

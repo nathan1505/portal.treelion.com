@@ -20,8 +20,9 @@
                 <div class="card">
                     <div class="card-header">
                         业绩赋分工作
+                        <a class="btn btn-success" type="button" href='{{url('/duties/export-excel')}}' style="margin-left:15px">汇出成Excel</a>
                     </div>
-
+                    
                     <!-- Start of card-body-->
                     <div class="card-body">
 

@@ -124,7 +124,7 @@
                                     <td style="width:7%">编号</td>
                                     <td style="width:20%">项目内容</td>
                                     <td style="width:11%">项目类别</td>
-                                    <td style="width:12%">更新日期</td>
+                                    <td style="width:12%">开始日期</td>
                                     <td style="width:11%">项目状态</td>
                                     <td style="width:35%">积分</td>
                                 </tr>
