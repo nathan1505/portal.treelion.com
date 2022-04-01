@@ -256,7 +256,7 @@ class PerformancesController extends Controller
         
         foreach ($performances as $p){
             $today = Carbon::today()->format('Y-m-d');
-            if($p['next_date'] == $today){
+            if($p['next_date'] == $today && $p['completeness'] < 100){
                 array_push($notifications, "今天有节点申报");
             }else{
                 array_push($notifications, "");
@@ -292,16 +292,25 @@ class PerformancesController extends Controller
             if (in_array($userId, $userArray)){
                 $latest_node = DB::table('duty_node')
                     ->where('duty_performance_no',"=",$duty['performance_no'])
-                    ->where('node_date',"=",$today)
+                    ->where('node_date',"<=",$today)
+                    ->where('node_completeness', "=", 0)
                     ->get();
-                //var_dump($latest_node);
+
                 //$latest_node = json_decode(json_encode($latest_node), true);    
                 if($latest_node->isEmpty()){
                     $duty['notification'] = "＊＊＊";
-                }else if(!isset($latest_node["node_completeness"]) && $duty['leader'] == $userId){
-                    $duty['notification'] = "今天你有节点申报";
-                }else if(!isset($latest_node["node_completeness"]) && $duty['leader'] != $userId){
-                    $duty['notification'] = "今天请項目组长申报节点";
+                }else if($duty['leader'] == $userId){
+                    $returnStr = '';
+                    foreach($latest_node as $single){
+                        $returnStr = $returnStr.''.$single->node_id.', ';
+                    }
+                    $duty['notification'] = "第".$returnStr."节点尚未申报完成";
+                }else if($duty['leader'] != $userId){
+                    $returnStr = '';
+                    foreach($latest_node as $single){
+                        $returnStr = $returnStr.''.$single->node_id.', ';
+                    }
+                    $duty['notification'] = "第".$returnStr."节点尚未申报，请項目组长申报完成节点";
                 }
 
                 array_push($returnArray, $duty);

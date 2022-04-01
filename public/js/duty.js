@@ -126,11 +126,11 @@ window.onload = function(){
     $.get(path, function(data){
         var disableTrue = "";
         $.get('/get-user',function(userDetail){
-            if(!(userDetail.id == data[0].leader || userDetail.id == data[0].declarant_id || filterByIdBoolean(data[0].members, userDetail.id)) && userDetail.role == "employee"){
+            if(!(userDetail.id == data[0].leader || userDetail.id == data[0].declarant_id || data[0].members.includes(userDetail.id)) && userDetail.role == "employee"){
                 disableTrue = "disabled=\"true\"";
             }
             
-            console.log(userDetail);
+            //console.log(data[0].members.includes(userDetail.id));
     
             //determine the color of difficulty, etc.
             var difficultyColor = "";

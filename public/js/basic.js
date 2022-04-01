@@ -179,7 +179,7 @@ window.onload = function(){
     
     $('#monthly-performance-table').append(
         '<tr>' +  //<td>开始日期</td><td>结束日期</td>
-        '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>基本积分</td><td>今月得分</td><td>項目總得分</td><td>貢獻度系數</td>' +
+        '<td >编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>项目总积分</td><td>个人今月实际得分</td><td>项目实际个人总得分</td><td>貢獻度系數</td>' +
         '</tr>'
     );
     

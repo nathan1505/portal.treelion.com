@@ -130,8 +130,13 @@
                                 </tr>
                                 </table>
                                 <table class="table table-striped">
-                                    <tbody id="performance-table">
-                                    </tbody>
+                                    @if ((Auth::user()->role != "employee"))
+                                        <tbody id="performance-table">
+                                        </tbody>
+                                    @else
+                                        <tbody id="performance-table-employee">
+                                        </tbody>
+                                    @endif
                                 </table>
                             </div>
                         </div>

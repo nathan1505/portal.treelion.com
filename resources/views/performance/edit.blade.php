@@ -29,7 +29,7 @@
 
             <div class="margin-top: 20px">
                 <label for="performance-no">编号</label>
-                <input id="performance-no" name="performance-no" type="input" class="form-control" value="{{$performancedata[0]['performance_no']}}" readonly>
+                <input id="performance-no" name="performance-no" type="input" class="form-control" value="{{$performancedata[0]['performance_no']}}">
             </div>
 
             <div style="margin-top: 20px">

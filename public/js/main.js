@@ -47,9 +47,10 @@ window.onload = function(){
         $.get('/get-notifications', function(notifications){
             var color = "";
             var status = "";
+            var hidden = "";
             
             //console.log(userDetail);
-            console.log(notifications);
+            //console.log(notifications);
             
             //console.log($('#performance-status').val());
             if(!$('#performance-status').val() && !$('#performance-property').val()){
@@ -77,7 +78,7 @@ window.onload = function(){
                     }
                     
                     var disableTrue = "";    
-                    if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") || (element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
+                    if(userDetail.role != "admin" || (userDetail.role != "admin" && element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
                         disableTrue = "disabled=\"true\"";
                     };
 
@@ -96,11 +97,25 @@ window.onload = function(){
                         '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                         '</td></tr>'
                     );
+                    
+                    $('#performance-table-employee').append(
+                        '<tr><td style="width:7%"><font size="2">' +
+                        element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
+                        element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
+                        element.property + '</font></td><td style="width:12%"><font size="2">' +
+                        element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
+                        status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
+                        element.completeness + '%</font></td>' +
+                        '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
+                        '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
+                        '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
+                        '</td></tr>'
+                    );
                 });
             }
             
             $("#performance-status, #performance-property").change(function () {
-                console.log($('#performance-property').val());
+                //console.log($('#performance-property').val());
                 $('#performance-table').empty();
                 $('#performance-table-employee').empty();
                 data.forEach((element, index) => {
@@ -127,10 +142,12 @@ window.onload = function(){
                             color = "table-warning";
                             status = "待审批";
                         }
+
                         var disableTrue = "";    
-                        if(!(userDetail.id == element.leader || userDetail.id == element.declarant_id || userDetail.role == "admin") || (element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
+                        if(userDetail.role != "admin" || (userDetail.role != "admin" && element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
                             disableTrue = "disabled=\"true\"";
                         };
+
                         
                         $('#performance-table').append(
                             '<tr><td style="width:7%"><font size="2">' +
@@ -144,6 +161,20 @@ window.onload = function(){
                             '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                             '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
                             '<a href="performance/delete/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
+                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
+                            '</td></tr>'
+                        );
+                        
+                        $('#performance-table-employee').append(
+                            '<tr><td style="width:7%"><font size="2">' +
+                            element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
+                            element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
+                            element.property + '</font></td><td style="width:12%"><font size="2">' +
+                            element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
+                            status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
+                            element.completeness + '%</font></td>' +
+                            '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
+                            '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
                             '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
                             '</td></tr>'
                         );
