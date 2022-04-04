@@ -256,11 +256,29 @@ class PerformancesController extends Controller
         
         foreach ($performances as $p){
             $today = Carbon::today()->format('Y-m-d');
+            
+            $latest_node = DB::table('duty_node')
+                ->where('duty_performance_no',"=",$p['performance_no'])
+                ->where('node_date',"<=",$today)
+                ->where('node_completeness', "=", 0)
+                ->get();
+            
+            if($p['next_date'] == $today && $p['completeness'] < 100){
+                array_push($notifications, "今天有节点申报");
+            }else if($latest_node->isEmpty()){
+                array_push($notifications, "");
+            }else{
+                array_push($notifications, "有节点延迟");
+            }
+            
+            /*
             if($p['next_date'] == $today && $p['completeness'] < 100){
                 array_push($notifications, "今天有节点申报");
             }else{
                 array_push($notifications, "");
             }
+            */
+
         }
         
         return $notifications;
@@ -476,7 +494,7 @@ class PerformancesController extends Controller
         ->update([
             "node_completeness" => $postContent["completeness"],
             "node_progress" => $postContent['progress'],
-            "confirmed_date" => $postContent['current_date'],
+            //"confirmed_date" => $postContent['current_date'],
             "node_completeness_coefficient" => $completenessCoefficient,
             "delayed_days" => $delayed_days,
             "confirmed_date" => $finishDate
@@ -518,6 +536,14 @@ class PerformancesController extends Controller
         echo 'complete degree: '.$completeDegree.'<br/>';
         echo 'completeness cofficient: '.$completenessCoefficient.'<br/>';
         */
+        
+        if($updateCompleteness == 100){
+            $status = 'done';
+        }
+        
+        if($completenessCoefficient < 1.0){
+            $status = 'delayed';
+        }
 
         //update the performance_duty table, by the performance duty no
         DB::table('performance_duty')->where('performance_no', $postContent['performance_no'])->update([
@@ -526,6 +552,7 @@ class PerformancesController extends Controller
             'leader_points' => $leader_points,
             'member_points' => $member_points,
             'completeness' => $updateCompleteness,
+            'status' => $status,
         ]);
         
 
@@ -864,6 +891,9 @@ class PerformancesController extends Controller
         $array = DB::table('performance_duty')->where('id',$dutyId)->get();
         $performancedata = json_decode(json_encode($array), true);
 
+        $id_name = DB::table('users')->where('id',$performancedata[0]['leader'])->get();
+        $id_name = json_decode(json_encode($id_name), true);
+
         $array2 = DB::table('users')->get();
         $user = json_decode(json_encode($array2), true);
         
@@ -871,7 +901,7 @@ class PerformancesController extends Controller
         ->orderBy('node_id')->get();
         $nodedata = json_decode(json_encode($array3), true);
         //return $array;
-        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user, 'nodedata' => $nodedata]);
+        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user, 'nodedata' => $nodedata, 'id_name' => $id_name]);
     }
     
     public function getTotalMonthlyPoints(Request $request){

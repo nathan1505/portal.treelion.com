@@ -207,9 +207,12 @@ window.onload = function(){
                 $('#check-duty').append(
                     '<input hidden name="performance_id" value="'+ data[0].id +'">'
                 );
-    
+                
                 if (data[0].status != "pending" && (userDetail.id == data[0].leader || userDetail.id == data[0].declarant_id || userDetail.role == "admin")){
                     $('#duty-footer').remove();
+                }
+    
+                if (data[0].status != "pending" && userDetail.role == "admin"){
                     $("#duty-change-status").append(
     
                         '<div class="form-group">' +

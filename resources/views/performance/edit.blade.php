@@ -21,7 +21,7 @@
         <div class="form-group">
             <div style="margin-top: 20px">
                 <label for="declarant">申报人</label>
-                <input id="declarant" type="input" class="form-control" readonly placeholder="{{Auth::user()->name}}">
+                <input id="declarant" type="input" class="form-control" readonly placeholder="{{$id_name[0]['name']}}">
                 <input style="visibility: hidden" name="member" type="input" value="{{Auth::user()->id}}">
                 <input style="visibility: hidden" name="duty_id" type="input" value="{{$performancedata[0]['id']}}">
                 <input style="visibility: hidden" name="performance_no" type="input" value="{{$performancedata[0]['performance_no']}}">
