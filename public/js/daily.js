@@ -124,8 +124,7 @@ window.onload = function () {
     });
 
     $.get('/get-user',function(userDetail){
-            $.get("/get-performance/" + userId,
-                function (data) {
+            $.get("/get-performance-id", function (data) {
                     //console.log(data);
                     $('#duty-table-body').append(
                         '<tr>' +

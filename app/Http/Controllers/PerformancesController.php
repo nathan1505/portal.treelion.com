@@ -189,7 +189,7 @@ function UpdateGainedPoints($dutyNo){
     return $basicPoints*$coefficient;
 }
 
-function MonthlyPoints($dutyNo){
+function MonthlyExpectedPoints($dutyNo){
     $basicPoints = DB::table('performance_duty')
                         ->where('performance_no', $dutyNo)
                         ->value('basic_points');
@@ -207,7 +207,7 @@ function MonthlyPoints($dutyNo){
     $coefficient = 0.0;
     
     foreach($array as $node){
-        $coefficient += ((float)$node['node_point_percentage'])/100 * $node['node_completeness_coefficient'];
+        $coefficient += ((float)$node['node_point_percentage'])/100 * 1.0;//$node['node_completeness_coefficient'];
     }
     
     return $basicPoints*$coefficient;
@@ -267,8 +267,8 @@ class PerformancesController extends Controller
     }
 
     //Get duties by user ID
-    public function GetPerformanceDutiesByUserId(Request $request, $arg){
-        $userId = (int)$arg;
+    public function GetPerformanceDutiesByUserId(Request $request){
+        $userId = Auth::user()->id;
         $response = DB::table('performance_duty')
                             ->where('status',"!=","end")
                             ->orderBy('status','desc')
@@ -464,6 +464,10 @@ class PerformancesController extends Controller
         }else{
             $delayed_days = 0 - $earlyDays;
         }
+        
+        if($postContent["completeness"] == 0){
+            $completenessCoefficient = 0;
+        }
 
         //Update the table `duty_node` by the request info
         DB::table('duty_node')
@@ -523,8 +527,10 @@ class PerformancesController extends Controller
             'member_points' => $member_points,
             'completeness' => $updateCompleteness,
         ]);
+        
 
-        return redirect('/')
+        $DutyId = Auth::user()->id;
+        return redirect('/daily/'.$DutyId)
         ->with('status', "您已更新【".$postContent['performance_no']."】的节点信息 【节点#".$postContent['node_id']."】！");
     }
 
@@ -813,9 +819,10 @@ class PerformancesController extends Controller
         $monthlyPoint = array();
         
         foreach ($dutyArray as $element){
+
             $members_no = (float) CountMembers($element->performance_no);
 
-            $total_points = (float) MonthlyPoints($element->performance_no);
+            $total_points = (float) MonthlyExpectedPoints($element->performance_no);
             //echo "AAAAAAA"+$total_points;
     
             $leader_points = bcmul($total_points, 0.2, 2) + bcdiv( bcmul($total_points, 0.8, 2) , $members_no, 2);

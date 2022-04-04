@@ -90,7 +90,7 @@ Route::get('/get-performances', 'App\Http\Controllers\PerformancesController@Get
 //Get notification
 Route::get('/get-notifications', 'App\Http\Controllers\PerformancesController@GetAllNotifications');
 //Get performance duties by user ID
-Route::get('/get-performance/{id}', 'App\Http\Controllers\PerformancesController@GetPerformanceDutiesByUserId');
+Route::get('/get-performance-id', 'App\Http\Controllers\PerformancesController@GetPerformanceDutiesByUserId');
 //Get performance duty by duty ID
 Route::get('/get-duty-detail/{duty_id?}', 'App\Http\Controllers\PerformancesController@SeeDuty');
 //Get nodes information of specific performance work, search by the performance ID
