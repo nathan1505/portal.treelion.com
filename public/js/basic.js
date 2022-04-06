@@ -124,7 +124,7 @@ window.onload = function(){
         var role;
         var userID = dutyId;
         var total_point2 = 0.0;
-        //console.log(data);
+        console.log(data);
         for (var i = 0; i < data.length; i++){
             var points;
             var whole_project;
@@ -159,7 +159,7 @@ window.onload = function(){
                 '<td style="width:7%">' + diff + '</td>' + 
                 '<td style="width:8%">' + role + '</td>' + 
                 '<td style="width:12%">' + Math.round(data[i].basic_points) + '</td>' + 
-                '<td style="width:12%">' + Math.round(points) + '</td>' + 
+                '<td style="width:12%">' + Math.round(data[i].this_month) + '</td>' + 
                 '<td style="width:15%">' + Math.round(whole_project) + '</td>' + 
                 '<td>' + data[i].profit_coefficient.toFixed(1) + '</td>' + 
                 

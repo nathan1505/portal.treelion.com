@@ -262,14 +262,25 @@ class PerformancesController extends Controller
                 ->where('node_date',"<=",$today)
                 ->where('node_completeness', "=", 0)
                 ->get();
+                
+            $status = DB::table('performance_duty')
+            ->where('performance_no', $p['performance_no'])
+            ->value('status');
             
             if($p['next_date'] == $today && $p['completeness'] < 100){
                 array_push($notifications, "今天有节点申报");
-            }else if($latest_node->isEmpty()){
-                array_push($notifications, "");
-            }else{
+            }else if($p['status'] == 'delayed' || ($p['status'] == 'processing' && !$latest_node->isEmpty())){
                 array_push($notifications, "有节点延迟");
+                $status = 'delayed';
+            }else{
+                array_push($notifications, "");
             }
+            
+            //update the performance_duty table, by the performance duty no
+            DB::table('performance_duty')->where('performance_no', $p['performance_no'])->update([
+                'status' => $status,
+            ]);
+            
             
             /*
             if($p['next_date'] == $today && $p['completeness'] < 100){
@@ -536,16 +547,13 @@ class PerformancesController extends Controller
         echo 'complete degree: '.$completeDegree.'<br/>';
         echo 'completeness cofficient: '.$completenessCoefficient.'<br/>';
         */
-        $status = DB::table('performance_duty')
-                    ->where('performance_no', $postContent['performance_no'])
-                    ->value('status');
         
+        $status = DB::table('performance_duty')
+        ->where('performance_no', $postContent['performance_no'])
+        ->value('status');
+    
         if($updateCompleteness == 100){
             $status = 'done';
-        }
-        
-        if($completenessCoefficient < 1.0){
-            $status = 'delayed';
         }
 
         //update the performance_duty table, by the performance duty no
@@ -841,7 +849,7 @@ class PerformancesController extends Controller
         $dutyArray_demo2 = $dutyArray_demo1->
                         whereNotIn('status', ['rejected', 'end']);
 
-        $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month")])->get();
+        $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month, 0 as this_month")])->get();
 
         //$performanceArray = array();
         //$dutyArray = $dutyArray->DB::raw('0 AS leader_month, 0 AS member_month');
@@ -869,6 +877,7 @@ class PerformancesController extends Controller
             //$element = $element->addSelect(DB::raw("{$member_points} as member_month"));
             $element->leader_month = $leader_points;
             $element->member_month = $member_points;
+            $element->this_month = $leader_points+$member_points*($members_no - 1);
         }
         
         //$currentMonth = date('m');
