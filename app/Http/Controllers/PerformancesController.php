@@ -536,6 +536,9 @@ class PerformancesController extends Controller
         echo 'complete degree: '.$completeDegree.'<br/>';
         echo 'completeness cofficient: '.$completenessCoefficient.'<br/>';
         */
+        $status = DB::table('performance_duty')
+                    ->where('performance_no', $postContent['performance_no'])
+                    ->value('status');
         
         if($updateCompleteness == 100){
             $status = 'done';
