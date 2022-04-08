@@ -207,7 +207,31 @@ function MonthlyExpectedPoints($dutyNo){
     $coefficient = 0.0;
     
     foreach($array as $node){
-        $coefficient += ((float)$node['node_point_percentage'])/100 * 1.0;//$node['node_completeness_coefficient'];
+        $coefficient += ((float)$node['node_point_percentage'])/100;//$node['node_completeness_coefficient'];
+    }
+    
+    return $basicPoints*$coefficient;
+}
+
+function MonthlyActualPoints($dutyNo){
+    $basicPoints = DB::table('performance_duty')
+                        ->where('performance_no', $dutyNo)
+                        ->value('basic_points');
+
+    $currentMonth = date('m');
+
+    $response = DB::table('duty_node')
+                    ->where('duty_performance_no', $dutyNo)
+                    ->whereMonth('node_date', '=' , $currentMonth)
+                    ->orderBy('node_id')
+                    ->get();
+
+    $array = json_decode(json_encode($response), true);
+    //var_dump($array);
+    $coefficient = 0.0;
+    
+    foreach($array as $node){
+        $coefficient += ((float)$node['node_point_percentage'])/100 * $node['node_completeness_coefficient'];
     }
     
     return $basicPoints*$coefficient;
@@ -259,7 +283,7 @@ class PerformancesController extends Controller
             
             $latest_node = DB::table('duty_node')
                 ->where('duty_performance_no',"=",$p['performance_no'])
-                ->where('node_date',"<=",$today)
+                ->where('node_date',"<",$today)
                 ->where('node_completeness', "=", 0)
                 ->get();
                 
@@ -554,6 +578,8 @@ class PerformancesController extends Controller
     
         if($updateCompleteness == 100){
             $status = 'done';
+        }else if($node['node_completeness'] == 100 && $updateCompleteness < 100){
+            $status = 'processing';
         }
 
         //update the performance_duty table, by the performance duty no
@@ -849,7 +875,7 @@ class PerformancesController extends Controller
         $dutyArray_demo2 = $dutyArray_demo1->
                         whereNotIn('status', ['rejected', 'end']);
 
-        $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month, 0 as this_month")])->get();
+        $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month, 0 as leader_month_actual, 0 as member_month_actual, 0 as this_month")])->get();
 
         //$performanceArray = array();
         //$dutyArray = $dutyArray->DB::raw('0 AS leader_month, 0 AS member_month');
@@ -861,7 +887,7 @@ class PerformancesController extends Controller
             $members_no = (float) CountMembers($element->performance_no);
 
             $total_points = (float) MonthlyExpectedPoints($element->performance_no);
-            //echo "AAAAAAA"+$total_points;
+            $total_points_actual = (float) MonthlyActualPoints($element->performance_no);
     
             $leader_points = bcmul($total_points, 0.2, 2) + bcdiv( bcmul($total_points, 0.8, 2) , $members_no, 2);
     
@@ -872,11 +898,22 @@ class PerformancesController extends Controller
                 $member_points = (float)bcdiv(($total_points - $leader_points) , ($members_no - 1), 2);
             }
             
+            $leader_month_actual = bcmul($total_points_actual, 0.2, 2) + bcdiv( bcmul($total_points_actual, 0.8, 2) , $members_no, 2);
+    
+            $member_points;
+            if ($members_no == 1.0){
+                $member_month_actual = 0.0;
+            } else {
+                $member_month_actual = (float)bcdiv(($total_points_actual - $leader_month_actual) , ($members_no - 1), 2);
+            }
+            
             //array_push($monthlyPoint, [$leader_points, $member_points]);
             //$element = $element->addSelect(DB::raw("{$leader_points} as leader_month"));
             //$element = $element->addSelect(DB::raw("{$member_points} as member_month"));
             $element->leader_month = $leader_points;
             $element->member_month = $member_points;
+            $element->leader_month_actual = $leader_month_actual;
+            $element->member_month_actual = $member_month_actual;
             $element->this_month = $leader_points+$member_points*($members_no - 1);
         }
         
@@ -930,10 +967,10 @@ class PerformancesController extends Controller
         $performance_total = 0.0;
         foreach ($PerformanceEvents as $element){
             if($element->leader == Auth::user()->id){
-                $performance_total += $element->leader_month;
+                $performance_total += $element->leader_month_actual;
             }
             else{
-                $performance_total += $element->member_month;
+                $performance_total += $element->member_month_actual;
             }
         }
         

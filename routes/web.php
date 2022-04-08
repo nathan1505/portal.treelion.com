@@ -232,5 +232,11 @@ Route::get('/weekly/detail', function(){
     return view('weekly.detail');
 })->middleware('auth');
 
+//---- Router for monthly report ----
+//Render detail page of every employees' monthly point
+Route::get('/monthly/detail', function(){
+    return view('monthly.detail');
+})->middleware('auth');
+
 //Get list of weekly point
 Route::get('/weekly/list-of-point', 'App\Http\Controllers\WeeklyController@GetWeeklyList');

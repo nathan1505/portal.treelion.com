@@ -143,12 +143,12 @@ window.onload = function(){
             
             if(data[i].leader == userID){
                 role = "组长";
-                points = data[i].leader_month;
+                points = data[i].leader_month_actual;
                 whole_project = data[i].leader_points;
             }
             else{
                 role = "组員";
-                points = data[i].member_month;
+                points = data[i].member_month_actual;
                 whole_project = data[i].member_points;
             }
             

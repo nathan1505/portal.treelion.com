@@ -41,6 +41,9 @@
                         <a class="nav-link" href="/weekly/detail">每周得分</a>
                     </li>
                     <li class="nav-item" style="position: relative; left: 130px">
+                        <a class="nav-link" href="/weekly/detail">每月得分</a>
+                    </li>
+                    <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/other">公司资料</a>
                     </li>
                 <!--/div-->
