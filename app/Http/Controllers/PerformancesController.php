@@ -857,6 +857,34 @@ class PerformancesController extends Controller
         }
     }
 
+
+    /**
+     * Update the `month_point` table
+     */
+    public function UpdateMonthPoints(Request $request){
+        $date = Carbon::now()->firstOfMonth();
+        echo $date;
+    }
+
+    //Show the edit page of performance duty by its ID
+    public function ShowPerformanceDuty(Request $request, $arg){
+        $dutyId = (int)$arg;
+        $array = DB::table('performance_duty')->where('id',$dutyId)->get();
+        $performancedata = json_decode(json_encode($array), true);
+
+        $id_name = DB::table('users')->where('id',$performancedata[0]['leader'])->get();
+        $id_name = json_decode(json_encode($id_name), true);
+
+        $array2 = DB::table('users')->get();
+        $user = json_decode(json_encode($array2), true);
+        
+        $array3 = DB::table('duty_node')->where('duty_performance_no',$performancedata[0]['performance_no'])
+        ->orderBy('node_id')->get();
+        $nodedata = json_decode(json_encode($array3), true);
+        //return $array;
+        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user, 'nodedata' => $nodedata, 'id_name' => $id_name]);
+    }
+    
     public function MonthlyPerformancePoint(Request $request){
         
         $dutyArray_demo = DB::table('performance_duty')->
@@ -870,7 +898,11 @@ class PerformancesController extends Controller
         
         $dutyArray_demo1 = $dutyArray_demo
                             ->whereMonth('start_date', '<=' , $currentMonth)
-                            ->whereMonth('end_date', '>=' , $currentMonth);
+                            ->where(function ($query){
+                                $currentMonth = date('m');
+                                $query->whereMonth('end_date', '>=' , $currentMonth)
+                                    ->orwhereMonth('next_date', '>=' , $currentMonth);
+                            });
         
         $dutyArray_demo2 = $dutyArray_demo1->
                         whereNotIn('status', ['rejected', 'end']);
@@ -924,33 +956,6 @@ class PerformancesController extends Controller
         
         //$groupByDate = DB::table('duty_node')->groupBy('confirmed_date')->get();
         return $dutyArray;
-    }
-
-    /**
-     * Update the `month_point` table
-     */
-    public function UpdateMonthPoints(Request $request){
-        $date = Carbon::now()->firstOfMonth();
-        echo $date;
-    }
-
-    //Show the edit page of performance duty by its ID
-    public function ShowPerformanceDuty(Request $request, $arg){
-        $dutyId = (int)$arg;
-        $array = DB::table('performance_duty')->where('id',$dutyId)->get();
-        $performancedata = json_decode(json_encode($array), true);
-
-        $id_name = DB::table('users')->where('id',$performancedata[0]['leader'])->get();
-        $id_name = json_decode(json_encode($id_name), true);
-
-        $array2 = DB::table('users')->get();
-        $user = json_decode(json_encode($array2), true);
-        
-        $array3 = DB::table('duty_node')->where('duty_performance_no',$performancedata[0]['performance_no'])
-        ->orderBy('node_id')->get();
-        $nodedata = json_decode(json_encode($array3), true);
-        //return $array;
-        return view('performance.edit', ['performancedata' => $performancedata, 'user' => $user, 'nodedata' => $nodedata, 'id_name' => $id_name]);
     }
     
     public function getTotalMonthlyPoints(Request $request){

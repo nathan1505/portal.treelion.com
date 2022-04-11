@@ -185,7 +185,7 @@ class BasicController extends Controller
         DB::table('basic_duty')
                 ->where('id', $dutyId)
                 ->update([
-                    'status' => "end",
+                    'status' => "delete",
                 ]);
                 
         return redirect('/daily/{$dutyId}')

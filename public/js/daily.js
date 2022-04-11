@@ -89,13 +89,16 @@ window.onload = function () {
                 } else if (data[i].status == "rejected") {
                     color = "table-danger";
                     status = "未通过";
+                } else if(data[i].status == "end"){
+                    color = "table-secondary";
+                    status = "结束";
                 } else {
                     color = "table-warning";
                     status = "待审批";
                 }
                 
                 if(userDetail.role != "employee"){
-                    if(data[i].status != "end"){
+                    if(data[i].status != "delete"){
                         $('#basic-duties-table').append(
                             '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
                             '<td style="width:30%">' + data[i].basic_content + '</td>' + 
@@ -107,7 +110,7 @@ window.onload = function () {
                         );
                     }
                 }else if(userDetail.id == data[i].member){
-                    if(data[i].status != "end"){
+                    if(data[i].status != "delete"){
                         $('#basic-duties-table').append(
                             '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
                             '<td style="width:30%">' + data[i].basic_content + '</td>' + 

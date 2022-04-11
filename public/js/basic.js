@@ -153,15 +153,15 @@ window.onload = function(){
             }
             
             $('#monthly-performance-table').append(
-                '<tr><td style="width:8%">' + data[i].performance_no + '</td>' + 
-                '<td style="width:12%">' + data[i].performance_content + '</td>' + 
-                '<td style="width:12%">' + data[i].type + '</td>' + 
-                '<td style="width:7%">' + diff + '</td>' + 
-                '<td style="width:8%">' + role + '</td>' + 
-                '<td style="width:12%">' + Math.round(data[i].basic_points) + '</td>' + 
-                '<td style="width:12%">' + Math.round(data[i].this_month) + '</td>' + 
-                '<td style="width:15%">' + Math.round(whole_project) + '</td>' + 
-                '<td>' + data[i].profit_coefficient.toFixed(1) + '</td>' + 
+                '<tr><td style="width:7%">' + data[i].performance_no + '</td>' + 
+                '<td style="width:10%">' + data[i].performance_content + '</td>' + 
+                '<td style="width:5%">' + data[i].type + '</td>' + 
+                '<td style="width:5%">' + diff + '</td>' + 
+                '<td style="width:5%">' + role + '</td>' + 
+                '<td style="width:5%">' + Math.round(data[i].basic_points) + '</td>' + 
+                '<td style="width:5%">' + Math.round(data[i].this_month) + '</td>' + 
+                '<td style="width:5%">' + Math.round(whole_project) + '</td>' + 
+                '<td style="width:5%">' + data[i].profit_coefficient.toFixed(1) + '</td>' + 
                 
                 '</tr>'
             );
@@ -179,13 +179,13 @@ window.onload = function(){
     
     $('#monthly-performance-table').append(
         '<tr>' +  //<td>开始日期</td><td>结束日期</td>
-        '<td >编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>身份</td><td>项目总积分</td><td>今月项目预计得分</td><td>项目实际个人总得分</td><td>貢獻度系數</td>' +
+        '<td style="width:7%">编号</td><td style="width:10%">项目内容</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">项目实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
         '</tr>'
     );
     
     $('#basic-duties-approved').append(
         '<tr>' +
-        '<td>编号</td><td>项目内容</td><td>项目类别</td><td>难度</td><td>更新日期</td><td>积分</td>' +
+        '<td style="width:10%">编号</td><td style="width:25%">项目内容</td><td style="width:20%">项目类别</td><td style="width:20%">难度</td><td style="width:15%">更新日期</td><td style="width:%">积分</td>' +
         '</tr>'
     );
 }
