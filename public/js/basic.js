@@ -77,7 +77,7 @@ window.onload = function(){
                 '<p class="card-text">难度 : ' + diff + '</p>' +
                 '<p class="card-text">状态 : ' + data[0].status + '</p>' +
                 '<p class="card-text">积分 : ' + data[0].total_points + '</p>' +
-                '<p class="card-text">更新日期 : ' + data[0].timestamp + '</p>'
+                '<p class="card-text">开始日期 : ' + data[0].timestamp + '</p>'
             );
         });
 

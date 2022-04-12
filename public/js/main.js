@@ -44,7 +44,7 @@ window.onload = function(){
 
     $.get('/get-user',function(userDetail){
         $.get('/get-performances',function(data){
-        $.get('/get-notifications', function(notifications){
+        //$.get('/get-notifications', function(notifications){
             var color = "";
             var status = "";
             var hidden = "";
@@ -54,8 +54,8 @@ window.onload = function(){
             
             //console.log($('#performance-status').val());
             if(!$('#performance-status').val() && !$('#performance-property').val()){
-                data.forEach((element, index) => {
-                    var notif = notifications[index];
+                data.forEach((element) => {
+                    var notif = element.notifications;
                     
                     if (element.status == "processing") {
                         color = "table-success";
@@ -182,7 +182,7 @@ window.onload = function(){
                     }
                 });
             });
-        });
+        //});
         });
     });
 

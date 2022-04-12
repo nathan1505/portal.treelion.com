@@ -352,7 +352,7 @@ window.onload = function(){
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
-                                            '<label for="finish-date">完成日期：' + cdate + '</label>' +
+                                            '<label for="finish-date">更新日期：' + cdate + '</label>' +
                                             '<input type="date" name="finish-date" id="finish-date" class="form-control" value="' + data[i].confirmed_date+'" required>' +
                                         '</div>' +
                                     '</div>' +
@@ -408,7 +408,7 @@ window.onload = function(){
                                     '</div>' +
                                     '<div class="row" style="margin-top:15px">' +
                                         '<div class="col">' +
-                                            '<label for="finish-date">完成日期：' + cdate + '</label>' +
+                                            '<label for="finish-date">更新日期：' + cdate + '</label>' +
                                             '<input type="date" name="finish-date" id="finish-date" class="form-control" value="" style="visibility: hidden" readonly>' +
                                         '</div>' +
                                     '</div>' +

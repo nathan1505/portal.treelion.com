@@ -265,21 +265,14 @@ class PerformancesController extends Controller
     
     //Get all duties
     public function GetAllPerformances(Request $request){
-        $performances = DB::table('performance_duty')
-        ->where('status',"!=","end")->orderBy('timestamp','desc')->get();
-        return $performances;
-    }
-    
-    //Get all notification
-    public function GetAllNotifications(Request $request){
-        $performances = DB::table('performance_duty')
+        $performances_get = DB::table('performance_duty')
         ->where('status',"!=","end")->orderBy('timestamp','desc')->get();
         
-        $performances = json_decode($performances, true);
+        $performances_get = json_decode(json_encode($performances_get), true);
         
-        $notifications = array();
+        $performances = array();
         
-        foreach ($performances as $p){
+        foreach ($performances_get as $p){
             $today = Carbon::today()->format('Y-m-d');
             
             $latest_node = DB::table('duty_node')
@@ -293,13 +286,15 @@ class PerformancesController extends Controller
             ->value('status');
             
             if($p['next_date'] == $today && $p['completeness'] < 100){
-                array_push($notifications, "今天有节点申报");
+                $p['notifications'] = "今天有节点申报";
             }else if($p['status'] == 'delayed' || ($p['status'] == 'processing' && !$latest_node->isEmpty())){
-                array_push($notifications, "有节点延迟");
+                $p['notifications'] = "有节点延迟";
                 $status = 'delayed';
             }else{
-                array_push($notifications, "");
+                $p['notifications'] = "";
             }
+            
+            array_push($performances, $p);
             
             //update the performance_duty table, by the performance duty no
             DB::table('performance_duty')->where('performance_no', $p['performance_no'])->update([
@@ -316,8 +311,7 @@ class PerformancesController extends Controller
             */
 
         }
-        
-        return $notifications;
+        return $performances;
     }
 
     //Get duties by user ID
