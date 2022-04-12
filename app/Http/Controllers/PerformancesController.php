@@ -579,7 +579,7 @@ class PerformancesController extends Controller
     
         if($updateCompleteness == 100){
             $status = 'done';
-        }else if($node['node_completeness'] == 100 && $updateCompleteness < 100){
+        }else if($postContent['completeness'] == 100 && $updateCompleteness < 100){
             $status = 'processing';
         }
 

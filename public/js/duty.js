@@ -199,7 +199,7 @@ window.onload = function(){
                     '<td>组员</td><td>' + GetMemberNameString(response, memberIdArray) + '</td></tr>'+
                     '<tr><td>开始日期</td><td>' + data[0].start_date + '</td><td>结束日期</td><td>' + data[0].end_date + '</td></tr>' +
                     '<tr><td>节点数</td><td>' + data[0].node_no + '</td><td>完成度</td><td>' + data[0].completeness + '%</td></tr>' +
-                    '<tr><td>基础赋分</td><td>' + data[0].basic_points + '</td><td>已获得积分</td><td>' + data[0].gained_points + '</td></tr>' +
+                    '<tr><td>基础赋分</td><td>' + Math.round(data[0].basic_points) + '</td><td>已获得积分</td><td>' + Math.round(data[0].gained_points) + '</td></tr>' +
                     '<tr><td>最新进展</td><td colspan=3>' + data[0].latest_progress + '</td></tr>' +
                     '<tr><td>状态</td><td><span style="color:'+ statusColor +'">' + status + '</td><td>申报人</td><td>' + filterById(response, data[0].declarant_id) + '</td></tr>'
                 );
@@ -279,18 +279,18 @@ window.onload = function(){
                 '</tr><tr>' +
                 '<td>难易系数</td><td>' + difficultyCoefficient + '</td>' +
                 '</tr><tr>' +
-                '<td>基础赋分</td><td>' + data[0].basic_points + '</td>' +
+                '<td>基础赋分</td><td>' + Math.round(data[0].basic_points) + '</td>' +
                 '</tr>'
             );
     
             $('#gained-table-body').append(
                 '<tr>' +
                 '<td>已获取积分</td>' +
-                '<td>' + data[0].gained_points + '</td>' +
+                '<td>' + Math.round(data[0].gained_points) + '</td>' +
                 '</tr><tr>' +
-                '<td>组长分配</td><td>' + data[0].leader_points + '</td>' +
+                '<td>组长分配</td><td>' + Math.round(data[0].leader_points) + '</td>' +
                 '</tr><tr>' +
-                '<td>组员分配</td><td>' + data[0].member_points + '</td>' +
+                '<td>组员分配</td><td>' + Math.round(data[0].member_points) + '</td>' +
                 '</tr>'
             );
     
@@ -305,7 +305,7 @@ window.onload = function(){
                         var cdate = "";
                         var hidden = "";
                         var finish_title = "节点完成度";
-                        if(data[i].confirmed_date){
+                        if(data[i].confirmed_date && data[i].node_completeness == 100){
                             cdate = data[i].confirmed_date;
                         }
                         if(data[i].node_completeness == 100){

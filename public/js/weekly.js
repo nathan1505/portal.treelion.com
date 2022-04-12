@@ -51,10 +51,8 @@ window.onload = function(){
 	       temparr.push(temp[key]);
 	   }
 	   element = temparr;
-	   console.log(element);
+	   //console.log(element);
 	   
-        
-        
         element.forEach((array) => {
             
             var this_week = "";
