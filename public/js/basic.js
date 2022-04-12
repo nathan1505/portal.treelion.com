@@ -167,6 +167,7 @@ window.onload = function(){
             );
             
             total_point2+=points;
+
         }
         $('#month-performance-points').append(Math.round(total_point2));
 

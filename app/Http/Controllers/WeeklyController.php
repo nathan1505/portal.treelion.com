@@ -32,11 +32,11 @@ class WeeklyController extends Controller
 {
     public function GetWeeklyList(Request $request){
         $now = Carbon::now();
-        $start = $now->startOfWeek()->format('Y-m-d H:i');
-        $end = $now->endOfWeek(Carbon::FRIDAY)->format('Y-m-d H:i');
+        $start = $now->startOfWeek()->format('Y-m-d');
+        $end = $now->endOfWeek(Carbon::FRIDAY)->format('Y-m-d');
         
-        $startlastweek = $now->startOfWeek()->subDays(7)->format('Y-m-d H:i');
-        $endlastweek = $now->endOfWeek(Carbon::FRIDAY)->format('Y-m-d H:i');
+        $startlastweek = $now->startOfWeek()->subDays(7)->format('Y-m-d');
+        $endlastweek = $now->endOfWeek(Carbon::FRIDAY)->format('Y-m-d');
 
         $performance_duty = DB::table('performance_duty')->where('status', '!=', 'end')->get();
         $performance = json_decode($performance_duty, true);

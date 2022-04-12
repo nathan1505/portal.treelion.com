@@ -227,12 +227,13 @@ function MonthlyActualPoints($dutyNo){
                     ->get();
 
     $array = json_decode(json_encode($response), true);
-    //var_dump($array);
+
     $coefficient = 0.0;
     
     foreach($array as $node){
-        $coefficient += ((float)$node['node_point_percentage'])/100 * $node['node_completeness_coefficient'];
+        $coefficient += ((float)$node['node_point_percentage'])/100 * $node['node_completeness']/100 * $node['node_completeness_coefficient'];
     }
+    
     
     return $basicPoints*$coefficient;
 }
@@ -894,14 +895,20 @@ class PerformancesController extends Controller
                                     orWhere('members', 'like', "%\"{$user_id}\"%");
                          });
                          
-        $currentMonth = date('m');
+        //$currentMonth = date('m');
+        $start = new Carbon('first day of this month');
+        $start = $start->startOfDay()->format('Y-m-d');
+        $end = new Carbon('last day of this month');
+        $end = $end->endOfDay()->format('Y-m-d');
         
         $dutyArray_demo1 = $dutyArray_demo
-                            ->whereMonth('start_date', '<=' , $currentMonth)
+                            ->where('start_date', '<=' , $end)
                             ->where(function ($query){
-                                $currentMonth = date('m');
-                                $query->whereMonth('end_date', '>=' , $currentMonth)
-                                    ->orwhereMonth('next_date', '>=' , $currentMonth);
+                                //$currentMonth = date('m');
+                                $start = new Carbon('first day of this month');
+                                $start = $start->startOfDay()->format('Y-m-d');
+                                $query->where('end_date', '>=' , $start)
+                                    ->orwhere('next_date', '>=' , $start);
                             });
         
         $dutyArray_demo2 = $dutyArray_demo1->
