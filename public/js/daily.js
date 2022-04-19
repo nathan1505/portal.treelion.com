@@ -149,7 +149,7 @@ window.onload = function () {
                         }
                         
                         var disableTrue = "";    
-                        if(userDetail.role != "admin" || (userDetail.role != "admin" && data[i].status != "pending" && (userDetail.id == data[i].leader || userDetail.id == data[i].declarant_id))){ //element.status == "pending"
+                        if(userDetail.role != "admin" && data[i].status != "pending" && !(userDetail.id == data[i].leader || userDetail.id == data[i].declarant_id)){ //element.status == "pending"
                             disableTrue = "disabled=\"true\"";
                         };
         
@@ -161,8 +161,8 @@ window.onload = function () {
                             '<td style="width:30%"><font size="2">' + data[i].performance_content + '</font></td>' +
                             '<td style="width:17%"><font size="2">' + data[i].start_date + '</font></td>' + 
                             '<td><a href="/duties/' + data[i].id + '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="performance/edit/' + data[i].id + '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
-                            '<a href="performance/delete/' + data[i].id + '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
+                            '<a href="/performance/edit/' + data[i].id + '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
+                            '<a href="/performance/delete/' + data[i].id + '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
                             '<a href="/performance/edit-approval/' +data[i].id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' + 
                             '</td>' +
                             '<td><font color="#FF0000" size="2">' + data[i].notification + '</font></td>' +

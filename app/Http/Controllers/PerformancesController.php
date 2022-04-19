@@ -614,7 +614,7 @@ class PerformancesController extends Controller
      * @param String property
      */
     public function GetDutiesTable(Request $request){
-        $dutiesArray = DB::table('performance_duty')->orderBy('timestamp','desc')->get();
+        $dutiesArray = DB::table('performance_duty')->where('status',"!=","end")->orderBy('timestamp','desc')->get();
         $dutiesArray = json_decode($dutiesArray, true);
 
         $userArray = DB::table('users')->get();

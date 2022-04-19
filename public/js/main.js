@@ -49,140 +49,166 @@ window.onload = function(){
             var status = "";
             var hidden = "";
             
+            data.forEach((element) => {
+                switch(element.status){
+                    case 'processing':
+                        element.status = '进行中';
+                        break;
+                    case 'done':
+                        element.status = '完成';
+                        break;
+                    case 'delayed':
+                        element.status = '延迟';
+                        break;
+                    case 'postponed':
+                        element.status = '暂缓';
+                        break;
+                    case 'rejected':
+                        element.status = '未通过';
+                        break;
+                    default:
+                        element.status = '待审批';
+                }
+            });
+            
+            var columns = {
+                performance_no: '编号',
+                performance_content: '项目内容',
+                property: '项目类别',
+                start_date: '开始日期',
+                status: '项目状态',
+                completeness: '积分',
+                notifications: '提醒',
+                id: '',
+            }
+            
             //console.log(userDetail);
             //console.log(notifications);
-            
-            //console.log($('#performance-status').val());
             if(!$('#performance-status').val() && !$('#performance-property').val()){
-                data.forEach((element) => {
-                    var notif = element.notifications;
-                    
-                    if (element.status == "processing") {
-                        color = "table-success";
-                        status = "进行中";
-                    } else if (element.status == "done") {
-                        color = "table-primary";
-                        status = "完成";
-                    } else if (element.status == "delayed") {
-                        color = "table-danger";
-                        status = "延迟";
-                    } else if (element.status == "postponed"){
-                        color = "table-secondary";
-                        status = "暂缓";
-                    } else if (element.status == "rejected") {
-                        color = "table-danger";
-                        status = "未通过";
-                    } else {
-                        color = "table-warning";
-                        status = "待审批";
+                var table = $('#root').tableSortable({
+                    data: data,
+                    columns: columns,
+                    searchField: '#searchField',
+                    rowsPerPage: 10,
+                    pagination: true,
+                    formatCell: function(row, key) {
+                        if (key === 'status') {
+                            switch(row[key]){
+                                case '进行中':
+                                    return $('<td></td>').addClass('font-weight-bold table-success').text(row[key]);
+                                case '完成':
+                                    return $('<td></td>').addClass('font-weight-bold table-primary').text(row[key]);
+                                case '延迟':
+                                    return $('<td></td>').addClass('font-weight-bold table-danger').text(row[key]);
+                                case '暂缓':
+                                    return $('<td></td>').addClass('font-weight-bold table-secondary').text(row[key]);
+                                case '未通过':
+                                    return $('<td></td>').addClass('font-weight-bold table-danger').text(row[key]);
+                                default:
+                                    return $('<td></td>').addClass('font-weight-bold table-warning').text(row[key]);
+                            }
+                        }
+                        if (key === 'completeness'){
+                            return $('<td"></td>').addClass('font-weight-bold').text(row[key]+'%');
+                        }
+                        if (key === 'notifications') {
+                            return $('<td style="color:red;"></td>').addClass('font-weight-bold').text(row[key]);
+                        }
+                        if (key === 'id'){
+                            if(userDetail.role == 'admin'){
+                                return $('<td"><button class="btn btn-secondary btn-sm" style="float:right"><a href="/duties/' +row[key]+ '" style="color: white">查看</a></button><button class="btn btn-success btn-sm" style="float:right"><a href="performance/edit/' +row[key]+ '" style="color: white">修改</a></button><button class="btn btn-danger btn-sm" style="float:right"><a href="performance/delete/' +row[key]+ '" style="color: white" onclick="return confirm(\'是否确定要删除项目？\')">刪除</a></button><button class="btn btn-warning btn-sm" style="float:right"><a href="/performance/edit-approval/' +row[key]+'" style="color: black">获利</a></button></td>');
+                            }else{
+                                return $('<td"><button class="btn btn-secondary btn-sm" style="float:right"><a href="/duties/' +row[key]+ '" style="color: white">查看</a></button><button class="btn btn-warning btn-sm" style="float:right"><a href="/performance/edit-approval/' +row[key]+'" style="color: black">获利</a></button></td>');
+                            }
+                        }
+                        // Finally return cell for rest of columns;
+                        return row[key];
+                    },
+                    tableWillMount: function() {
+                        console.log('table will mount')
+                    },
+                    tableDidMount: function() {
+                        console.log('table did mount')
+                    },
+                    tableWillUpdate: function() {console.log('table will update')},
+                    tableDidUpdate: function() {console.log('table did update')},
+                    tableWillUnmount: function() {console.log('table will unmount')},
+                    tableDidUnmount: function() {console.log('table did unmount')},
+                    onPaginationChange: function(nextPage, setPage) {
+                        setPage(nextPage);
                     }
-                    
-                    var disableTrue = "";    
-                    if(userDetail.role != "admin" || (userDetail.role != "admin" && element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
-                        disableTrue = "disabled=\"true\"";
-                    };
-
-                    $('#performance-table').append(
-                        '<tr><td style="width:7%"><font size="2">' +
-                        element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                        element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
-                        element.property + '</font></td><td style="width:12%"><font size="2">' +
-                        element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
-                        status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                        element.completeness + '%</font></td>' +
-                        '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
-                        '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                        '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
-                        '<a href="performance/delete/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
-                        '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                        '</td></tr>'
-                    );
-                    
-                    $('#performance-table-employee').append(
-                        '<tr><td style="width:7%"><font size="2">' +
-                        element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                        element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
-                        element.property + '</font></td><td style="width:12%"><font size="2">' +
-                        element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
-                        status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                        element.completeness + '%</font></td>' +
-                        '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
-                        '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                        '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                        '</td></tr>'
-                    );
                 });
             }
             
+            $('#changeRows').on('change', function() {
+                table.updateRowsPerPage(parseInt($(this).val(), 10));
+            })
+            
             $("#performance-status, #performance-property").change(function () {
-                //console.log($('#performance-property').val());
-                $('#performance-table').empty();
-                $('#performance-table-employee').empty();
-                data.forEach((element, index) => {
-                    var notif = notifications[index];
-
+                var dataarray = [];
+                data.forEach((element) => {
                     if(($('#performance-status').val() == element.status || !($('#performance-status').val())) &&
-                    ($('#performance-property').val() == element.property || !($('#performance-property').val()))){
-                        if (element.status == "processing") {
-                            color = "table-success";
-                            status = "进行中";
-                        } else if (element.status == "done") {
-                            color = "table-primary";
-                            status = "完成";
-                        } else if (element.status == "delayed") {
-                            color = "table-danger";
-                            status = "延迟";
-                        } else if (element.status == "postponed"){
-                            color = "table-secondary";
-                            status = "暂缓";
-                        } else if (element.status == "rejected") {
-                            color = "table-danger";
-                            status = "未通过";
-                        } else {
-                            color = "table-warning";
-                            status = "待审批";
+                        ($('#performance-property').val() == element.property || !($('#performance-property').val()))){
+                            dataarray.push(element);
                         }
-
-                        var disableTrue = "";    
-                        if(userDetail.role != "admin" || (userDetail.role != "admin" && element.status != "pending" && (userDetail.id == element.leader || userDetail.id == element.declarant_id))){ //element.status == "pending"
-                            disableTrue = "disabled=\"true\"";
-                        };
-
-                        
-                        $('#performance-table').append(
-                            '<tr><td style="width:7%"><font size="2">' +
-                            element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                            element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
-                            element.property + '</font></td><td style="width:12%"><font size="2">' +
-                            element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
-                            status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                            element.completeness + '%</font></td>' +
-                            '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
-                            '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="performance/edit/' +element.id+ '"><button class="btn btn-success btn-sm" style="float:right"'+disableTrue+'>修改</button></a>' +
-                            '<a href="performance/delete/' +element.id+ '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger btn-sm" style="float:right"'+disableTrue+'>刪除</button></a>' +
-                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                            '</td></tr>'
-                        );
-                        
-                        $('#performance-table-employee').append(
-                            '<tr><td style="width:7%"><font size="2">' +
-                            element.performance_no + '</font></td><td style="width:20%"><font size="2">' +
-                            element.performance_content + '</font></td><td style="width:11%"><font size="2">' +
-                            element.property + '</font></td><td style="width:12%"><font size="2">' +
-                            element.start_date + '</font></td><td style="width:11%;text-align:center;" class="'+ color +'"><font size="2">' +
-                            status + '</font></td><td style="width:10%;text-align:center;" class="' + color + '"><font size="2">' +
-                            element.completeness + '%</font></td>' +
-                            '<td style="text-align:center;"><font color="#FF0000" size="2">' + notif + '</font></td>' +
-                            '<td><a href="/duties/' +element.id+ '"><button class="btn btn-secondary btn-sm" style="float:right">查看</button></a>'+
-                            '<a href="/performance/edit-approval/' +element.id+'"<button class="btn btn-warning btn-sm" style="float:right">获利</button></a>' +
-                            '</td></tr>'
-                        );
-
+                });
+                //console.log(dataarray);
+                var table = $('#root').tableSortable({
+                    data: dataarray,
+                    columns: columns,
+                    searchField: '#searchField',
+                    rowsPerPage: 10,
+                    pagination: true,
+                    formatCell: function(row, key) {
+                        if (key === 'status') {
+                            switch(row[key]){
+                                case '进行中':
+                                    return $('<td></td>').addClass('font-weight-bold table-success').text(row[key]);
+                                case '完成':
+                                    return $('<td></td>').addClass('font-weight-bold table-primary').text(row[key]);
+                                case '延迟':
+                                    return $('<td></td>').addClass('font-weight-bold table-danger').text(row[key]);
+                                case '暂缓':
+                                    return $('<td></td>').addClass('font-weight-bold table-secondary').text(row[key]);
+                                case '未通过':
+                                    return $('<td></td>').addClass('font-weight-bold table-danger').text(row[key]);
+                                default:
+                                    return $('<td></td>').addClass('font-weight-bold table-warning').text(row[key]);
+                            }
+                        }
+                        if (key === 'completeness'){
+                            return $('<td"></td>').addClass('font-weight-bold').text(row[key]+'%');
+                        }
+                        if (key === 'notifications') {
+                            return $('<td style="color:red;"></td>').addClass('font-weight-bold').text(row[key]);
+                        }
+                        if (key === 'id'){
+                            if(userDetail.role == 'admin'){
+                                return $('<td"><button class="btn btn-secondary btn-sm" style="float:right"><a href="/duties/' +row[key]+ '" style="color: white">查看</a></button><button class="btn btn-success btn-sm" style="float:right"><a href="performance/edit/' +row[key]+ '" style="color: white">修改</a></button><button class="btn btn-danger btn-sm" style="float:right"><a href="performance/delete/' +row[key]+ '" style="color: white" onclick="return confirm(\'是否确定要删除项目？\')">刪除</a></button><button class="btn btn-warning btn-sm" style="float:right"><a href="/performance/edit-approval/' +row[key]+'" style="color: black">获利</a></button></td>');
+                            }else{
+                                return $('<td"><button class="btn btn-secondary btn-sm" style="float:right"><a href="/duties/' +row[key]+ '" style="color: white">查看</a></button><button class="btn btn-warning btn-sm" style="float:right"><a href="/performance/edit-approval/' +row[key]+'" style="color: black">获利</a></button></td>');
+                            }
+                        }
+                        // Finally return cell for rest of columns;
+                        return row[key];
+                    },
+                    tableWillMount: function() {
+                        console.log('table will mount')
+                    },
+                    tableDidMount: function() {
+                        console.log('table did mount')
+                    },
+                    tableWillUpdate: function() {console.log('table will update')},
+                    tableDidUpdate: function() {console.log('table did update')},
+                    tableWillUnmount: function() {console.log('table will unmount')},
+                    tableDidUnmount: function() {console.log('table did unmount')},
+                    onPaginationChange: function(nextPage, setPage) {
+                        setPage(nextPage);
                     }
                 });
-            });
-        //});
+                //console.log(table._dataset.dataset);
+                table.refresh(true);
+            })
         });
     });
 

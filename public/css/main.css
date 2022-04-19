@@ -21,7 +21,7 @@ table {
 
 table tbody tr {
     width: 100%;
-    display: table; /* 重要代码 */ 
+    /* display: table;  重要代码 */ 
 }
 
 table tbody tr td {
