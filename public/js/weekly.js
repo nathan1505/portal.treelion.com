@@ -2,7 +2,7 @@ window.onload = function(){
 
     $('#weekly-list-detail').append(
         '<tr>' +
-        '<td width="10%">名字</td><td width="10%">今周编号（节点）</td><td width="10%">上周编号（节点）</td><td width="5%">今周预测分数</td><td width="5%">今周实际分数</td><td width="5%">上周预测分数</td><td width="5%">上周实际分数</td>' +
+        '<td width="10%">名字</td><td width="10%">今周编号（节点）</td><td width="10%">上周编号（节点）</td><td width="5%">今周预测分数</td><td width="5%">今周实际分数</td><td width="5%">上周实际分数</td>' +
         '</tr>'
     );
 
@@ -86,7 +86,7 @@ window.onload = function(){
                 '<td width="10%">' + last_week +'</td>' +
                 '<td width="5%">' + Math.round(array.node_point_expected) + '</td>' +
                 '<td width="5%">' + Math.round(array.node_point) + '</td>' +
-                '<td width="5%">' + Math.round(array.node_point_expected_lastweek) + '</td>' +
+                //'<td width="5%">' + Math.round(array.node_point_expected_lastweek) + '</td>' +
                 '<td width="5%">' + Math.round(array.node_point_lastweek) + '</td>' +
                 '</tr>'
             );

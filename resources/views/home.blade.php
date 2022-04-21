@@ -90,7 +90,7 @@
                                 <a class="btn btn-success" type="button" href='{{url('/duties')}}' style="float:left;margin-left:15px">查看积分总表</a>
                                 <a class="btn btn-warning" type="button" href='{{url('/performance/profit')}}' style="float:left;margin-left:15px">申报获利</a>
                                 <select id='performance-status' name='performance-status' class="form-control" style="float:left;width:15%;margin-left:15px">
-                                    <option value="">--选择状态--</option>
+                                    <option value="">--所有选择状态--</option>
                                     <option value="待审批">待审批</option>
                                     <option value="进行中">进行中</option>
                                     <option value="完成">完成</option>
@@ -99,7 +99,7 @@
                                     <option value="暂缓">暂缓</option>
                                 </select>
                                 <select id='performance-property' name='performance-property' type="input" class="form-control" style="float:left;width:15%;margin-left:15px">
-                                    <option value="">--选择类别属性--</option>
+                                    <option value="">--所有类别属性--</option>
                                     <option value="宣发">宣发</option>
                                     <option value="销售">销售</option>
                                     <option value="商务拓展">商务拓展</option>
@@ -118,7 +118,7 @@
                                     <option value="管理创新">管理创新</option>
                                     <option value="商业创新">商业创新</option>
                                 </select>
-                                <input type="text" class="form-control" style="float:left;width:15%;margin-left:15px" placeholder="Search in table..." id="searchField">
+                                <input type="text" class="form-control" style="float:left;width:15%;margin-left:15px" placeholder="表格中搜索" id="searchField">
                                 <div class="d-flex justify-content-end" style="float:left;margin-left:15px">
                                     <select class="custom-select" name="rowsPerPage" id="changeRows">
                                         <option value="1">1</option>

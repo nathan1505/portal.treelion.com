@@ -206,6 +206,10 @@ window.onload = function(){
                         setPage(nextPage);
                     }
                 });
+                
+                $('#changeRows').on('change', function() {
+                    table.updateRowsPerPage(parseInt($(this).val(), 10));
+                })
                 //console.log(table._dataset.dataset);
                 table.refresh(true);
             })

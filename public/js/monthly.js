@@ -11,9 +11,7 @@ window.onload = function(){
         '<td width="5%">业绩实际分数</td>' +
         '<td width="5%">预测总和分数</td>' +
         '<td width="5%">实际总和分数</td>' +
-        '<td width="5%">上月业绩预测分数</td>' +
         '<td width="5%">上月业绩实际分数</td>' +
-        '<td width="5%">上月预测总和分数</td>' +
         '<td width="5%">上月实际总和分数</td>' +
         '</tr>'
     );
@@ -34,9 +32,7 @@ window.onload = function(){
                 '<td width="5%">' + Math.round(element.point) + '</td>' +
                 '<td width="5%">' + Math.round(element.basic_points+element.point_expected) + '</td>' +
                 '<td width="5%">' + Math.round(element.basic_points+element.point) + '</td>' +
-                '<td width="5%">' + Math.round(element.point_expected_lastmonth) + '</td>' +
                 '<td width="5%">' + Math.round(element.point_lastmonth) + '</td>' +
-                '<td width="5%">' + Math.round(element.basic_points+element.point_expected_lastmonth) + '</td>' +
                 '<td width="5%">' + Math.round(element.basic_points+element.point_lastmonth) + '</td>' +
                 '</tr>'
             );
