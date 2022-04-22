@@ -30,17 +30,29 @@ function CountMembers($performance_no){
 
 class MonthlyController extends Controller
 {
+    
+    //Get the monthly point of every members
     public function GetMonthlyList(Request $request){
+        
+        $yearmonth = $request->yearmonth;
+
+        $start = Carbon::parse($yearmonth)->startOfMonth()->format('Y-m-d');
+        $end = Carbon::parse($yearmonth)->endofMonth()->format('Y-m-d');
+
         //$now = Carbon::now();
+        /*
         $start = new Carbon('first day of this month');
         $start = $start->startOfDay()->format('Y-m-d');
         $end = new Carbon('last day of this month');
         $end = $end->endOfDay()->format('Y-m-d');
-
+        */
+        
+        /*
         $startlastmonth = new Carbon('first day of last month');
         $startlastmonth = $startlastmonth->startOfDay()->format('Y-m-d');
         $endlastmonth = new Carbon('last day of last month');
         $endlastmonth = $endlastmonth->endOfDay()->format('Y-m-d');
+        */
         
         $eachuser = DB::table('users')->where('id', '!=', 1)->get();
         $eachuser = json_decode($eachuser, true);
@@ -54,6 +66,7 @@ class MonthlyController extends Controller
             
             $basic_points = 0;
             $basic_no = "";
+
             foreach($basic_duty as $b){
                 $basic_points += $b['total_points'];
                 $basic_no = $basic_no.' '.$b['basic_no'].'';
@@ -104,12 +117,7 @@ class MonthlyController extends Controller
                     $leader_points = bcmul($base_point, 0.2, 2) + bcdiv( bcmul($base_point, 0.8, 2) , $members_no, 2);
                     $leader_points_expected = bcmul($base_point_expected, 0.2, 2) + bcdiv( bcmul($base_point_expected, 0.8, 2) , $members_no, 2);
                     $member_list = json_decode($p['members']);
-                    /*
-                    if($user['id'] == 14){
-                        var_dump($p['performance_no']);
-                        var_dump($d['node_date']);
-                    }
-                    */
+
                     if($d['node_date'] >= $start && $d['node_date'] <= $end){
                         if($user['id'] == $p['leader'] && $members_no == 1){
                             //$role = "1组长";
@@ -126,18 +134,12 @@ class MonthlyController extends Controller
                                 $point_expected += (float)bcdiv(($base_point_expected - $leader_points_expected) , ($members_no - 1), 2);
                             }
                         }
-                    /*
-                    if($user['id'] == 13){
-                        var_dump($role, $p['id']);
-                        var_dump($p['performance_no']);
-                        var_dump($d['node_date']);
-                        var_dump($point);
-                    }
-                    */
+
                         
                         $performance_no = $performance_no." ".$p['performance_no']."";
                         $performance_no = implode(' ', array_unique(explode(' ', $performance_no)));
                     }
+                    /*
                     if($d['node_date'] >= $startlastmonth && $d['node_date'] <= $endlastmonth){
                         if($user['id'] == $p['leader']){
                             $point_lastmonth += $base_point;
@@ -155,20 +157,41 @@ class MonthlyController extends Controller
                         $performance_no_lastmonth = $performance_no_lastmonth." ".$p['performance_no']."";
                         $performance_no_lastmonth = implode(' ', array_unique(explode(' ', $performance_no_lastmonth)));
                     }
+                    */
                 }
+            }
+            
+            $basic_points_actual = 0;
+            $basic_points_distribute = 0;
+            $total = $basic_points+$point;
+            
+            if($user['istechnical'] || $basic_points < 40){
+                $basic_points_actual = $basic_points;
+            }else if($basic_points >= 40){
+                $basic_points_actual = 40;
+                $basic_points_distribute = $basic_points - 40;
+            }
+            
+            if(!$user['istechnical'] && ($basic_points_actual+$point) < 100){
+                if($total > 100) $total = 100;
             }
             
             $column = array(
                 "user_id" => $user['id'],
                 "name" => $user['name'],
                 "basic_points" => $basic_points,
+                "basic_points_actual" => $basic_points_actual,
+                "basic_points_distribute" => $basic_points_distribute,
                 "basic_no" => $basic_no,
                 "performance_no" => $performance_no,
-                "performance_no_lastmonth" => $performance_no_lastmonth,
+                //"performance_no_lastmonth" => $performance_no_lastmonth,
                 "point" => $point,
                 "point_expected" => $point_expected,
-                "point_lastmonth" => $point_lastmonth,
-                "point_expected_lastmonth" => $point_expected_lastmonth,
+                //"point_lastmonth" => $point_lastmonth,
+                //"point_expected_lastmonth" => $point_expected_lastmonth,
+                "total_expected" => $basic_points+$point_expected,
+                "total" => $total,
+                
             );
             //var_dump($column);
             array_push($array, $column);

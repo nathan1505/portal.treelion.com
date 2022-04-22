@@ -240,4 +240,4 @@ Route::get('/monthly/detail', function(){
 })->middleware('auth');
 
 //Get list of monthly point
-Route::get('/monthly/list-of-point', 'App\Http\Controllers\MonthlyController@GetMonthlyList');
+Route::get('/monthly/list-of-point/{yearmonth}', 'App\Http\Controllers\MonthlyController@GetMonthlyList');

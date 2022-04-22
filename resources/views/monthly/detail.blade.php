@@ -42,11 +42,12 @@
                 <div class="card">
                     <div class="card-header">
                         本月基础项目得分
+                        <input type="month" id="yearmonth" name="yearmonth" value="2022-04">
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">
-                            <tbody id="monthly-list-detail">
-                            </tbody>
+                            <tbody id="monthly-list-topic"></tbody>
+                            <tbody id="monthly-list-detail"></tbody>
                         </table>
                     </div>
                 </div>
@@ -55,6 +56,52 @@
         <!--Row 1 ends-->
     </div>
     <script>
+    
+        let date= new Date()
+        let month=("0" + (date.getMonth() + 1)).slice(-2)
+        let year=date.getFullYear()
+        document.getElementById("yearmonth").value = `${year}-${month}`;
+        
+        const yearmonth = document.getElementById("yearmonth").value;
+        
+        $(document).ready(function(){
+            $("#yearmonth").on("input", function(){
+                // Print entered value in a div box
+                var yearmonth = document.getElementById("yearmonth").value;
+                //console.log(yearmonth);
+                 $.ajax({
+                    url: '/monthly/list-of-point/'+yearmonth,
+                    type: "get",
+                    //data: {'yearmonth':yearmonth},
+                    success: function (response) {
+                        //console.log(response);
+                        $('#monthly-list-detail').empty();
+                        data = (Object.values(response));
+                        data.sort((a, b) => (a.name > b.name) ? 1 : -1);
+                        //console.log(data);
+                        data.forEach((element) => {
+                            $('#monthly-list-detail').append(
+                                '<tr>' +
+                                '<td width="5%">' + element.name + '</td>' +
+                                '<td width="5%">' + element.basic_points +'</td>' +
+                                '<td width="5%">' + element.basic_points_actual +'</td>' +
+                                '<td width="10%">' + element.performance_no +'</td>' +
+                                '<td width="5%">' + Math.round(element.point) + '</td>' +
+                                '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
+                                '<td width="5%">xxx</td>' +
+                                '<td width="5%">' + element.basic_points_distribute +'</td>' +
+                                '<td width="5%">' + Math.round(element.total) + '</td>' +
+                                '</tr>'
+                            );
+                        });
+                    },
+                    error: function(response){
+                        alert('Error'+response);
+                    }
+                });
+            });
+        });
+
         //Get the button
         var mybutton = document.getElementById("myBtn");
         
