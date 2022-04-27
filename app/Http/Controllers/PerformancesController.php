@@ -345,7 +345,7 @@ class PerformancesController extends Controller
                     ->get();
 
                 //$latest_node = json_decode(json_encode($latest_node), true);    
-                if($latest_node->isEmpty()){
+                if($latest_node->isEmpty() || $duty['status'] == "done"){
                     $duty['notification'] = "＊＊＊";
                 }else if($duty['leader'] == $userId){
                     $returnStr = '';
@@ -973,10 +973,10 @@ class PerformancesController extends Controller
         $performance_total = 0.0;
         foreach ($PerformanceEvents as $element){
             if($element->leader == Auth::user()->id){
-                $performance_total += $element->leader_month_actual;
+                $performance_total += round($element->leader_month_actual, 0);
             }
             else{
-                $performance_total += $element->member_month_actual;
+                $performance_total += round($element->member_month_actual, 0);
             }
         }
         
@@ -990,7 +990,7 @@ class PerformancesController extends Controller
             $members = "";
         }
         
-        echo $request;
+        $basic_points = CalculateBasicPoints(18.0, $request['type'], $request['difficulty']);
         
         DB::table('performance_duty')
                 ->where('performance_no', $request["performance_no"])
@@ -1000,6 +1000,7 @@ class PerformancesController extends Controller
                     'type' => $request["type"],
                     'property' => $request["property"],
                     'difficulty' => $request["difficulty"],
+                    'basic_points' => $basic_points,
                     'node_no' => (int) $request["node-no"],
                     'leader' => (int) $request["leader"],
                     'second_leader' => (int)$request['leader2'],
@@ -1009,21 +1010,35 @@ class PerformancesController extends Controller
                 ]);
         
         //Update the table `duty_node` by the request info
+        $node_memory = DB::table('duty_node')->where('duty_performance_no', $request['performance-no'])->get();
+        
+        $node_memory = json_decode(json_encode($node_memory), true);
+
         DB::table('duty_node')
         ->where('duty_performance_no', $request['performance-no'])
         ->delete();
-        
+
         //Generate nodes
         for ($i=1; $i<= (int)$request['node-no']; $i++){
+            if(array_key_exists($i-1, $node_memory)){
+                $node_progress = $node_memory[$i-1]['node_progress'];
+                $node_completeness = $node_memory[$i-1]['node_completeness'];
+            }else{
+                $node_progress = "";
+                $node_completeness = 0;
+            }
             DB::table('duty_node')->insert([
                 'duty_performance_no' => $request["performance-no"],
                 'node_id' => $i,
                 'node_date' => $request['date_'.$i],
                 'node_point_percentage' => $request['percentage_'.$i],
-                'node_goal' => $request['goal_'.$i]
+                'node_goal' => $request['goal_'.$i],
+                'node_progress' => $node_progress,
+                'node_completeness' => $node_completeness,
             ]);
         }
 
+        
         return redirect('/')
         ->with('status', "您已更新【".$request['performance-no']."】！");
     }

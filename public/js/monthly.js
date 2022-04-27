@@ -21,8 +21,8 @@ window.onload = function(){
     );
 
     $.get('/monthly/list-of-point/'+yearmonth,function(data){
-        data = (Object.values(data));
-        data.sort((a, b) => (a.name > b.name) ? 1 : -1);
+        //data = (Object.values(data));
+        //data.sort((a, b) => (a.id > b.id) ? 1 : -1);
         //console.log(data);
         data.forEach((element) => {
             $('#monthly-list-detail').append(
@@ -37,7 +37,7 @@ window.onload = function(){
                 '<td width="5%">' + Math.round(element.point) + '</td>' +
                 //'<td width="5%">' + Math.round(element.total_expected) + '</td>' +
                 '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
-                '<td width="5%">xxx</td>' +
+                '<td width="5%">' + element.attendance + '</td>' +
                 '<td width="5%">' + element.basic_points_distribute +'</td>' +
                 '<td width="5%">' + Math.round(element.total) + '</td>' +
                 //'<td width="5%">' + Math.round(element.point_lastmonth) + '</td>' +

@@ -216,8 +216,9 @@ class BasicController extends Controller
             'content' =>  $announcementContent,
             'is_important' => 1,
         ]);
-
-        return redirect('/')
+        
+        $duty_id = (int)$request["duty_id"];
+        return redirect('/basic/edit/'.$duty_id)
         ->with('status', "您已成功更改基础项目 ".$basic_no."！");
     }
     
@@ -275,14 +276,16 @@ class BasicController extends Controller
 
 
         //Create Announcement for the duty
-        $announcementContent = '【'.Auth::user()->name.'】 创建了基础项目 【'.$basic_no.'】，请主管领导尽快审批';
+        $announcementContent = '【'.Auth::user()->name.'】 创建了基础项目 【'.$postContent["basic-no"].'】，请主管领导尽快审批';
         DB::table('announcements')->insert([
             'name' => Auth::user()->name,
             'content' =>  $announcementContent,
             'is_important' => 1,
         ]);
+        
+        $user = Auth::user()->id;
 
-        return redirect('/')
-        ->with('status', "您已成功提交基础项目 ".$basic_no."！");
+        return redirect('/daily/'.$user)
+        ->with('status', "您已成功提交基础项目 ".$postContent["basic-no"]."！");
     }
 }

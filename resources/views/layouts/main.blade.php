@@ -43,6 +43,11 @@
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/monthly/detail">每月统计</a>
                     </li>
+                    @if ((Auth::user()->role != "employee"))
+                    <li class="nav-item" style="position: relative; left: 130px">
+                        <a class="nav-link" href="/attendance/detail">考勤分数</a>
+                    </li>
+                    @endif
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/other">公司资料</a>
                     </li>

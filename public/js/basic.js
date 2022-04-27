@@ -166,10 +166,10 @@ window.onload = function(){
                 '</tr>'
             );
             
-            total_point2+=points;
+            total_point2+=Math.round(points);
 
         }
-        $('#month-performance-points').append(Math.round(total_point2));
+        $('#month-performance-points').append(total_point2);
 
     });
     

@@ -116,6 +116,8 @@ window.onload = function () {
 
     $.get('/get-user',function(userDetail){
             $.get("/get-performance-id", function (data) {
+                    data = (Object.values(data));
+                    data.sort((a, b) => (a.start_date < b.start_date) ? 1 : -1);
                     //console.log(data);
                     $('#duty-table-body').append(
                         '<tr>' +
@@ -149,7 +151,7 @@ window.onload = function () {
                         }
                         
                         var disableTrue = "";    
-                        if(userDetail.role != "admin" && data[i].status != "pending" && !(userDetail.id == data[i].leader || userDetail.id == data[i].declarant_id)){ //element.status == "pending"
+                        if(userDetail.role != "admin" && (data[i].status != "pending" && (userDetail.id == data[i].leader || userDetail.id == data[i].declarant_id))){ //element.status == "pending"
                             disableTrue = "disabled=\"true\"";
                         };
         

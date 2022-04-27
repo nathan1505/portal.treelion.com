@@ -42,7 +42,7 @@
                 <div class="card">
                     <div class="card-header">
                         本月基础项目得分
-                        <input type="month" id="yearmonth" name="yearmonth" value="2022-04">
+                        <input type="month" id="yearmonth" name="yearmonth" value="">
                     </div>
                     <div class="card-body">
                         <table class="table table-striped">
@@ -77,7 +77,7 @@
                         //console.log(response);
                         $('#monthly-list-detail').empty();
                         data = (Object.values(response));
-                        data.sort((a, b) => (a.name > b.name) ? 1 : -1);
+                        //data.sort((a, b) => (a.name > b.name) ? 1 : -1);
                         //console.log(data);
                         data.forEach((element) => {
                             $('#monthly-list-detail').append(
@@ -88,7 +88,7 @@
                                 '<td width="10%">' + element.performance_no +'</td>' +
                                 '<td width="5%">' + Math.round(element.point) + '</td>' +
                                 '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
-                                '<td width="5%">xxx</td>' +
+                                '<td width="5%">' + element.attendance + '</td>' +
                                 '<td width="5%">' + element.basic_points_distribute +'</td>' +
                                 '<td width="5%">' + Math.round(element.total) + '</td>' +
                                 '</tr>'

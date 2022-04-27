@@ -215,6 +215,7 @@ Route::get('/get-approved-basic-duties', 'App\Http\Controllers\BasicController@G
 Route::get('/get-monthly-performance', 'App\Http\Controllers\PerformancesController@MonthlyPerformancePoint');
 //Get monthly total points
 Route::get('/get-total-monthly', 'App\Http\Controllers\PerformancesController@getTotalMonthlyPoints');
+
 //---- End of Routers for monthly points ----
 
 //---- Routers for PDF view page ----
@@ -223,6 +224,7 @@ Route::get('/pdf_contact_list', 'App\Http\Controllers\PDFsController@pdfContactL
 //Get the day off application in pdf form
 Route::get('/pdf_dayoff_application', 'App\Http\Controllers\PDFsController@pdfDayoff');
 
+//---- End of Routers for PDF ---
 
 //---- Router for weekly report ----
 //Render detail page of every employees' weekly point
@@ -233,6 +235,8 @@ Route::get('/weekly/detail', function(){
 //Get list of weekly point
 Route::get('/weekly/list-of-point', 'App\Http\Controllers\WeeklyController@GetWeeklyList');
 
+//---- End of Routers for weekly report ---
+
 //---- Router for monthly report ----
 //Render detail page of every employees' monthly point
 Route::get('/monthly/detail', function(){
@@ -241,3 +245,18 @@ Route::get('/monthly/detail', function(){
 
 //Get list of monthly point
 Route::get('/monthly/list-of-point/{yearmonth}', 'App\Http\Controllers\MonthlyController@GetMonthlyList');
+
+//---- End of Routers for monthly report ---
+
+//---- Router for attendance ----
+//Render detail page of every employees' attendance point
+Route::get('/attendance/detail', function(){
+    return view('attendance.edit');
+})->middleware('auth');
+
+//Get list of employees' attendance point
+Route::get('/attendance/update/{yearmonth}', 'App\Http\Controllers\AttendanceController@ShowAttendance');
+
+//Update list of employees' attendance point according to each month
+Route::post('/attendance/update', 'App\Http\Controllers\AttendanceController@UpdateAttendance')->middleware('auth');
+//---- End of Routers for attendance ---
