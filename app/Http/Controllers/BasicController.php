@@ -218,7 +218,7 @@ class BasicController extends Controller
         ]);
         
         $duty_id = (int)$request["duty_id"];
-        return redirect('/basic/edit/'.$duty_id)
+        return redirect('basic/detail')
         ->with('status', "您已成功更改基础项目 ".$basic_no."！");
     }
     

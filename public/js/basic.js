@@ -124,7 +124,7 @@ window.onload = function(){
         var role;
         var userID = dutyId;
         var total_point2 = 0.0;
-        console.log(data);
+        //console.log(data);
         for (var i = 0; i < data.length; i++){
             var points;
             var whole_project;
@@ -189,4 +189,85 @@ window.onload = function(){
         '<td style="width:10%">编号</td><td style="width:25%">项目内容</td><td style="width:20%">项目类别</td><td style="width:20%">难度</td><td style="width:15%">更新日期</td><td style="width:%">积分</td>' +
         '</tr>'
     );
+    
+    $.get('/performance/get-users',function(users){
+        $.get('/get-basic-duties',function(data){
+            var color = "";
+            var status = "";
+            var hidden = "";
+            
+            data.forEach((element) => {
+                switch(element.status){
+                    case 'approved':
+                        element.status = '通过';
+                        break;
+                    case 'rejected':
+                        element.status = '未通过';
+                        break;
+                    case 'delete':
+                        element.status = '结束';
+                        break;
+                    default:
+                        element.status = '待审批';
+                }
+            });
+            
+            var columns = {
+                basic_no: '编号',
+                basic_content: '项目内容',
+                member: '申报人',
+                status: '项目状态',
+                id: '',
+            }
+            
+            //console.log(userDetail);
+            //console.log(notifications);
+            var table = $('#root').tableSortable({
+                data: data,
+                columns: columns,
+                searchField: '#searchField',
+                rowsPerPage: 10,
+                pagination: true,
+                formatCell: function(row, key) {
+                    if (key === 'status') {
+                        switch(row[key]){
+                            case '通过':
+                                return $('<td></td>').addClass('font-weight-bold table-success').text(row[key]);
+                            case '未通过':
+                                return $('<td></td>').addClass('font-weight-bold table-danger').text(row[key]);
+                            case '结束':
+                                return $('<td></td>').addClass('font-weight-bold table-secondary').text(row[key]);
+                            default:
+                                return $('<td></td>').addClass('font-weight-bold table-warning').text(row[key]);
+                        }
+                    }
+                    if (key === 'member') {
+                        return users[row[key]].name;
+                    }
+                    if (key === 'id') {
+                        return (
+                            '<td><a href="/basic/' + row[key] + '"><button class="btn btn-secondary">查看</button></a>' + 
+                            '<a href="/basic/edit/' + row[key] + '"><button class="btn btn-success">修改</button></a>' + 
+                            '<a href="/basic/hide/' + row[key] + '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger">删除</button></a><td>'
+                            );
+                    }
+                    // Finally return cell for rest of columns;
+                    return row[key];
+                },
+                tableWillMount: function() {
+                    console.log('table will mount')
+                },
+                tableDidMount: function() {
+                    console.log('table did mount')
+                },
+                tableWillUpdate: function() {console.log('table will update')},
+                tableDidUpdate: function() {console.log('table did update')},
+                tableWillUnmount: function() {console.log('table will unmount')},
+                tableDidUnmount: function() {console.log('table did unmount')},
+                onPaginationChange: function(nextPage, setPage) {
+                    setPage(nextPage);
+                }
+            });
+        });
+    });
 }

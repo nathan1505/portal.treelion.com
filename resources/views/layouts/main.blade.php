@@ -40,12 +40,15 @@
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/weekly/detail">每周统计</a>
                     </li>
+                    @if ((Auth::user()->role != "employee"))
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/monthly/detail">每月统计</a>
                     </li>
-                    @if ((Auth::user()->role != "employee"))
                     <li class="nav-item" style="position: relative; left: 130px">
                         <a class="nav-link" href="/attendance/detail">考勤分数</a>
+                    </li>
+                    <li class="nav-item" style="position: relative; left: 130px">
+                        <a class="nav-link" href="/basic/detail">基础项目</a>
                     </li>
                     @endif
                     <li class="nav-item" style="position: relative; left: 130px">

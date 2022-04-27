@@ -97,7 +97,7 @@ window.onload = function () {
                     status = "待审批";
                 }
 
-                if(userDetail.id == data[i].member || (data[i].status == "pending" && userDetail.role != "employee")){
+                if(userDetail.id == data[i].member){// || (data[i].status == "pending" && userDetail.role != "employee")){
                     if(data[i].status != "delete"){
                         $('#basic-duties-table').append(
                             '<tr><td style="width:10%">' + data[i].basic_no + '</td>' + 
@@ -117,7 +117,17 @@ window.onload = function () {
     $.get('/get-user',function(userDetail){
             $.get("/get-performance-id", function (data) {
                     data = (Object.values(data));
-                    data.sort((a, b) => (a.start_date < b.start_date) ? 1 : -1);
+                    data.sort((a, b) => {
+                        const statusOrder = ['rejected', 'pending', 'processing', 'delayed', 'done', 'postponed'];
+                        
+                        const aStatusIndex = statusOrder.indexOf( a.status );
+                        const bStatusIndex = statusOrder.indexOf( b.status );
+                    
+                        if ( aStatusIndex === bStatusIndex )
+                            return ((a.start_date < b.start_date) ? 1 : -1);
+                    
+                        return aStatusIndex - bStatusIndex;
+                    });
                     //console.log(data);
                     $('#duty-table-body').append(
                         '<tr>' +

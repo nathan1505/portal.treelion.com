@@ -136,7 +136,10 @@ Route::get('/basic/register', function(){
 Route::get('/basic/{duty_id}', function(){
     return view('basic.duty');
 })->middleware('auth')->whereNumber('duty_id');
-//Render page of evening daily report
+//Create a tab to contain all basic event
+Route::get('/basic/detail', function(){
+    return view('basic.detail');
+})->middleware('auth');
 /*
 Route::get('/basic/edit/{duty_id}', function(){
     return view('basic.edit');
