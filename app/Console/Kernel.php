@@ -181,6 +181,514 @@ class Kernel extends ConsoleKernel
                 ]);
             }
         })->monthly();
+        
+        $schedule->call(function(){
+            $fromDate = Carbon::now()->startOfMonth()->format('Y-m-d');
+            $toDate = Carbon::now()->endOfMonth()->format('Y-m-d');
+            $monthwithoutzero = Carbon::now()->format('n');
+            $monthwithzero = date('m');
+            $fridays = [];
+            $startDate = Carbon::parse($fromDate)->modify('this friday'); 
+            $endDate = Carbon::parse($toDate);
+            
+            for ($date = $startDate; $date->lte($endDate); $date->addWeek()) {
+                $fridays[] = $date->format('Y-m-d');
+            }
+//-------------------种子铅笔推广销售---------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "种子铅笔推广销售（".$monthwithoutzero."月）",
+                'performance_no' => "D01".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "三类积分",
+                'property' => "销售",
+                'difficulty' => "normal",
+                'leader' => 2,
+                'members' => "[\"9\",\"10\",\"17\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 18,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D01".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周考核进度",
+                ]);
+            }
+            
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D01'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-------------------end of 种子铅笔推广销售---------------//
+//-------------------社群宣发工作--------------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "社群宣发工作（".$monthwithoutzero."月）",
+                'performance_no' => "D03".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "三类积分",
+                'property' => "宣发",
+                'difficulty' => "easy",
+                'leader' => 2,
+                'members' => "[\"8\",\"9\",\"10\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 14.4,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D03".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "根据《社群宣发》管理办法展开社群工作",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D03'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-------------------end of 社群宣发工作--------------------------//
+//-------------------牌照公司业务推广-----------------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "牌照公司业务推广（".$monthwithoutzero."月）",
+                'performance_no' => "D04".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "三类积分",
+                'property' => "宣发",
+                'difficulty' => "easy",
+                'leader' => 5,
+                'members' => "[\"11\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 14.4,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D04".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周至少发布一篇业务推广文章",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D04'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-----------------end of 牌照公司业务推广------------------------//
+//-------------------抖音短视频制作-------------------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "抖音短视频制作（".$monthwithoutzero."月）",
+                'performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "四类积分",
+                'property' => "宣发",
+                'difficulty' => "easy",
+                'leader' => 8,
+                'members' => "",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 11.52,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周制作一个抖音短视频",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D05'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-----------------end of 抖音短视频制作----------------------------//
+//-------------------政策新闻研究-------------------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "政策新闻研究（".$monthwithoutzero."月）",
+                'performance_no' => "D06".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "四类积分",
+                'property' => "行业研究",
+                'difficulty' => "normal",
+                'leader' => 5,
+                'members' => "",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 14.4,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D06".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "提供5份每日新闻要点",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D06'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-----------------end of 政策新闻研究----------------------------//
+//-------------3060/Green Passport合作伙伴推进--------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "政策新闻研究（".$monthwithoutzero."月）",
+                'performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "三类积分",
+                'property' => "商务拓展",
+                'difficulty' => "normal",
+                'leader' => 2,
+                'members' => "[\"9\",\"10\",\"19\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 2,
+                'basic_points' => 18,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 1,
+                'node_date' => $fridays[1],
+                'node_point_percentage' => 50,
+                'node_goal' => "二周一次考核",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 2,
+                'node_date' => $fridays[3],
+                'node_point_percentage' => 50,
+                'node_goal' => "二周一次考核",
+            ]);
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D08'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-------------end of 3060/Green Passport合作伙伴推进-------------//
+//-------------------牌照公司基金产品发行-------------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "牌照公司基金产品发行（".$monthwithoutzero."月）",
+                'performance_no' => "D09".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "三类积分",
+                'property' => "销售",
+                'difficulty' => "normal",
+                'leader' => 6,
+                "second_leader" => 12,
+                'members' => "[\"5\",\"11\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 18,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D09".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周考核进度",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D09'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//--------------------end of 牌照公司基金产品发行------------------//
+//-------------------申请政府ESS补助-------------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "申请政府ESS补助（".$monthwithoutzero."月）",
+                'performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "二类积分",
+                'property' => "融资",
+                'difficulty' => "normal",
+                'leader' => 5,
+                'members' => "[\"2\",\"9\",\"10\",\"13\",\"19\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 25.2,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 1,
+                'node_date' => $fridays[0],
+                'node_point_percentage' => 25,
+                'node_goal' => "收集区块链交易研究的内容和资料",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 2,
+                'node_date' => $fridays[1],
+                'node_point_percentage' => 25,
+                'node_goal' => "由PwC把资料综合，优化",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 3,
+                'node_date' => $fridays[2],
+                'node_point_percentage' => 25,
+                'node_goal' => "我方预备补充后补资料",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 4,
+                'node_date' => $fridays[3],
+                'node_point_percentage' => 25,
+                'node_goal' => "由PwC把资料综合，优化申请书内容",
+            ]);
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D11'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//--------------------end of 申请政府ESS补助------------------//
+//--------------绿色金融联盟App前台会员反馈优化----------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "绿色金融联盟App前台会员反馈优化（".$monthwithoutzero."月）",
+                'performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "三类积分",
+                'property' => "商务拓展",
+                'difficulty' => "normal",
+                'leader' => 11,
+                'members' => "[\"5\"]",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 18,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 1,
+                'node_date' => $fridays[0],
+                'node_point_percentage' => 10,
+                'node_goal' => "收集会员反馈",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 2,
+                'node_date' => $fridays[1],
+                'node_point_percentage' => 20,
+                'node_goal' => "与技术人员沟通如何实现反馈和优化App",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 3,
+                'node_date' => $fridays[2],
+                'node_point_percentage' => 30,
+                'node_goal' => "优化APP",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 4,
+                'node_date' => $fridays[3],
+                'node_point_percentage' => 40,
+                'node_goal' => "配置到GOOGLE",
+            ]);
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D13'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//--------------------end of 绿色金融联盟App前台会员反馈优化------------------//
+//-------------------每周文案編寫-----------------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "每周文案編寫（".$monthwithoutzero."月）",
+                'performance_no' => "D14".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "四类积分",
+                'property' => "文件编写",
+                'difficulty' => "difficult",
+                'leader' => 8,
+                'members' => "",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 21.6,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D14".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周編寫三篇不同的文案",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D14'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//------------------------end of 每周文案編寫------------------------//
+//-------区块链溯源方面的相关政府政策搜集，更新，支持业务推进--------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "区块链溯源方面的相关政府政策搜集，更新，支持业务推进（".$monthwithoutzero."月）",
+                'performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "四类积分",
+                'property' => "行业研究",
+                'difficulty' => "normal",
+                'leader' => 17,
+                'members' => "",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 14.4,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周将收集来的政府政策相关汇总进行汇报一次，更新PPT、话术、Q&A",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D15'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//-------end of 区块链溯源方面的相关政府政策搜集，更新，支持业务推进----------//
+//-------------溯源系统客户拜访-----------------//
+            DB::table('performance_duty')->insert([
+                'performance_content' => "区块链溯源方面的相关政府政策搜集，更新，支持业务推进（".$monthwithoutzero."月）",
+                'performance_no' => "D16".$monthwithzero, //$postContent["performance-no"], 
+                'type' => "四类积分",
+                'property' => "文件编写",
+                'difficulty' => "normal",
+                'leader' => 18,
+                'members' => "",
+                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
+                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
+                'node_no' => 4,
+                'basic_points' => 18,
+                'latest_progress' => "",
+                'declarant_id' => 1,
+            ]);
+    
+            //Generate nodes
+            for ($i=1; $i<= 4; $i++){
+                DB::table('duty_node')->insert([
+                    'duty_performance_no' => "D16".$monthwithzero, //$postContent["performance-no"], 
+                    'node_id' => $i,
+                    'node_date' => $fridays[$i-1],
+                    'node_point_percentage' => 25,
+                    'node_goal' => "每周汇报本周拜访情况",
+                ]);
+            }
+
+    
+            //Create Announcement for the duty
+            $announcementContent = '【管理員】 创建了业绩事项 【D16'.$monthwithzero.'】，请主管领导尽快审批';
+            DB::table('announcements')->insert([
+                'name' => "管理員",
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
+//--------------end of 溯源系统客户拜访--------------//
+        })->monthly();
     }
 
     /**
