@@ -188,12 +188,13 @@ class BasicController extends Controller
                     'status' => "delete",
                 ]);
                 
-        return redirect('/daily/{$dutyId}')
+        return redirect('/basic/detail')
         ->with('status', "您已成功删除基础项目！");
     }
     
     //Edit basic duty
     public function EditBasicDuty(Request $request){
+        //dd($request->all());
         $total_points = CalculateBasicPoints(10.0, $request["type"], $request["difficulty"]);
         $basic_no = $request["basic_no"];
         

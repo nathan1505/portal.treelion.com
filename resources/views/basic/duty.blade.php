@@ -31,7 +31,7 @@
             
             <hr>
             <div>
-            <a class="btn btn-success" type="button" href="/daily/{{Auth::user()->id}}" style="float:left;margin-left:15px">返回</a>
+            <a class="btn btn-success" type="button" href="/basic/detail" style="float:left;margin-left:15px">返回</a>
             </div>
         
         </div>

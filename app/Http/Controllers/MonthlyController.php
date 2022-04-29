@@ -120,18 +120,15 @@ class MonthlyController extends Controller
 
                     if($d['node_date'] >= $start && $d['node_date'] <= $end){
                         if($user['id'] == $p['leader'] && $members_no == 1){
-                            //$role = "1组长";
-                            $point += round($base_point,0);
-                            $point_expected += round($base_point_expected,0);
-                        }else if($user['id'] == $p['leader']){
-                            //$role = "组长";
-                            $point += round($leader_points,0);
-                            $point_expected += round($leader_points_expected,0);
+                            $point += $base_point;
+                            $point_expected += $base_point_expected;
+                        }else if($user['id'] == $p['leader'] || $user['id'] == $p['second_leader']){
+                            $point += $leader_points;
+                            $point_expected += $leader_points_expected;
                         }else if($member_list){
-                            //$role = "组員";
                             if(in_array($user['id'], $member_list)){
-                                $point += round((float)bcdiv(($base_point - $leader_points) , ($members_no - 1), 2), 0);
-                                $point_expected += round((float)bcdiv(($base_point_expected - $leader_points_expected) , ($members_no - 1), 2),0);
+                                $point += (float)bcdiv(($base_point - $leader_points) , ($members_no - 1), 2);
+                                $point_expected += (float)bcdiv(($base_point_expected - $leader_points_expected) , ($members_no - 1), 2);
                             }
                         }
 
@@ -161,26 +158,7 @@ class MonthlyController extends Controller
                 }
             }
             
-            $basic_points_actual = 0;
-            $basic_points_distribute = 0;
-            $total = $basic_points+$point;
-            
-            if($user['pointtype'] == "support"){
-                $basic_points_actual = 100;
-            }else if($user['pointtype'] == "technical" || $basic_points < 40){
-                $basic_points_actual = $basic_points;
-            }else if($basic_points >= 40){
-                $basic_points_actual = 40;
-                $basic_points_distribute = $basic_points - 40;
-            }
-            
-            if($user['pointtype'] == "regular" && ($basic_points_actual+$point) < 100){
-                if($total > 100) $total = 100;
-            }
-            
             $attendance = DB::table('attendance')->where('month', $yearmonth)->where('user_id', $user['id'])->get();
-            //$attendance = json_decode(json_encode($attendance), true);
-            //$attendance_point = $attendance[0]['points'];
             
             if($attendance->isempty()){
                 $attendance_point = 0;
@@ -188,8 +166,36 @@ class MonthlyController extends Controller
                 $attendance = json_decode(json_encode($attendance), true);
                 $attendance_point = $attendance[0]['points'];
             }
-            //dd($attendance);
             
+            $point = round($point, 0);
+            $basic_points_actual = 0;
+            $basic_points_distribute = 0;
+            $total = $basic_points+$point;
+            
+            if($user['pointtype'] == "support"){
+                $basic_points_actual = 100;
+                $total = $basic_points_actual+$point;
+                $basic_points = $basic_points_actual;
+            }else if($user['pointtype'] == "regular2"){
+                $basic_points = 40;
+                $basic_points_actual = 40;
+
+            }else if($user['pointtype'] == "technical" || $basic_points < 40){
+                $basic_points_actual = $basic_points;
+            }else if($basic_points >= 40){
+                $basic_points_actual = 40;
+                $basic_points_distribute = $basic_points - 40;
+                $total = $basic_points_actual+$point;
+            }
+            
+            if($user['pointtype'] == "regular" && ($basic_points_actual+$point) < 100 && ($basic_points+$point) >= 100){
+                $total = 100;
+            }else if($user['pointtype'] == "regular"){
+                $basic_points_distribute = 0;
+            }
+            
+            $total += $attendance_point;
+
             $column = array(
                 "user_id" => $user['id'],
                 "name" => $user['name'],

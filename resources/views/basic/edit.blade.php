@@ -73,7 +73,7 @@
                         <option value="delete" <?php if($data[0]['status'] =="end") echo 'selected="selected"'; ?>>结束</option>
                     </select>
                     @else
-                    <select id="status" name="status" type="input" class="form-control" disabled="true">
+                    <select id="status" name="status" type="input" class="form-control" readonly>
                         <option value="approved" <?php if($data[0]['status'] =="approved") echo 'selected="selected"'; ?>>通过</option>
                         <option value="pending" <?php if($data[0]['status'] =="pending") echo 'selected="selected"'; ?>>待审批</option>
                         <option value="rejected" <?php if($data[0]['status'] =="rejected") echo 'selected="selected"'; ?>>未通过</option>

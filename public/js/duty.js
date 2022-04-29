@@ -137,6 +137,7 @@ window.onload = function(){
             var difficulty = "";
             var statusColor = "";
             var status = "";
+            var second_leader = (filterById(response, data[0].second_leader) === undefined) ? filterById(response, data[0].second_leader) : "" ;
     
             switch (data[0].difficulty) {
                 case "difficult":
@@ -196,7 +197,8 @@ window.onload = function(){
             $.when(getUserArray()).done(function(response){
                 $('#duty-table').append(
                     '<tr><td>组长</td><td>' + filterById(response, data[0].leader) + '</td>' +
-                    '<td>组员</td><td>' + GetMemberNameString(response, memberIdArray) + '</td></tr>'+
+                    '<td>第二组长</td><td>' + second_leader + '</td></tr>' +
+                    '<tr><td>组员</td><td colspan=3>' + GetMemberNameString(response, memberIdArray) + '</td></tr>'+
                     '<tr><td>开始日期</td><td>' + data[0].start_date + '</td><td>结束日期</td><td>' + data[0].end_date + '</td></tr>' +
                     '<tr><td>节点数</td><td>' + data[0].node_no + '</td><td>完成度</td><td>' + data[0].completeness + '%</td></tr>' +
                     '<tr><td>基础赋分</td><td>' + Math.round(data[0].basic_points) + '</td><td>已获得积分</td><td>' + Math.round(data[0].gained_points) + '</td></tr>' +
