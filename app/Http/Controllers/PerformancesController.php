@@ -516,6 +516,13 @@ class PerformancesController extends Controller
         if($postContent["completeness"] == 0){
             $completenessCoefficient = 0;
         }
+        
+        $progressDate = Carbon::now()->format('Y-m-d H:i');
+        
+        $progressContent = DB::table('duty_node')
+        ->where('duty_performance_no', $postContent['performance_no'])
+        ->where('node_id', $postContent['node_id'])
+        ->value('node_progress');
 
         //Update the table `duty_node` by the request info
         DB::table('duty_node')
@@ -523,7 +530,7 @@ class PerformancesController extends Controller
         ->where('node_id', $postContent['node_id'])
         ->update([
             "node_completeness" => $postContent["completeness"],
-            "node_progress" => $postContent['progress'],
+            "node_progress" => $progressContent."<br>(".$progressDate.") ".$postContent['progress'],
             //"confirmed_date" => $postContent['current_date'],
             "node_completeness_coefficient" => $completenessCoefficient,
             "delayed_days" => $delayed_days,

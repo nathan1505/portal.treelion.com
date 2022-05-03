@@ -1,0 +1,9 @@
+.scrollit {
+    max-height: 100px; 
+    overflow: auto;
+    padding-bottom: 10px;
+}
+
+td:first-child {
+    width: 20%;
+}

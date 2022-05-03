@@ -380,7 +380,7 @@ class Kernel extends ConsoleKernel
 //-----------------end of 政策新闻研究----------------------------//
 //-------------3060/Green Passport合作伙伴推进--------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "政策新闻研究（".$monthwithoutzero."月）",
+                'performance_content' => "3060/Green Passport 合作伙伴推进（5月）（".$monthwithoutzero."月）",
                 'performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "商务拓展",
@@ -653,7 +653,7 @@ class Kernel extends ConsoleKernel
 //-------end of 区块链溯源方面的相关政府政策搜集，更新，支持业务推进----------//
 //-------------溯源系统客户拜访-----------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "区块链溯源方面的相关政府政策搜集，更新，支持业务推进（".$monthwithoutzero."月）",
+                'performance_content' => "绿色金融联盟App前台会员反馈优化（".$monthwithoutzero."月）",
                 'performance_no' => "D16".$monthwithzero, //$postContent["performance-no"], 
                 'type' => "四类积分",
                 'property' => "文件编写",

@@ -137,7 +137,6 @@ window.onload = function(){
             var difficulty = "";
             var statusColor = "";
             var status = "";
-            var second_leader = (filterById(response, data[0].second_leader) === undefined) ? filterById(response, data[0].second_leader) : "" ;
     
             switch (data[0].difficulty) {
                 case "difficult":
@@ -195,6 +194,7 @@ window.onload = function(){
             //Append leader and members
             memberIdArray = GetMemberId(data[0].members);
             $.when(getUserArray()).done(function(response){
+                var second_leader = (filterById(response, data[0].second_leader) === undefined) ? "" : filterById(response, data[0].second_leader) ;
                 $('#duty-table').append(
                     '<tr><td>组长</td><td>' + filterById(response, data[0].leader) + '</td>' +
                     '<td>第二组长</td><td>' + second_leader + '</td></tr>' +
@@ -331,19 +331,26 @@ window.onload = function(){
                             '</div>' +
                             '<div class="card-body" id="duty_card_body_' + i + '">' +
                             //Print the table of nodes info
+
                             '<table class="table table-bordered">' +
                                 '<tbody>' +
                                     '<tr><td>积分比例</td><td>' +  data[i].node_point_percentage + '%</td></tr>' +
                                     '<tr><td>考核时间</td><td>' + data[i].node_date + '</td></tr>' +
                                     '<tr><td>节点目标</td><td>' + data[i].node_goal + '</td></tr>' +
-                                    '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
                                 '</tbody>' +
                             '</table>'+
+                            '<div class="scrollit">' +
+                                '<table class="table table-bordered">' +
+                                    '<tbody>' +
+                                        '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
+                                    '</tbody>' +
+                                '</table>' +
+                            '</div>' +
     
                             '<form action="post-node" method="post">' +
                                 '<div class="form-group">' +
                                     '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
-                                    '<div class="row">' +
+                                    '<div class="row" style="margin-top:10px">' +
                                         '<div class="col">' +
                                             '<label for="completeness">' + finish_title + '</label><br>' +
                                             '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;">' +
@@ -392,14 +399,20 @@ window.onload = function(){
                                     '<tr><td>积分比例</td><td>' +  data[i].node_point_percentage + '%</td></tr>' +
                                     '<tr><td>考核时间</td><td>' + data[i].node_date + '</td></tr>' +
                                     '<tr><td>节点目标</td><td>' + data[i].node_goal + '</td></tr>' +
-                                    '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
                                 '</tbody>' +
                             '</table>'+
+                            '<div class="scrollit">' +
+                                '<table class="table table-bordered">' +
+                                    '<tbody>' +
+                                        '<tr><td>节点进展</td><td>' + data[i].node_progress + '</td></tr>' +
+                                    '</tbody>' +
+                                '</table>' +
+                            '</div>' +
     
                             '<form action="post-node" method="post">' +
                                 '<div class="form-group">' +
                                     '<input type="input" hidden name="current_date" value="' + CurrentDate() + '"></input>' +
-                                    '<div class="row">' +
+                                    '<div class="row" style="margin-top:10px">' +
                                         '<div class="col">' +
                                             '<label for="completeness">' + finish_title + '</label><br>' +
                                             '<select id="completeness" name="completeness" type="input" class="form-control" style="float:left;width:20%;' + hidden + '">' +

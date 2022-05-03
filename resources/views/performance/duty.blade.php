@@ -11,7 +11,7 @@
 @endsection
 
 @section('content')
-    <div class="container-fluid" style="margin-top:2%; margin-bottom:30px">
+    <div class="container-fluid" style="margin-top:2%; margin-bottom:30px;">
         <div class="row">
             <!--main block-->
             <div class="col-sm-8">
