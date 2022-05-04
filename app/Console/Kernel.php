@@ -9,6 +9,39 @@ use Carbon\Carbon;
 use DateTime;
 use DateTimeZone;
 
+function send_to_wecom($text, $wecom_cid, $wecom_aid, $wecom_secret, $wecom_touid)
+{
+    $info = @json_decode(file_get_contents("https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid=".urlencode($wecom_cid)."&corpsecret=".urlencode($wecom_secret)), true);
+                
+    if ($info && isset($info['access_token']) && strlen($info['access_token']) > 0) {
+        $access_token = $info['access_token'];
+        $url = 'https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token='.urlencode($access_token);
+        $data = new \stdClass();
+        $data->touser = $wecom_touid;
+        $data->agentid = $wecom_aid;
+        $data->msgtype = "text";
+        $data->text = ["content"=> $text];
+        $data->duplicate_check_interval = 600;
+
+        $data_json = json_encode($data);
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        @curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_POST, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $data_json);
+
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        
+        $response = curl_exec($ch);
+        return $response;
+    }
+    return false;
+}
+
 class Kernel extends ConsoleKernel
 {
     /**
@@ -181,6 +214,33 @@ class Kernel extends ConsoleKernel
                 ]);
             }
         })->monthly();
+        
+        $schedule->call(function(){
+            $performances_get = DB::table('performance_duty')
+            ->where('status',"!=","end")->orderBy('timestamp','desc')->get();
+            
+            $performances_get = json_decode(json_encode($performances_get), true);
+            
+            $message = "";
+            
+            foreach ($performances_get as $p){
+                $today = Carbon::today()->format('Y-m-d');
+                    
+                $status = DB::table('performance_duty')
+                ->where('performance_no', $p['performance_no'])
+                ->value('status');
+                
+                $leader = DB::table('users')->where('id', $p['leader'])->value('name');
+                
+                if($p['next_date'] == $today && $p['completeness'] < 100){
+                    $p['notifications'] = "今天有节点申报";
+                    $message = $message.$p['performance_content']." (".$p['performance_no']."): ".$p['notifications']." 请组长".$leader."尽快申报\r\n";
+                }
+            }
+            send_to_wecom($message, "ww189e06c1b93e38e2", "1000002", "nV1Ri4V1AS3kLfOi7XUMUV5r_WEbJIzLx-2chxmbmjY", "Nick");
+            //print_r($ret);
+            //return $message;
+        })->dailyAt('15:00'); //everyTwoMinutes(); //dailyAt('15:00');
         
         $schedule->call(function(){
             $fromDate = Carbon::now()->startOfMonth()->format('Y-m-d');
