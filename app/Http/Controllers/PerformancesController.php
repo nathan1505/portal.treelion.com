@@ -324,7 +324,7 @@ class PerformancesController extends Controller
         $array = json_decode(json_encode($response), true);
         $today = Carbon::today()->format('Y-m-d');
 
-        $returnArray = array();
+        $allArray = array();
 
         foreach ($array as $duty){
             $userArray = array();
@@ -361,6 +361,33 @@ class PerformancesController extends Controller
                     $duty['notification'] = "第".$returnStr."节点尚未申报，请項目组长申报完成节点";
                 }
 
+                array_push($allArray, $duty);
+            }
+        }
+        //get duty within range
+        $yearmonth = $request->yearmonth;
+
+        $start = Carbon::parse($yearmonth)->startOfMonth()->subMonth()->format('Y-m-d');
+        $end = Carbon::parse($yearmonth)->endofMonth()->format('Y-m-d');
+        
+        $returnArray = array();
+        
+        foreach ($allArray as $duty){
+            $latest_node = DB::table('duty_node')
+                ->where('duty_performance_no',"=",$duty['performance_no'])
+                ->orderBy('id', 'desc')->first();
+                
+            $latest_node = json_decode(json_encode($latest_node), true);
+                
+            $node_date = "";
+            
+            if(!is_null($latest_node['confirmed_date'])){
+                $node_date = $latest_node['confirmed_date'];
+            }else{
+                $node_date = $latest_node['node_date'];
+            }
+            
+            if($node_date >= $start && $node_date <= $end){
                 array_push($returnArray, $duty);
             }
         }

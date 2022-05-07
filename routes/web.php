@@ -88,7 +88,7 @@ Route::get('/get-user', 'App\Http\Controllers\PerformancesController@GetUserDeta
 //Get all performance duties
 Route::get('/get-performances', 'App\Http\Controllers\PerformancesController@GetAllPerformances');
 //Get performance duties by user ID
-Route::get('/get-performance-id', 'App\Http\Controllers\PerformancesController@GetPerformanceDutiesByUserId');
+Route::get('/get-performance-id/{yearmonth}', 'App\Http\Controllers\PerformancesController@GetPerformanceDutiesByUserId');
 //Get performance duty by duty ID
 Route::get('/get-duty-detail/{duty_id?}', 'App\Http\Controllers\PerformancesController@SeeDuty');
 //Get nodes information of specific performance work, search by the performance ID
