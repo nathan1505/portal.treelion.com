@@ -530,7 +530,7 @@ class PerformancesController extends Controller
         ->where('node_id', $postContent['node_id'])
         ->update([
             "node_completeness" => $postContent["completeness"],
-            "node_progress" => $progressContent."<br>(".$progressDate.") ".$postContent['progress'],
+            "node_progress" => $progressContent."(".$progressDate.") ".$postContent['progress']."<br>",
             //"confirmed_date" => $postContent['current_date'],
             "node_completeness_coefficient" => $completenessCoefficient,
             "delayed_days" => $delayed_days,

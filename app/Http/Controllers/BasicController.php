@@ -179,6 +179,19 @@ function UpdateGainedPoints($dutyNo){
 
 class BasicController extends Controller
 {
+    //Approve basic duty
+    public function ApproveBasicDuty(Request $request, $arg){
+        $dutyId = (int)$arg;
+        DB::table('basic_duty')
+                ->where('id', $dutyId)
+                ->update([
+                    'status' => "approved",
+                ]);
+                
+        return redirect('/basic/detail')
+        ->with('status', "您已成功批准除基础项目！");
+    }
+    
     //Hide basic duty
     public function HideBasicDuty(Request $request, $arg){
         $dutyId = (int)$arg;

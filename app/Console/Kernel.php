@@ -519,65 +519,6 @@ class Kernel extends ConsoleKernel
                 'is_important' => 1,
             ]);
 //--------------------end of 牌照公司基金产品发行------------------//
-//-------------------申请政府ESS补助-------------------------//
-            DB::table('performance_duty')->insert([
-                'performance_content' => "申请政府ESS补助（".$monthwithoutzero."月）",
-                'performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
-                'type' => "二类积分",
-                'property' => "融资",
-                'difficulty' => "normal",
-                'leader' => 5,
-                'members' => "[\"2\",\"9\",\"10\",\"13\",\"19\"]",
-                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
-                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
-                'node_no' => 4,
-                'basic_points' => 25.2,
-                'latest_progress' => "",
-                'declarant_id' => 1,
-            ]);
-    
-            //Generate nodes
-            DB::table('duty_node')->insert([
-                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
-                'node_id' => 1,
-                'node_date' => $fridays[0],
-                'node_point_percentage' => 25,
-                'node_goal' => "收集区块链交易研究的内容和资料",
-            ]);
-            
-            DB::table('duty_node')->insert([
-                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
-                'node_id' => 2,
-                'node_date' => $fridays[1],
-                'node_point_percentage' => 25,
-                'node_goal' => "由PwC把资料综合，优化",
-            ]);
-            
-            DB::table('duty_node')->insert([
-                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
-                'node_id' => 3,
-                'node_date' => $fridays[2],
-                'node_point_percentage' => 25,
-                'node_goal' => "我方预备补充后补资料",
-            ]);
-            
-            DB::table('duty_node')->insert([
-                'duty_performance_no' => "D11".$monthwithzero, //$postContent["performance-no"], 
-                'node_id' => 4,
-                'node_date' => $fridays[3],
-                'node_point_percentage' => 25,
-                'node_goal' => "由PwC把资料综合，优化申请书内容",
-            ]);
-
-    
-            //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D11'.$monthwithzero.'】，请主管领导尽快审批';
-            DB::table('announcements')->insert([
-                'name' => "管理員",
-                'content' =>  $announcementContent,
-                'is_important' => 1,
-            ]);
-//--------------------end of 申请政府ESS补助------------------//
 //--------------绿色金融联盟App前台会员反馈优化----------------//
             DB::table('performance_duty')->insert([
                 'performance_content' => "绿色金融联盟App前台会员反馈优化（".$monthwithoutzero."月）",

@@ -245,6 +245,7 @@ window.onload = function(){
             var columns = {
                 basic_no: '编号',
                 basic_content: '项目内容',
+                type: '项目类别',
                 member: '负责同事',
                 status: '项目状态',
                 id: '',
@@ -259,23 +260,36 @@ window.onload = function(){
                 rowsPerPage: 10,
                 pagination: true,
                 formatCell: function(row, key) {
+                    if (key === 'basic_no') {
+                        return $('<td style="width: 5%;"></td>').addClass('').text(row[key]);
+                    }
+                    if (key === 'basic_content') {
+                        return $('<td style="width: 450px;"></td>').addClass('').text(row[key]);
+                    }
+                    if (key === 'type') {
+                        return $('<td style="width: 15%;"></td>').addClass('').text(row[key]);
+                    }
+                    if (key === 'member') {
+                        return $('<td style="width: 10%;"></td>').addClass('').text(row[key]);
+                    }
                     if (key === 'status') {
                         switch(row[key]){
                             case '通过':
-                                return $('<td></td>').addClass('font-weight-bold table-success').text(row[key]);
+                                return $('<td style="width: 10%;"></td>').addClass('font-weight-bold table-success').text(row[key]);
                             case '未通过':
-                                return $('<td></td>').addClass('font-weight-bold table-danger').text(row[key]);
+                                return $('<td style="width: 10%;"></td>').addClass('font-weight-bold table-danger').text(row[key]);
                             case '结束':
-                                return $('<td></td>').addClass('font-weight-bold table-secondary').text(row[key]);
+                                return $('<td style="width: 10%;"></td>').addClass('font-weight-bold table-secondary').text(row[key]);
                             default:
-                                return $('<td></td>').addClass('font-weight-bold table-warning').text(row[key]);
+                                return $('<td style="width: 10%;"></td>').addClass('font-weight-bold table-warning').text(row[key]);
                         }
                     }
                     if (key === 'id') {
                         return (
-                            '<td><a href="/basic/' + row[key] + '"><button class="btn btn-secondary">查看</button></a>' + 
+                            '<td style="width: 30%;"><a href="/basic/' + row[key] + '"><button class="btn btn-secondary">查看</button></a>' + 
                             '<a href="/basic/edit/' + row[key] + '"><button class="btn btn-success">修改</button></a>' + 
-                            '<a href="/basic/hide/' + row[key] + '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger">删除</button></a><td>'
+                            '<a href="/basic/hide/' + row[key] + '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger">删除</button></a>' +
+                            '<a href="/basic/approve/' + row[key] + '"><button class="btn btn-warning">批准</button></a></td>'
                             );
                     }
                     // Finally return cell for rest of columns;

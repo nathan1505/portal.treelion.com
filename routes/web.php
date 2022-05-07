@@ -160,6 +160,9 @@ Route::post('/basic/edit', 'App\Http\Controllers\BasicController@EditBasicDuty')
 //Hide a basic duty
 Route::get('/basic/hide/{duty_id?}', 'App\Http\Controllers\BasicController@HideBasicDuty');
 
+//Approve a basic duty
+Route::get('/basic/approve/{duty_id?}', 'App\Http\Controllers\BasicController@ApproveBasicDuty');
+
 //---- End of Routers for basic duty----
 
 //---- Routers for daily report ----
