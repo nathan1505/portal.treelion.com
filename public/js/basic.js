@@ -173,7 +173,7 @@ window.onload = function(){
         
                 }
                 
-                var basic_point = total_point1;
+                var basic_point = Math.round(total_point1);
                 var distributed_point = 0;
                 
                 if(user.pointtype == "regular" && basic_point > 40){
@@ -221,6 +221,20 @@ window.onload = function(){
     
     $.get('/performance/get-users',function(users){
         $.get('/get-basic-duties',function(data){
+
+            data = (Object.values(data));
+            data.sort((a, b) => {
+                const statusOrder = ['pending', 'rejected', 'approved', 'delete'];
+                
+                const aStatusIndex = statusOrder.indexOf( a.status );
+                const bStatusIndex = statusOrder.indexOf( b.status );
+            
+                if ( aStatusIndex === bStatusIndex )
+                    return ((a.timestamp < b.timestamp) ? 1 : -1);
+            
+                return aStatusIndex - bStatusIndex;
+            });
+
             var color = "";
             var status = "";
             var hidden = "";
@@ -289,7 +303,7 @@ window.onload = function(){
                             '<td style="width: 30%;"><a href="/basic/' + row[key] + '"><button class="btn btn-secondary">查看</button></a>' + 
                             '<a href="/basic/edit/' + row[key] + '"><button class="btn btn-success">修改</button></a>' + 
                             '<a href="/basic/hide/' + row[key] + '" onclick="return confirm(\'是否确定要删除项目？\')"><button class="btn btn-danger">删除</button></a>' +
-                            '<a href="/basic/approve/' + row[key] + '"><button class="btn btn-warning">批准</button></a></td>'
+                            '<a href="/basic/approve/' + row[key] + '"><button class="btn btn-warning">通過</button></a></td>'
                             );
                     }
                     // Finally return cell for rest of columns;

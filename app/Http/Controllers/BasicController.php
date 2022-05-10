@@ -189,7 +189,7 @@ class BasicController extends Controller
                 ]);
                 
         return redirect('/basic/detail')
-        ->with('status', "您已成功批准除基础项目！");
+        ->with('status', "您已成功批准基础项目！");
     }
     
     //Hide basic duty

@@ -179,7 +179,7 @@ class MonthlyController extends Controller
             }else if($user['pointtype'] == "regular2"){
                 $basic_points = 40;
                 $basic_points_actual = 40;
-
+                $total = $basic_points+$point;
             }else if($user['pointtype'] == "technical" || $basic_points < 40){
                 $basic_points_actual = $basic_points;
             }else if($basic_points >= 40){
@@ -191,7 +191,8 @@ class MonthlyController extends Controller
             if($user['pointtype'] == "regular" && ($basic_points_actual+$point) < 100 && ($basic_points+$point) >= 100){
                 $total = 100;
             }else if($user['pointtype'] == "regular"){
-                $basic_points_distribute = 0;
+                //$basic_points_distribute = 0;
+                $total = $basic_points+$point;
             }
             
             $total += $attendance_point;

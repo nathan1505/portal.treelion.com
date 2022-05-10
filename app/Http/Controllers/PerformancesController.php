@@ -387,7 +387,7 @@ class PerformancesController extends Controller
                 $node_date = $latest_node['node_date'];
             }
             
-            if($node_date >= $start && $node_date <= $end){
+            if(($node_date >= $start && $node_date <= $end) || $duty['status'] == "postponed"){
                 array_push($returnArray, $duty);
             }
         }
