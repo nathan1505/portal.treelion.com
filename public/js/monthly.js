@@ -41,7 +41,7 @@ window.onload = function(){
                 '<td width="5%">' + Math.round(sum) + '</td>' +
                 '<td width="5%">' + element.attendance + '</td>' +
                 '<td width="5%">' + Math.round(element.basic_points_distribute) +'</td>' +
-                '<td width="5%">' + Math.round(element.total) + '</td>' +
+                '<td width="5%">' + Math.round(element.total)+element.dist + '</td>' +
                 //'<td width="5%">' + Math.round(element.point_lastmonth) + '</td>' +
                 //'<td width="5%">' + Math.round(element.basic_points+element.point_lastmonth) + '</td>' +
                 '</tr>'

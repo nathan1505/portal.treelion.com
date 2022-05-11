@@ -188,8 +188,11 @@ class MonthlyController extends Controller
                 $total = $basic_points_actual+$point;
             }
             
+            $dist = "";
+            
             if($user['pointtype'] == "regular" && ($basic_points_actual+$point) < 100 && ($basic_points+$point) >= 100){
                 $total = 100;
+                $dist = "*";
             }else if($user['pointtype'] == "regular"){
                 //$basic_points_distribute = 0;
                 $total = $basic_points+$point;
@@ -213,6 +216,7 @@ class MonthlyController extends Controller
                 "total_expected" => $basic_points+$point_expected,
                 "total" => $total,
                 "attendance" => $attendance_point,
+                "dist" => $dist,
                 
             );
             //var_dump($column);
