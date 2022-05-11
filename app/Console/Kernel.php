@@ -234,13 +234,16 @@ class Kernel extends ConsoleKernel
                 
                 if($p['next_date'] == $today && $p['completeness'] < 100){
                     $p['notifications'] = "今天有节点申报";
-                    $message = $message.$p['performance_content']." (".$p['performance_no']."): ".$p['notifications']." 请组长".$leader."尽快申报\r\n";
+                    $message = $p['performance_content']." (".$p['performance_no']."): ".$p['notifications']." 请组长尽快申报\r\n";
                 }
+                
+                $wechat_id = DB::table('users')->where('id', $p['leader'])->value('wechat_id');
+                
+                send_to_wecom($message, "ww189e06c1b93e38e2", "1000002", "nV1Ri4V1AS3kLfOi7XUMUV5r_WEbJIzLx-2chxmbmjY", $wechat_id);
             }
-            send_to_wecom($message, "ww189e06c1b93e38e2", "1000002", "nV1Ri4V1AS3kLfOi7XUMUV5r_WEbJIzLx-2chxmbmjY", "Nick");
             //print_r($ret);
             //return $message;
-        })->dailyAt('15:00'); //everyTwoMinutes(); //dailyAt('15:00');
+        })->dailyAt('14:40'); //everyTwoMinutes(); //dailyAt('15:00');
         
         $schedule->call(function(){
             $fromDate = Carbon::now()->startOfMonth()->format('Y-m-d');

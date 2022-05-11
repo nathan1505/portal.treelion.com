@@ -1,10 +1,10 @@
 window.onload = function(){
     ShowStocks();
-
-    $.get("/duties/generate-duties-table",
+/*
+    $.get("/duties/generate-duties-table/"+yearmonth,
         function (data) {
-            console.log(data);
+            //console.log(data);
         }
     );
-    
+*/
 }

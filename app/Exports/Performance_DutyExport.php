@@ -8,6 +8,7 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromCollection;
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 
 /**
  * Return the string of all names of a duty's member, split by comma
@@ -44,6 +45,12 @@ function parseMembers($memberStr){
 
 class Performance_DutyExport implements FromCollection,WithHeadings
 {
+    protected $id;
+
+    function __construct($id) {
+        $this->yearmonth = $id;
+    }
+
     /**
     * @return \Illuminate\Support\Collection
     */
@@ -81,6 +88,16 @@ class Performance_DutyExport implements FromCollection,WithHeadings
 
         $nodeArray = DB::table('duty_node')->get();
         $nodeArray = json_decode($nodeArray, true);
+        
+        //get duty within range
+        //dd($this);
+        $yearmonth = $this->yearmonth;
+        
+        //dd($yearmonth);
+
+        $start = Carbon::parse($yearmonth)->startOfMonth()->subMonth()->format('Y-m-d');
+        $startD = Carbon::parse($yearmonth)->startOfMonth()->format('Y-m-d');
+        $end = Carbon::parse($yearmonth)->endofMonth()->format('Y-m-d');
 
         $row = array();
 
@@ -141,36 +158,52 @@ class Performance_DutyExport implements FromCollection,WithHeadings
             if ($dutiesArray[$i]['members'] != ""){
                 $members = parseMembers($dutiesArray[$i]['members']);
             }
+            
+            $latest_node = DB::table('duty_node')
+                ->where('duty_performance_no',"=",$dutiesArray[$i]['performance_no'])
+                ->orderBy('id', 'desc')->first();
+                
+            $latest_node = json_decode(json_encode($latest_node), true);
+                
+            $node_date = "";
+            
+            if(!is_null($latest_node['confirmed_date'])){
+                $node_date = $latest_node['confirmed_date'];
+            }else{
+                $node_date = $latest_node['node_date'];
+            }
 
-            $unit = array(
-                'id' => $dutiesArray[$i]['id'],
-                'content' => $dutiesArray[$i]['performance_content'],
-                'no' => $dutiesArray[$i]['performance_no'],
-                'type' => $dutiesArray[$i]['type'],
-                'property' => $dutiesArray[$i]['property'],
-                'difficulty' => $difficulty,
-                'status' => $status,
-                'leader' => $leader,
-                'second_leader' => $second_leader,
-                'members' => $members,
-                'node_no' => $dutiesArray[$i]['node_no'],
-                'start_date' => $dutiesArray[$i]['start_date'],
-                'end_date' => $dutiesArray[$i]['end_date'],
-                'entire_completeness' => $dutiesArray[$i]['completeness'],
-                'basic_points' => round($dutiesArray[$i]['basic_points']),
-                'gained_points' => round($dutiesArray[$i]['gained_points']),
-                'latest_progress' => $dutiesArray[$i]['latest_progress'],
-                //'next_date' => $dutiesArray[$i]['next_date'],
-                //'next_goal' => $dutiesArray[$i]['next_goal'],
-                //'next_percentage' =>  $dutiesArray[$i]['next_percentage'],
-                //'next_date' => $dutiesArray[$i][''],
-                //'goal' => $dutiesArray[$i][''],
-                //'node_percentage' => ,
-                //'node_completeness' => ,
-                //'detail_url' => "/duties/".$dutiesArray[$i]['id'],
-            );
-            if($dutiesArray[$i]['status'] != 'end'){
-                array_push($row, $unit);
+            if(($node_date >= $start && $node_date <= $end && !str_starts_with($dutiesArray[$i]['performance_no'] , 'D')) || ($node_date >= $startD && $node_date <= $end && str_starts_with($dutiesArray[$i]['performance_no'] , 'D'))){
+                $unit = array(
+                    'id' => $dutiesArray[$i]['id'],
+                    'content' => $dutiesArray[$i]['performance_content'],
+                    'no' => $dutiesArray[$i]['performance_no'],
+                    'type' => $dutiesArray[$i]['type'],
+                    'property' => $dutiesArray[$i]['property'],
+                    'difficulty' => $difficulty,
+                    'status' => $status,
+                    'leader' => $leader,
+                    'second_leader' => $second_leader,
+                    'members' => $members,
+                    'node_no' => $dutiesArray[$i]['node_no'],
+                    'start_date' => $dutiesArray[$i]['start_date'],
+                    'end_date' => $dutiesArray[$i]['end_date'],
+                    'entire_completeness' => $dutiesArray[$i]['completeness'],
+                    'basic_points' => round($dutiesArray[$i]['basic_points']),
+                    'gained_points' => round($dutiesArray[$i]['gained_points']),
+                    'latest_progress' => $dutiesArray[$i]['latest_progress'],
+                    //'next_date' => $dutiesArray[$i]['next_date'],
+                    //'next_goal' => $dutiesArray[$i]['next_goal'],
+                    //'next_percentage' =>  $dutiesArray[$i]['next_percentage'],
+                    //'next_date' => $dutiesArray[$i][''],
+                    //'goal' => $dutiesArray[$i][''],
+                    //'node_percentage' => ,
+                    //'node_completeness' => ,
+                    //'detail_url' => "/duties/".$dutiesArray[$i]['id'],
+                );
+                if($dutiesArray[$i]['status'] != 'end'){
+                    array_push($row, $unit);
+                }
             }
         }
         

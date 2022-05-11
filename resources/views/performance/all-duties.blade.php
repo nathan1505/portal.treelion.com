@@ -20,7 +20,8 @@
                 <div class="card">
                     <div class="card-header">
                         业绩赋分工作
-                        <a class="btn btn-success" type="button" href='{{url('/duties/export-excel')}}' style="margin-left:15px">汇出成Excel</a>
+                        <input type="month" id="yearmonth" name="yearmonth" value="">
+                        <a class="btn btn-success" id="export-xlsx" type="button" href='{{url('/duties/export-excel')}}' style="margin-left:15px">汇出成Excel</a>
                     </div>
                     
                     <!-- Start of card-body-->
@@ -34,7 +35,8 @@
                         <div id="duties-table-div">
 
                             <!-- bootstrap table -->
-                            <table
+                            <table id="table"></table>
+                          <!--   <table
                                 id="table"
                                 data-locale="zh-CN"
                                 data-toggle="table"
@@ -67,7 +69,7 @@
                                     <th data-field="next_goal" data-width="15" data-width-unit="%">目标描述</th>
                                     <th data-field="next_percentage">积分比例(%)</th>
                                 </thead>
-                            </table>
+                            </table> -->
                         </div>
                     </div>
                     <!-- End of card body -->
@@ -77,5 +79,129 @@
             </div>
         </div>
     </div>
+    <script>
+        let date= new Date()
+        let month=("0" + (date.getMonth() + 1)).slice(-2)
+        let year=date.getFullYear()
+        document.getElementById("yearmonth").value = `${year}-${month}`;
+        
+        const yearmonth = document.getElementById("yearmonth").value;
+        
+        //var el = document.getElementById('export-xlsx');
+        //el.href += yearmonth;
+        
+        $(document).ready(function(){
+            var yearmonth = document.getElementById("yearmonth").value;
+            var el = document.getElementById('export-xlsx');
+            el.href = "/duties/export-excel/" + yearmonth;
+
+            $('#table').bootstrapTable({
+                url: '/duties/generate-duties-table/'+yearmonth,
+                columns: [{
+                    field: 'content',
+                    title: '项目内容'
+                }, 
+                {
+                    field: 'no',
+                    title: '项目编号'
+                }, {
+                    field: 'type',
+                    title: '项目类别'
+                },
+                {
+                    field: 'property',
+                    title: '类别属性',
+                },
+                {
+                    field: 'difficulty',
+                    title: '难度',
+                },
+                {
+                    field: 'status',
+                    title: '状态',
+                },
+                {
+                    field: 'leader',
+                    title: '组长',
+                },
+                {
+                    field: 'second_leader',
+                    title: '第二组长',
+                },
+                {
+                    field: 'members',
+                    title: '组员',
+                },
+                {
+                    field: 'start_date',
+                    title: '开始日',
+                },
+                {
+                    field: 'end_date',
+                    title: '结束日',
+                },
+                {
+                    field: 'entire_completeness',
+                    title: '整体完成度(%)',
+                },
+                {
+                    field: 'basic_points',
+                    title: '基础积分',
+                },
+                {
+                    field: 'gained_points',
+                    title: '累计获取积分',
+                },
+                {
+                    field: 'latest_progress', 
+                    title: '项目最新进展',
+                },
+                {
+                    field: 'node_no',
+                    title: '节点数',
+                },
+                {
+                    field: 'next_date',
+                    title: '下一考核时点',
+                },
+                {
+                    field: 'next_goal',
+                    title: '目标描述',
+                },
+                {
+                    field: 'next_percentage',
+                    title: '积分比例',
+                }],
+            })
+            
+            $("#yearmonth").on("input", function(){
+                // Print entered value in a div box
+                var yearmonth = document.getElementById("yearmonth").value;
+                var el = document.getElementById('export-xlsx');
+                el.href = "/duties/export-excel/" + yearmonth;
+                //console.log(yearmonth);
+
+                 $.ajax({
+                    url: '/duties/generate-duties-table/'+yearmonth,
+                    type: "get",
+                    //data: {'yearmonth':yearmonth},
+                    success: function (response) {
+                        console.log(JSON.parse(response));
+                       // $('#table').empty();
+                        var data = JSON.parse(response);
+                        
+                
+                        $('#table').bootstrapTable('load', data)
+                        
+                        
+                    },
+                    error: function(response){
+                        alert('Error'+response);
+                    }
+                });
+
+            });
+        });
+    </script>
 
 @endsection

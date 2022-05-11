@@ -94,9 +94,9 @@ Route::get('/get-duty-detail/{duty_id?}', 'App\Http\Controllers\PerformancesCont
 //Get nodes information of specific performance work, search by the performance ID
 Route::get('/get-nodes/{duty_id}', 'App\Http\Controllers\PerformancesController@SeeNodes');
 //Get the json of performance duty, to generate the duties table
-Route::get('/duties/generate-duties-table', 'App\Http\Controllers\PerformancesController@GetDutiesTable');
+Route::get('/duties/generate-duties-table/{yearmonth}', 'App\Http\Controllers\PerformancesController@GetDutiesTable');
 //Download full detail list in excel
-Route::get('/duties/export-excel', 'App\Http\Controllers\PerformancesController@ExportExcel');
+Route::get('/duties/export-excel/{yearmonth}', 'App\Http\Controllers\PerformancesController@ExportExcel');
 //Update the information of performance duty table
 Route::get('/duties/update-duty-table', 'App\Http\Controllers\PerformancesController@UpdatePerformanceDuty');
 //Update the total points gained by all users

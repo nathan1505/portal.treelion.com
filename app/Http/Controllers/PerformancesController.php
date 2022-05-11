@@ -387,7 +387,7 @@ class PerformancesController extends Controller
                 $node_date = $latest_node['node_date'];
             }
             
-            if(($node_date >= $start && $node_date <= $end) || $duty['status'] == "postponed"){
+            if($node_date >= $start || $duty['status'] == "postponed"){
                 array_push($returnArray, $duty);
             }
         }
@@ -651,6 +651,13 @@ class PerformancesController extends Controller
         $dutiesArray = DB::table('performance_duty')->where('status',"!=","end")->orderBy('timestamp','desc')->get();
         $dutiesArray = json_decode($dutiesArray, true);
 
+        //get duty within range
+        $yearmonth = $request->yearmonth;
+
+        $start = Carbon::parse($yearmonth)->startOfMonth()->subMonth()->format('Y-m-d');
+        $startD = Carbon::parse($yearmonth)->startOfMonth()->format('Y-m-d');
+        $end = Carbon::parse($yearmonth)->endofMonth()->format('Y-m-d');
+
         $userArray = DB::table('users')->get();
         $userArray = json_decode($userArray, true);
 
@@ -716,49 +723,66 @@ class PerformancesController extends Controller
             if ($dutiesArray[$i]['members'] != ""){
                 $members = parseMembers($dutiesArray[$i]['members']);
             }
-
-            $unit = array(
-                'id' => $dutiesArray[$i]['id'],
-                'content' => $dutiesArray[$i]['performance_content'],
-                'no' => $dutiesArray[$i]['performance_no'],
-                'type' => $dutiesArray[$i]['type'],
-                'property' => $dutiesArray[$i]['property'],
-                'difficulty' => $difficulty,
-                'status' => $status,
-                'leader' => $leader,
-                'second_leader' => $second_leader,
-                'members' => $members,
-                'start_date' => $dutiesArray[$i]['start_date'],
-                'end_date' => $dutiesArray[$i]['end_date'],
-                'entire_completeness' => $dutiesArray[$i]['completeness'],
-                'basic_points' => round($dutiesArray[$i]['basic_points']),
-                'gained_points' => round($dutiesArray[$i]['gained_points']),
-                'latest_progress' => $dutiesArray[$i]['latest_progress'],
-                'node_no' => $dutiesArray[$i]['node_no'],
-                'next_date' => $dutiesArray[$i]['next_date'],
-                'next_goal' => $dutiesArray[$i]['next_goal'],
-                'next_percentage' =>  $dutiesArray[$i]['next_percentage'],
-                //'next_date' => $dutiesArray[$i][''],
-                //'goal' => $dutiesArray[$i][''],
-                //'node_percentage' => ,
-                //'node_completeness' => ,
-                'detail_url' => "/duties/".$dutiesArray[$i]['id'],
-            );
-            if($dutiesArray[$i]['status'] != 'end'){
-                array_push($row, $unit);
+            
+            $latest_node = DB::table('duty_node')
+                ->where('duty_performance_no',"=",$dutiesArray[$i]['performance_no'])
+                ->orderBy('id', 'desc')->first();
+                
+            $latest_node = json_decode(json_encode($latest_node), true);
+                
+            $node_date = "";
+            
+            if(!is_null($latest_node['confirmed_date'])){
+                $node_date = $latest_node['confirmed_date'];
+            }else{
+                $node_date = $latest_node['node_date'];
+            }
+            
+            if($node_date >= $start && $node_date <= $end){
+                $unit = array(
+                    'id' => $dutiesArray[$i]['id'],
+                    'content' => $dutiesArray[$i]['performance_content'],
+                    'no' => $dutiesArray[$i]['performance_no'],
+                    'type' => $dutiesArray[$i]['type'],
+                    'property' => $dutiesArray[$i]['property'],
+                    'difficulty' => $difficulty,
+                    'status' => $status,
+                    'leader' => $leader,
+                    'second_leader' => $second_leader,
+                    'members' => $members,
+                    'start_date' => $dutiesArray[$i]['start_date'],
+                    'end_date' => $dutiesArray[$i]['end_date'],
+                    'entire_completeness' => $dutiesArray[$i]['completeness'],
+                    'basic_points' => round($dutiesArray[$i]['basic_points']),
+                    'gained_points' => round($dutiesArray[$i]['gained_points']),
+                    'latest_progress' => $dutiesArray[$i]['latest_progress'],
+                    'node_no' => $dutiesArray[$i]['node_no'],
+                    'next_date' => $dutiesArray[$i]['next_date'],
+                    'next_goal' => $dutiesArray[$i]['next_goal'],
+                    'next_percentage' =>  $dutiesArray[$i]['next_percentage'],
+                    //'next_date' => $dutiesArray[$i][''],
+                    //'goal' => $dutiesArray[$i][''],
+                    //'node_percentage' => ,
+                    //'node_completeness' => ,
+                    'detail_url' => "/duties/".$dutiesArray[$i]['id'],
+                );
+                if($dutiesArray[$i]['status'] != 'end'){
+                    array_push($row, $unit);
+                }
             }
         }
-
+        
         $returnJSON = array();
         $returnJSON['total'] = count($dutiesArray);
         $returnJSON['totalNotFiltered'] = count($dutiesArray);
         $returnJSON['row'] = $row;
-        return json_encode($returnJSON, true);
+        return json_encode($row, true);
     }
     
-    public function ExportExcel()
+    public function ExportExcel(Request $request)
     {
-        return Excel::download(new Performance_DutyExport, 'Performance_Duty.xlsx');
+        $yearmonth = $request->yearmonth;
+        return Excel::download(new Performance_DutyExport($yearmonth), 'Performance_Duty_'.$yearmonth.'.xlsx');
     }
 
     /**
