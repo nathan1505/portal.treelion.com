@@ -223,6 +223,7 @@ window.onload = function(){
         $.get('/get-basic-duties',function(data){
 
             data = (Object.values(data));
+            data = data.filter(element => element.status != 'delete');
             data.sort((a, b) => {
                 const statusOrder = ['pending', 'rejected', 'approved', 'delete'];
                 

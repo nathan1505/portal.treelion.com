@@ -117,6 +117,7 @@
                                     <option value="资质申请">资质申请</option>
                                     <option value="管理创新">管理创新</option>
                                     <option value="商业创新">商业创新</option>
+                                    <option value="設計">設計</option>
                                 </select>
                                 <input type="text" class="form-control" style="float:left;width:15%;margin-left:15px" placeholder="表格中搜索" id="searchField">
                                 <div class="d-flex justify-content-end" style="float:left;margin-left:15px">

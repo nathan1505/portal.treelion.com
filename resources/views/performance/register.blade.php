@@ -72,6 +72,7 @@
                         <option>资质申请</option>
                         <option>管理创新</option>
                         <option>商业创新</option>
+                        <option>設計</option>
                     </select>
                 </div>
             </div>
