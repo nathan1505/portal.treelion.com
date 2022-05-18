@@ -65,9 +65,11 @@ window.onload = function(){
     });
 
     $.get('/performance/get-categories',function (data){
+        /*
         $('#categories').append(
             '<option>选择类别编号</option>'
         );
+        */
         
         for (user in data) {
             $('#categories').append(

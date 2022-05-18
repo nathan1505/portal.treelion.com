@@ -214,6 +214,7 @@ class BasicController extends Controller
         DB::table('basic_duty')
                 ->where('id', $request["duty_id"])
                 ->update([
+                    'basic_no' => $request["basic-no"],
                     'basic_content' => $request["basic-content"],
                     'type' => $request["type"],
                     'difficulty' => $request["difficulty"],
