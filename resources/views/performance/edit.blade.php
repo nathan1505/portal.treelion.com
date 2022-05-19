@@ -69,7 +69,6 @@
                         <option value="管理创新" <?php if($performancedata[0]['property'] =="管理创新") echo 'selected="selected"'; ?>>管理创新</option>
                         <option value="商业创新" <?php if($performancedata[0]['property'] =="商业创新") echo 'selected="selected"'; ?>>商业创新</option>
                         <option value="設計" <?php if($performancedata[0]['property'] =="設計") echo 'selected="selected"'; ?>>設計</option>
-                        <option value="星火链网项目" <?php if($performancedata[0]['property'] =="星火链网项目") echo 'selected="selected"'; ?>>星火链网项目</option>
                     </select>
                 </div>
             </div>
