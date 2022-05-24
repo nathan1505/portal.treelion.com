@@ -724,6 +724,7 @@ class PerformancesController extends Controller
                 $members = parseMembers($dutiesArray[$i]['members']);
             }
             
+            /*
             $latest_node = DB::table('duty_node')
                 ->where('duty_performance_no',"=",$dutiesArray[$i]['performance_no'])
                 ->orderBy('id', 'desc')->first();
@@ -737,8 +738,9 @@ class PerformancesController extends Controller
             }else{
                 $node_date = $latest_node['node_date'];
             }
+            */
             
-            if($node_date >= $start && $node_date <= $end){
+            if(($dutiesArray[$i]['end_date'] >= $start && $dutiesArray[$i]['start_date'] <= $end && !str_starts_with($dutiesArray[$i]['performance_no'] , 'D')) || ($dutiesArray[$i]['end_date'] >= $startD && $dutiesArray[$i]['start_date'] <= $end && str_starts_with($dutiesArray[$i]['performance_no'] , 'D'))){
                 $unit = array(
                     'id' => $dutiesArray[$i]['id'],
                     'content' => $dutiesArray[$i]['performance_content'],

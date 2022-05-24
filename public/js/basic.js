@@ -191,7 +191,7 @@ window.onload = function(){
                 
                 $('#month-performance-points').append(Math.round(total_point2));
                 
-                if(user.pointtype == "regular" && Math.round(total_point2) < 100){
+                if(user.pointtype == "regular" && Math.round(total_point2)+basic_point < 100){
                     if(basic_point+distributed_point+Math.round(total_point2) >= 100) 
                         actual_total = 100;
                     else
