@@ -193,6 +193,9 @@ class MonthlyController extends Controller
             if($user['pointtype'] == "regular" && ($basic_points_actual+$point) < 100 && ($basic_points+$point) >= 100){
                 $total = 100;
                 $dist = "*";
+            }else if($user['pointtype'] == "regular" && ($basic_points+$point) < 100 && $basic_points > 40){
+                $total = $basic_points+$point;
+                $dist = "*";
             }else if($user['pointtype'] == "regular" && ($basic_points_actual+$point) >= 100){
                 $total = $basic_points_actual+$point;
             }else if($user['pointtype'] == "regular" && $basic_points+$point != 0){

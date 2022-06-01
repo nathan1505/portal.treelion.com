@@ -276,6 +276,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 18,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -312,6 +313,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 14.4,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -349,6 +351,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 14.4,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -386,6 +389,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 11.52,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -423,6 +427,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 14.4,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -447,7 +452,7 @@ class Kernel extends ConsoleKernel
 //-----------------end of 政策新闻研究----------------------------//
 //-------------3060/Green Passport合作伙伴推进--------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "3060/Green Passport 合作伙伴推进（5月）（".$monthwithoutzero."月）",
+                'performance_content' => "3060/Green Passport 合作伙伴推进（".$monthwithoutzero."月）",
                 'performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "商务拓展",
@@ -460,6 +465,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 18,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -504,6 +510,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 18,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -541,6 +548,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 18,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -600,6 +608,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 21.6,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -637,6 +646,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 14.4,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes
@@ -674,6 +684,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 18,
                 'latest_progress' => "",
                 'declarant_id' => 1,
+                'status' => "processing",
             ]);
     
             //Generate nodes

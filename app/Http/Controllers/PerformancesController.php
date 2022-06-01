@@ -724,7 +724,7 @@ class PerformancesController extends Controller
                 $members = parseMembers($dutiesArray[$i]['members']);
             }
             
-            /*
+
             $latest_node = DB::table('duty_node')
                 ->where('duty_performance_no',"=",$dutiesArray[$i]['performance_no'])
                 ->orderBy('id', 'desc')->first();
@@ -735,12 +735,9 @@ class PerformancesController extends Controller
             
             if(!is_null($latest_node['confirmed_date'])){
                 $node_date = $latest_node['confirmed_date'];
-            }else{
-                $node_date = $latest_node['node_date'];
             }
-            */
             
-            if(($dutiesArray[$i]['end_date'] >= $start && $dutiesArray[$i]['start_date'] <= $end && !str_starts_with($dutiesArray[$i]['performance_no'] , 'D')) || ($dutiesArray[$i]['end_date'] >= $startD && $dutiesArray[$i]['start_date'] <= $end && str_starts_with($dutiesArray[$i]['performance_no'] , 'D'))){
+            if(($dutiesArray[$i]['status'] != "done"  || ($node_date >= $start && $dutiesArray[$i]['status'] == "done" ) && !str_starts_with($dutiesArray[$i]['performance_no'] , 'D')) ||($dutiesArray[$i]['end_date'] >= $startD && $dutiesArray[$i]['start_date'] <= $end && str_starts_with($dutiesArray[$i]['performance_no'] , 'D'))){
                 $unit = array(
                     'id' => $dutiesArray[$i]['id'],
                     'content' => $dutiesArray[$i]['performance_content'],
