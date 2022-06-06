@@ -927,7 +927,7 @@ class PerformancesController extends Controller
         $id_name = DB::table('users')->where('id',$performancedata[0]['leader'])->get();
         $id_name = json_decode(json_encode($id_name), true);
 
-        $array2 = DB::table('users')->get();
+        $array2 = DB::table('users')->where('is_disable', NULL)->get();
         $user = json_decode(json_encode($array2), true);
         
         $array3 = DB::table('duty_node')->where('duty_performance_no',$performancedata[0]['performance_no'])

@@ -102,7 +102,6 @@
                     <select id="leader-edit" name="leader" type="input" class="form-control" required>
                         <?php
                         $selected = $performancedata[0]['leader']; // Put value from database here.
-
                         foreach ($user as $key) {
                         ?>
                             <option value="{{$key['id']}}" <?php
@@ -124,7 +123,6 @@
                         foreach ($user as $key) {
                         ?>
                             <option value="{{$key['id']}}" <?php
-                            //var_dump($selected);
                             $int2str = strval($key['id']);
                             if($selected == null){
                                 echo '';
@@ -147,7 +145,6 @@
                     <select id="leader2-edit" name="leader2" type="input" class="form-control">
                         <?php
                         $selected = $performancedata[0]['second_leader']; // Put value from database here.
-
                         foreach ($user as $key) {
                         ?>
                             <?php
