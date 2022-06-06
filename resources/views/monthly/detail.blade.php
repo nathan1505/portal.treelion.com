@@ -83,14 +83,14 @@
                             $('#monthly-list-detail').append(
                                 '<tr>' +
                                 '<td width="5%">' + element.name + '</td>' +
-                                '<td width="5%">' + element.basic_points +'</td>' +
-                                '<td width="5%">' + element.basic_points_actual +'</td>' +
+                                '<td width="5%">' + Math.round(element.basic_points) +'</td>' +
+                                '<td width="5%">' + Math.round(element.basic_points_actual) +'</td>' +
                                 '<td width="10%">' + element.performance_no +'</td>' +
                                 '<td width="5%">' + Math.round(element.point) + '</td>' +
                                 '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
                                 '<td width="5%">' + element.attendance + '</td>' +
-                                '<td width="5%">' + element.basic_points_distribute +'</td>' +
-                                '<td width="5%">' + Math.round(element.total) + '</td>' +
+                                '<td width="5%">' + Math.round(element.basic_points_distribute) +'</td>' +
+                                '<td width="5%">' + Math.round(element.total)+element.dist+ '</td>' +
                                 '</tr>'
                             );
                         });
