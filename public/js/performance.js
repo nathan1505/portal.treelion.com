@@ -34,7 +34,7 @@ window.onload = function(){
     });
 
     $.get('/get-user',function(userDetail){
-        $.get('/performance/get-users',function (data){
+        $.get('/performance/get-users-filtrated',function (data){
             $('#leader2').append(
                 '<option></option>'
             );

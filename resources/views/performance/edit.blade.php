@@ -121,7 +121,6 @@
                     <select id="members-edit" name="members[]" type="checkbox" class="form-control selectpicker" data-live-search="true" multiple data-style="btn-light">
                         <?php
                         $selected = json_decode($performancedata[0]['members']);
-
                         foreach ($user as $key) {
                         ?>
                             <option value="{{$key['id']}}" <?php
@@ -133,6 +132,7 @@
                                 echo 'selected="selected"';
                             }
                             ?>>{{$key['name']}}</option>
+                        }
                         <?php
                         }
                         ?>
