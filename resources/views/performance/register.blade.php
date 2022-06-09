@@ -37,7 +37,7 @@
 
             
             <div style="margin-top: 20px">
-                <label for="content">项目主题</label>
+                <label for="content">项目标题</label>
                 <textarea id="content" name="content" type="input" class="form-control" rows="4" required></textarea>
             </div>
 
