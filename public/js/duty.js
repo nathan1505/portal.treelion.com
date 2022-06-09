@@ -187,7 +187,7 @@ window.onload = function(){
     
             $('#duty-table').append(
                 '<tr><td style="width:15%">项目编号</td><td style="width:35%">' + data[0].performance_no + '</td><td style="width:15%">难度</td><td><span style="color:' + difficultyColor + '">'+ difficulty + '</span></td></tr>' +
-                '<tr><td>项目内容</td><td colspan=3>' + data[0].performance_content + '</td></tr>' +
+                '<tr><td>项目标题</td><td colspan=3>' + data[0].performance_content + '</td></tr>' +
                 '<tr><td>项目类别</td><td>' + data[0].type + '</td><td>类别属性</td><td>' + data[0].property + '</td></tr>'
             );
             

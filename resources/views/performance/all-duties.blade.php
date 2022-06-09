@@ -49,7 +49,7 @@
                                 data-sortable="true"
                                 data-url="https://portal.treelion.com/duties/generate-duties-table">
                                 <thead>
-                                    <th data-field="content" data-width="8" data-width-unit="%">项目内容</th>
+                                    <th data-field="content" data-width="8" data-width-unit="%">项目标题</th>
                                     <th data-sortable="true" data-field="no">项目编号</th>
                                     <th data-sortable="true" data-field="type">项目类别</th>
                                     <th data-field="property">类别属性</th>
@@ -99,7 +99,7 @@
                 url: '/duties/generate-duties-table/'+yearmonth,
                 columns: [{
                     field: 'content',
-                    title: '项目内容'
+                    title: '项目标题'
                 }, 
                 {
                     field: 'no',

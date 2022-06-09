@@ -73,7 +73,7 @@ window.onload = function(){
             
             var columns = {
                 performance_no: '编号',
-                performance_content: '项目内容',
+                performance_content: '项目标题',
                 property: '项目类别',
                 start_date: '开始日期',
                 status: '项目状态',

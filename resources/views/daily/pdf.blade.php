@@ -40,7 +40,7 @@
                     <td style="width:25%">{{$leader_0}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_0}}</td>
                 </tr>
                 <tr>
@@ -58,7 +58,7 @@
                     <td style="width:25%">{{$leader_1}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_1}}</td>
                 </tr>
                 <tr>
@@ -75,7 +75,7 @@
                     <td style="width:25%">{{$leader_2}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_2}}</td>
                 </tr>
                 <tr>
@@ -93,7 +93,7 @@
                     <td style="width:25%">{{$leader_3}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_3}}</td>
                 </tr>
                 <tr>
@@ -111,7 +111,7 @@
                     <td style="width:25%">{{$leader_4}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_4}}</td>
                 </tr>
                 <tr>
@@ -129,7 +129,7 @@
                     <td style="width:25%">{{$leader_5}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_5}}</td>
                 </tr>
                 <tr>
@@ -147,7 +147,7 @@
                     <td style="width:25%">{{$leader_6}}</td>
                 </tr>
                 <tr>
-                    <td style="width:25%">项目内容</td>
+                    <td style="width:25%">项目标题</td>
                     <td colspan="3">{{$content_6}}</td>
                 </tr>
                 <tr>

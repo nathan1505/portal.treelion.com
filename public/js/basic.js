@@ -73,7 +73,7 @@ window.onload = function(){
                 $('#basic-table').append(
                     '<h5 class="card-title">编号 : ' + data[0].basic_no + '</h5>' + 
                     '<p class="card-text">申报人 : ' + filterById(response, data[0].member).name + '</p>' +
-                    '<p class="card-text">项目内容 : ' + data[0].basic_content + '</p>' +
+                    '<p class="card-text">项目标题 : ' + data[0].basic_content + '</p>' +
                     '<p class="card-text">项目类别 : ' + data[0].type + '</p>' +
                     '<p class="card-text">难度 : ' + diff + '</p>' +
                     '<p class="card-text">状态 : ' + data[0].status + '</p>' +
@@ -209,13 +209,13 @@ window.onload = function(){
     
     $('#monthly-performance-table').append(
         '<tr>' +  //<td>开始日期</td><td>结束日期</td>
-        '<td style="width:7%">编号</td><td style="width:10%">项目内容</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">今月实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
+        '<td style="width:7%">编号</td><td style="width:10%">项目标题</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">今月实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
         '</tr>'
     );
     
     $('#basic-duties-approved').append(
         '<tr>' +
-        '<td style="width:10%">编号</td><td style="width:25%">项目内容</td><td style="width:20%">项目类别</td><td style="width:20%">难度</td><td style="width:15%">更新日期</td><td style="width:%">积分</td>' +
+        '<td style="width:10%">编号</td><td style="width:25%">项目标题</td><td style="width:20%">项目类别</td><td style="width:20%">难度</td><td style="width:15%">更新日期</td><td style="width:%">积分</td>' +
         '</tr>'
     );
     
@@ -259,7 +259,7 @@ window.onload = function(){
             
             var columns = {
                 basic_no: '编号',
-                basic_content: '项目内容',
+                basic_content: '项目标题',
                 type: '项目类别',
                 member: '负责同事',
                 status: '项目状态',

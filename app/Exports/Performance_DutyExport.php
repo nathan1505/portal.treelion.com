@@ -57,7 +57,7 @@ class Performance_DutyExport implements FromCollection,WithHeadings
     public function headings():array{
         return[
             'ID',
-            '项目内容',
+            '项目标题',
             '项目编号',
             '项目类别',
             '类别属性',
