@@ -120,6 +120,7 @@ window.onload = function(){
                 var role;
                 var userID = dutyId;
                 var total_point2 = 0.0;
+                var total_expect_point = 0.0;
                 var monthly_person_expect = 0.0;
                 //console.log(data);
                 for (var i = 0; i < data2.length; i++){
@@ -174,6 +175,7 @@ window.onload = function(){
                     );
                     
                     total_point2+=points;
+                    total_expect_point += Math.round(monthly_person_expect);
         
                 }
                 
@@ -195,6 +197,8 @@ window.onload = function(){
                 
                 $('#month-performance-points').append(Math.round(total_point2));
                 
+                $('#month-expected-points').append(total_expect_point);
+                
                 if(user.pointtype == "regular" && Math.round(total_point2)+basic_point < 100){
                     if(basic_point+distributed_point+Math.round(total_point2) >= 100) 
                         actual_total = 100;
@@ -213,7 +217,7 @@ window.onload = function(){
     
     $('#monthly-performance-table').append(
         '<tr>' +  //<td>开始日期</td><td>结束日期</td>
-        '<td style="width:7%">编号</td><td style="width:10%">项目标题</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">项目個人预计得分</td><td style="width:5%">今月实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
+        '<td style="width:7%">编号</td><td style="width:10%">项目标题</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">今月项目個人预计得分</td><td style="width:5%">今月实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
         '</tr>'
     );
     
