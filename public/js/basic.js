@@ -120,6 +120,7 @@ window.onload = function(){
                 var role;
                 var userID = dutyId;
                 var total_point2 = 0.0;
+                var monthly_person_expect = 0.0;
                 //console.log(data);
                 for (var i = 0; i < data2.length; i++){
                     var points;
@@ -141,11 +142,13 @@ window.onload = function(){
                         role = "组长";
                         points = data2[i].leader_month_actual;
                         whole_project = data2[i].leader_points;
+                        monthly_person_expect = data2[i].leader_month;
                     }
                     else{
                         role = "组員";
                         points = data2[i].member_month_actual;
                         whole_project = data2[i].member_points;
+                        monthly_person_expect = data2[i].member_month;
                     }
                     
                     var profit;
@@ -163,6 +166,7 @@ window.onload = function(){
                         '<td style="width:5%">' + role + '</td>' + 
                         '<td style="width:5%">' + Math.round(data2[i].basic_points) + '</td>' + 
                         '<td style="width:5%">' + Math.round(data2[i].this_month) + '</td>' + 
+                        '<td style="width:5%">' + Math.round(monthly_person_expect) + '</td>' + 
                         '<td style="width:5%">' + Math.round(points) + '</td>' + 
                         '<td style="width:5%">' + profit + '</td>' + 
                         
@@ -209,7 +213,7 @@ window.onload = function(){
     
     $('#monthly-performance-table').append(
         '<tr>' +  //<td>开始日期</td><td>结束日期</td>
-        '<td style="width:7%">编号</td><td style="width:10%">项目标题</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">今月实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
+        '<td style="width:7%">编号</td><td style="width:10%">项目标题</td><td style="width:5%">项目类别</td><td style="width:5%">难度</td><td style="width:5%">身份</td><td style="width:5%">项目总积分</td><td style="width:5%">今月项目预计得分</td><td style="width:5%">项目個人预计得分</td><td style="width:5%">今月实际个人总得分</td><td style="width:5%">貢獻度系數</td>' +
         '</tr>'
     );
     
