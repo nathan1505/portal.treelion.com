@@ -60,8 +60,8 @@
                             <th>基础项目得分：<span id="month-basic-points"></span></th>
                             <th>业绩項目得分：<span id="month-performance-points"></span></th>
                             <th>补助基础赋分：<span id="basic-points-distribute"></span></th>
-                            <th>今月预计得分：<span id="month-expected-points"></span></span></th>
                             <th>总得分：<span id="month-total-points"></span></span></th>
+                            <th>今月预计得分：<span id="month-expected-points"></span></span></th>
                         </table>
                         <sc>
                     </div>
