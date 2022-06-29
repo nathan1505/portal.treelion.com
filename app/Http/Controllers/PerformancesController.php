@@ -1102,7 +1102,7 @@ class PerformancesController extends Controller
     
     public function PostProfit(Request $request){
         $request->validate([
-            'file' => 'required|mimes:docx,jpeg,pdf,png|max:2048'
+            'file' => 'required|mimes:docx,jpeg,png,pdf,png,zip,rar|max:5120'
         ]);
         
         if($request->event_image instanceof \Illuminate\Http\UploadedFile) {
@@ -1117,7 +1117,7 @@ class PerformancesController extends Controller
             DB::table('performance_duty')
                     ->where('performance_no', $request["performance-no"])
                     ->update([
-                        'file_name' => time().'_'.$request->file->getClientOriginalName(),
+                        'file_name' => $fileName,
                         'file_path' => '/storage/'.$filePath,
                         'upload_at' => Carbon::now(),
                         'direction' => $request["direction"],

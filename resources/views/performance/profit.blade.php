@@ -51,7 +51,7 @@
             
             <div class="row">
                 <div class="col-5" style="margin-top: 20px">
-                    <label>上载文件</label><br/>
+                    <label>上载文件（允許格式：docx,jpeg,png,pdf,png,zip,rar）</label><br/>
                     @csrf
                     <!--
                     @if ($message = Session::get('success'))
@@ -73,7 +73,7 @@
                     
                     <div class="custom-file">
                         <input type="file" name="file" class="custom-file-input" id="chooseFile">
-                        <label class="custom-file-label" for="chooseFile">选择文件</label>
+                        <label class="custom-file-label" for="chooseFile">选择文件（最大5MB）</label>
                         <label id="file-name"></label>
                     </div>
                     <script>
