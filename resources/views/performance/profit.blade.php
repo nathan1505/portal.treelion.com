@@ -27,8 +27,8 @@
             
             <div class="row">
                 <div class="col" style="margin-top: 20px">
-                    <label for="performance-no">项目编号</label>
-                    <select id="performance-no" name="performance-no" type="input" class="form-control" required>
+                    <label for="performance-no-profit">项目编号</label>
+                    <select id="performance-no-profit" name="performance-no-profit" type="input" class="form-control" required>
                     </select>
                 </div>
             </div>

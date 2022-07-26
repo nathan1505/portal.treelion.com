@@ -314,6 +314,21 @@ class PerformancesController extends Controller
         return $performances;
     }
 
+    //Get duties by User ID
+    public function GetPerformancesByUserId(Request $request){
+        $performances_get = DB::table('performance_duty')
+        ->where('status',"!=","end")
+        ->where(function ($query) {
+            $userId = Auth::user()->id;
+            $query->where('leader',"=",$userId)
+            ->orWhere('members', 'like', "%\"{$userId}\"%");
+        })->orderBy('timestamp','desc')->get();
+        
+        $performances = json_decode(json_encode($performances_get), true);
+
+        return $performances;
+    }
+
     //Get duties by user ID
     public function GetPerformanceDutiesByUserId(Request $request){
         $userId = Auth::user()->id;
