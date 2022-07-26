@@ -293,6 +293,14 @@ class PerformancesController extends Controller
             }else{
                 $p['notifications'] = "";
             }
+
+            if($p['profit_status'] == 'approved'){
+                $p['notifications'] .= "\n获利申报通过";
+            }else if($p['profit_status'] == 'rejected'){
+                $p['notifications'] .= "\n获利申报未通过";
+            }else if($p['profit_status'] == 'pending'){
+                $p['notifications'] .= "\n获利申报待审批";
+            }
             
             array_push($performances, $p);
             
@@ -1139,6 +1147,13 @@ class PerformancesController extends Controller
                         'amount' => $request["amount"],
                         'profit_status' => "pending"
                     ]);
+
+            $announcementContent = '【'.Auth::user()->name.'】 已申报业绩事项获利 【'.$request["performance-no"].'】，请管理員尽快审批';
+            DB::table('announcements')->insert([
+                'name' => Auth::user()->name,
+                'content' =>  $announcementContent,
+                'is_important' => 1,
+            ]);
         }
 
         //$fileModel = new File;
