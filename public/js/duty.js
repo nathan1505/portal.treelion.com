@@ -284,15 +284,16 @@ window.onload = function(){
                 '<td>基础赋分</td><td>' + Math.round(data[0].basic_points) + '</td>' +
                 '</tr>'
             );
-    
+
             $('#gained-table-body').append(
                 '<tr>' +
-                '<td>已获取积分</td>' +
-                '<td>' + Math.round(data[0].gained_points) + '</td>' +
+                '<td>已获取积分</td><td>' + Math.round(data[0].gained_points) + '</td>' +
                 '</tr><tr>' +
                 '<td>组长分配</td><td>' + Math.round(data[0].leader_points) + '</td>' +
                 '</tr><tr>' +
                 '<td>组员分配</td><td>' + Math.round(data[0].member_points) + '</td>' +
+                '</tr><tr>' +
+                '<td>貢獻度系數</td><td>' + data[0].profit_coefficient + '</td>' +
                 '</tr>'
             );
     

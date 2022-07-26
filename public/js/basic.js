@@ -156,7 +156,7 @@ window.onload = function(){
                     if(data2[i].amount == null){
                         profit = "-";
                     }else{
-                        profit = data2[i].profit_coefficient.toFixed(1);
+                        profit = data2[i].profit_coefficient;
                     }
                     
                     $('#monthly-performance-table').append(
