@@ -396,23 +396,25 @@ class PerformancesController extends Controller
         $returnArray = array();
         
         foreach ($allArray as $duty){
-            $latest_node = DB::table('duty_node')
-                ->where('duty_performance_no',"=",$duty['performance_no'])
-                ->orderBy('id', 'desc')->first();
-                
-            $latest_node = json_decode(json_encode($latest_node), true);
-                
-            $node_date = "";
+
+            $latest_nodes = DB::table('duty_node')
+            ->where('duty_performance_no',"=",$duty['performance_no'])
+            ->orderBy('id', 'desc')->get('node_date');
             
-            if(!is_null($latest_node['confirmed_date'])){
-                $node_date = $latest_node['confirmed_date'];
-            }else{
-                $node_date = $latest_node['node_date'];
+            $latest_nodes = json_decode(json_encode($latest_nodes), true);
+            
+            $is_inmonth = false;
+            
+            foreach($latest_nodes[0] as $n){
+                if($n >= $start && $n <= $end){
+                    $is_inmonth = true;
+                }
             }
             
-            if($node_date >= $start || $duty['status'] == "postponed"){
+            if($is_inmonth || $duty['status'] == "postponed"){
                 array_push($returnArray, $duty);
             }
+            
         }
         
         return $returnArray;
