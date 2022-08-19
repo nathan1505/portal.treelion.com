@@ -306,7 +306,7 @@ class Kernel extends ConsoleKernel
                 'property' => "宣发",
                 'difficulty' => "easy",
                 'leader' => 2,
-                'members' => "[\"8\",\"9\",\"10\"]",
+                'members' => "[\"9\",\"27\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 4,
@@ -381,27 +381,33 @@ class Kernel extends ConsoleKernel
                 'type' => "四类积分",
                 'property' => "宣发",
                 'difficulty' => "easy",
-                'leader' => 8,
+                'leader' => 9,
                 'members' => "",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
-                'node_no' => 4,
+                'node_no' => 2,
                 'basic_points' => 11.52,
                 'latest_progress' => "",
                 'declarant_id' => 1,
                 'status' => "processing",
             ]);
-    
-            //Generate nodes
-            for ($i=1; $i<= 4; $i++){
-                DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
-                    'node_id' => $i,
-                    'node_date' => $fridays[$i-1],
-                    'node_point_percentage' => 25,
-                    'node_goal' => "每周制作一个抖音短视频",
-                ]);
-            }
+
+                        //Generate nodes
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 1,
+                'node_date' => $fridays[1],
+                'node_point_percentage' => 50,
+                'node_goal' => "每兩周制作一个抖音短视频",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 2,
+                'node_date' => $fridays[3],
+                'node_point_percentage' => 50,
+                'node_goal' => "每兩周周制作一个抖音短视频",
+            ]);
 
     
             //Create Announcement for the duty
@@ -548,7 +554,7 @@ class Kernel extends ConsoleKernel
                 'basic_points' => 18,
                 'latest_progress' => "",
                 'declarant_id' => 1,
-                'status' => "processing",
+                'status' => "postponed",
             ]);
     
             //Generate nodes
@@ -600,8 +606,8 @@ class Kernel extends ConsoleKernel
                 'type' => "四类积分",
                 'property' => "文件编写",
                 'difficulty' => "difficult",
-                'leader' => 8,
-                'members' => "",
+                'leader' => 17,
+                'members' => "[\"9\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 4,

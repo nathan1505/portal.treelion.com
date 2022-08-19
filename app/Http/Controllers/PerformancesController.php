@@ -399,14 +399,14 @@ class PerformancesController extends Controller
 
             $latest_nodes = DB::table('duty_node')
             ->where('duty_performance_no',"=",$duty['performance_no'])
-            ->orderBy('id', 'desc')->get('node_date');
-            
+            ->orderBy('id')->get();
+           
             $latest_nodes = json_decode(json_encode($latest_nodes), true);
             
             $is_inmonth = false;
             
-            foreach($latest_nodes[0] as $n){
-                if($n >= $start && $n <= $end){
+            foreach($latest_nodes as $n){
+                if($n['node_date'] >= $start && $n['node_date']  <= $end){
                     $is_inmonth = true;
                 }
             }
