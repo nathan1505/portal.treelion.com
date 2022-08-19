@@ -123,11 +123,11 @@ window.onload = function(){
                 var total_expect_point = 0.0;
                 var monthly_person_expect = 0.0;
                 //console.log(data);
-                for (var i = 0; i < data2.length; i++){
+                for (var j = 0; j < data2.length; j++){
                     var points;
                     var whole_project;
                     
-                    switch (data2[i].difficulty) {
+                    switch (data2[j].difficulty) {
                         case "difficult":
                             diff = "困难";
                             break;
@@ -139,34 +139,34 @@ window.onload = function(){
                             // code
                     }
                     
-                    if(data2[i].leader == userID){
+                    if(data2[j].leader == userID){
                         role = "组长";
                         points = data2[i].leader_month_actual;
-                        whole_project = data2[i].leader_points;
-                        monthly_person_expect = data2[i].leader_month;
+                        whole_project = data2[j].leader_points;
+                        monthly_person_expect = data2[j].leader_month;
                     }
                     else{
                         role = "组員";
-                        points = data2[i].member_month_actual;
-                        whole_project = data2[i].member_points;
-                        monthly_person_expect = data2[i].member_month;
+                        points = data2[j].member_month_actual;
+                        whole_project = data2[j].member_points;
+                        monthly_person_expect = data2[j].member_month;
                     }
                     
                     var profit;
-                    if(data2[i].amount == null){
+                    if(data2[j].amount == null){
                         profit = "-";
                     }else{
-                        profit = data2[i].profit_coefficient;
+                        profit = data2[j].profit_coefficient;
                     }
                     
                     $('#monthly-performance-table').append(
-                        '<tr><td style="width:7%">' + data2[i].performance_no + '</td>' + 
-                        '<td style="width:10%">' + data2[i].performance_content + '</td>' + 
-                        '<td style="width:5%">' + data2[i].type + '</td>' + 
+                        '<tr><td style="width:7%">' + data2[j].performance_no + '</td>' + 
+                        '<td style="width:10%">' + data2[j].performance_content + '</td>' + 
+                        '<td style="width:5%">' + data2[j].type + '</td>' + 
                         '<td style="width:5%">' + diff + '</td>' + 
                         '<td style="width:5%">' + role + '</td>' + 
-                        '<td style="width:5%">' + Math.round(data2[i].basic_points) + '</td>' + 
-                        '<td style="width:5%">' + Math.round(data2[i].this_month) + '</td>' + 
+                        '<td style="width:5%">' + Math.round(data2[j].basic_points) + '</td>' + 
+                        '<td style="width:5%">' + Math.round(data2[j].this_month) + '</td>' + 
                         '<td style="width:5%">' + Math.round(monthly_person_expect) + '</td>' + 
                         '<td style="width:5%">' + Math.round(points) + '</td>' + 
                         '<td style="width:5%">' + profit + '</td>' + 
@@ -188,7 +188,7 @@ window.onload = function(){
                 }else if(user.pointtype == "regular2"){
                     basic_point = 40;
                 }else if(user.pointtype == "support"){
-                    basic_point = 100
+                    basic_point = 100;
                 }
                 
                 $('#month-basic-points').append(basic_point);
@@ -249,7 +249,8 @@ window.onload = function(){
             var hidden = "";
             
             data.forEach((element) => {
-                element.member = users[element.member-1].name;
+                let name = users.find(o => o.id === element.member)
+                element.member = name.name;
                 switch(element.status){
                     case 'approved':
                         element.status = '通过';
