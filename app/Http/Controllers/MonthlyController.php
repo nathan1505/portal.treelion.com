@@ -209,6 +209,7 @@ class MonthlyController extends Controller
             $column = array(
                 "user_id" => $user['id'],
                 "name" => $user['name'],
+                "status" => $user['is_disable'],
                 "basic_points" => $basic_points,
                 "basic_points_actual" => $basic_points_actual,
                 "basic_points_distribute" => $basic_points_distribute,

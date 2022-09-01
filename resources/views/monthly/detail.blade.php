@@ -68,7 +68,8 @@
             $("#yearmonth").on("input", function(){
                 // Print entered value in a div box
                 var yearmonth = document.getElementById("yearmonth").value;
-                //console.log(yearmonth);
+                let newyear = yearmonth.substring(0,4)
+                let newmonth = yearmonth.substring(5,7)
                  $.ajax({
                     url: '/monthly/list-of-point/'+yearmonth,
                     type: "get",
@@ -78,21 +79,38 @@
                         $('#monthly-list-detail').empty();
                         data = (Object.values(response));
                         //data.sort((a, b) => (a.name > b.name) ? 1 : -1);
-                        //console.log(data);
                         data.forEach((element) => {
-                            $('#monthly-list-detail').append(
-                                '<tr>' +
-                                '<td width="5%">' + element.name + '</td>' +
-                                '<td width="5%">' + Math.round(element.basic_points) +'</td>' +
-                                '<td width="5%">' + Math.round(element.basic_points_actual) +'</td>' +
-                                '<td width="10%">' + element.performance_no +'</td>' +
-                                '<td width="5%">' + Math.round(element.point) + '</td>' +
-                                '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
-                                '<td width="5%">' + element.attendance + '</td>' +
-                                '<td width="5%">' + Math.round(element.basic_points_distribute) +'</td>' +
-                                '<td width="5%">' + Math.round(element.total)+element.dist+ '</td>' +
-                                '</tr>'
-                            );
+                            if(parseInt(newyear) >= 2022 && parseInt(newmonth) >= 9){
+                                if(!element.status){
+                                    $('#monthly-list-detail').append(
+                                        '<tr>' +
+                                        '<td width="5%">' + element.name + '</td>' +
+                                        '<td width="5%">' + Math.round(element.basic_points) +'</td>' +
+                                        '<td width="5%">' + Math.round(element.basic_points_actual) +'</td>' +
+                                        '<td width="10%">' + element.performance_no +'</td>' +
+                                        '<td width="5%">' + Math.round(element.point) + '</td>' +
+                                        '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
+                                        '<td width="5%">' + element.attendance + '</td>' +
+                                        '<td width="5%">' + Math.round(element.basic_points_distribute) +'</td>' +
+                                        '<td width="5%">' + Math.round(element.total)+element.dist+ '</td>' +
+                                        '</tr>'
+                                    );
+                                }
+                            }else{
+                                $('#monthly-list-detail').append(
+                                    '<tr>' +
+                                    '<td width="5%">' + element.name + '</td>' +
+                                    '<td width="5%">' + Math.round(element.basic_points) +'</td>' +
+                                    '<td width="5%">' + Math.round(element.basic_points_actual) +'</td>' +
+                                    '<td width="10%">' + element.performance_no +'</td>' +
+                                    '<td width="5%">' + Math.round(element.point) + '</td>' +
+                                    '<td width="5%">' + Math.round(element.basic_points_actual+element.point) + '</td>' +
+                                    '<td width="5%">' + element.attendance + '</td>' +
+                                    '<td width="5%">' + Math.round(element.basic_points_distribute) +'</td>' +
+                                    '<td width="5%">' + Math.round(element.total)+element.dist+ '</td>' +
+                                    '</tr>'
+                                );
+                            }
                         });
                     },
                     error: function(response){
