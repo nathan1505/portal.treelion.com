@@ -988,7 +988,7 @@ class PerformancesController extends Controller
                             });
         
         $dutyArray_demo2 = $dutyArray_demo1->
-                        whereNotIn('status', ['rejected', 'end']);
+                        whereNotIn('status', ['rejected', 'end', 'postponed']);
 
         $dutyArray = $dutyArray_demo2->select(['*', DB::raw("0 as leader_month, 0 as member_month, 0 as leader_month_actual, 0 as member_month_actual, 0 as this_month")])->get();
 

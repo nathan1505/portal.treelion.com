@@ -38,7 +38,7 @@ class WeeklyController extends Controller
         $startlastweek = $now->startOfWeek()->subDays(7)->format('Y-m-d');
         $endlastweek = $now->endOfWeek(Carbon::FRIDAY)->format('Y-m-d');
 
-        $performance_duty = DB::table('performance_duty')->where('status', '!=', 'end')->get();
+        $performance_duty = DB::table('performance_duty')->whereNotIn('status', ['rejected', 'end', 'postponed'])->get();
         $performance = json_decode($performance_duty, true);
         
         //$duty_node = DB::table('duty_node')->get();
