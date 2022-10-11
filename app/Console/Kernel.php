@@ -624,7 +624,7 @@ class Kernel extends ConsoleKernel
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
-                    'node_goal' => "每周編寫三篇不同的文案",
+                    'node_goal' => "每周編寫兩篇不同的文案",
                 ]);
             }
 
