@@ -269,7 +269,7 @@ class Kernel extends ConsoleKernel
                 'property' => "销售",
                 'difficulty' => "normal",
                 'leader' => 2,
-                'members' => "[\"9\",\"10\",\"17\"]",
+                'members' => "[\"9\",\"17\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 4,
@@ -464,7 +464,7 @@ class Kernel extends ConsoleKernel
                 'property' => "商务拓展",
                 'difficulty' => "normal",
                 'leader' => 2,
-                'members' => "[\"9\",\"10\",\"19\"]",
+                'members' => "[\"9\",\"19\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 2,
@@ -648,25 +648,30 @@ class Kernel extends ConsoleKernel
                 'members' => "",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
-                'node_no' => 4,
+                'node_no' => 2,
                 'basic_points' => 14.4,
                 'latest_progress' => "",
                 'declarant_id' => 1,
                 'status' => "processing",
             ]);
-    
-            //Generate nodes
-            for ($i=1; $i<= 4; $i++){
-                DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
-                    'node_id' => $i,
-                    'node_date' => $fridays[$i-1],
-                    'node_point_percentage' => 25,
-                    'node_goal' => "每周将收集来的政府政策相关汇总进行汇报一次，更新PPT、话术、Q&A",
-                ]);
-            }
 
-    
+            //Generate nodes
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 1,
+                'node_date' => $fridays[1],
+                'node_point_percentage' => 50,
+                'node_goal' => "将收集来的政府政策相关汇总进行汇报一次，更新PPT、话术、Q&A",
+            ]);
+            
+            DB::table('duty_node')->insert([
+                'duty_performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                'node_id' => 2,
+                'node_date' => $fridays[3],
+                'node_point_percentage' => 50,
+                'node_goal' => "将收集来的政府政策相关汇总进行汇报一次，更新PPT、话术、Q&A",
+            ]);
+
             //Create Announcement for the duty
             $announcementContent = '【管理員】 创建了业绩事项 【D15'.$monthwithzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
