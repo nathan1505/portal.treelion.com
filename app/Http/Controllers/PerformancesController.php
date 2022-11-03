@@ -410,13 +410,12 @@ class PerformancesController extends Controller
                     $is_inmonth = true;
                 }
             }
-            
-            if($is_inmonth || $duty['status'] == "postponed"){
+
+            if($is_inmonth || $duty['status'] == "postponed" || $duty['status'] == "delayed"){
                 array_push($returnArray, $duty);
             }
             
         }
-        
         return $returnArray;
     }
 
