@@ -680,44 +680,6 @@ class Kernel extends ConsoleKernel
                 'is_important' => 1,
             ]);
 //-------end of 区块链溯源方面的相关政府政策搜集，更新，支持业务推进----------//
-//-------------溯源系统客户拜访-----------------//
-            DB::table('performance_duty')->insert([
-                'performance_content' => "溯源系统客户拜访（".$monthwithoutzero."月）",
-                'performance_no' => "D16".$monthwithzero, //$postContent["performance-no"], 
-                'type' => "三类积分",
-                'property' => "商务拓展",
-                'difficulty' => "normal",
-                'leader' => 18,
-                'members' => "",
-                'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
-                'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
-                'node_no' => 4,
-                'basic_points' => 18,
-                'latest_progress' => "",
-                'declarant_id' => 1,
-                'status' => "processing",
-            ]);
-    
-            //Generate nodes
-            for ($i=1; $i<= 4; $i++){
-                DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D16".$monthwithzero, //$postContent["performance-no"], 
-                    'node_id' => $i,
-                    'node_date' => $fridays[$i-1],
-                    'node_point_percentage' => 25,
-                    'node_goal' => "每周汇报本周拜访情况",
-                ]);
-            }
-
-    
-            //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D16'.$monthwithzero.'】，请主管领导尽快审批';
-            DB::table('announcements')->insert([
-                'name' => "管理員",
-                'content' =>  $announcementContent,
-                'is_important' => 1,
-            ]);
-//--------------end of 溯源系统客户拜访--------------//
         })->monthly();
     }
 
