@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Auth;
 class UsersController extends Controller
 {
     public function GetMembers(){
-        $response = DB::table('users')->get();
+        $response = DB::table('users')->where('is_disable', NULL)->get();
         $array = json_decode(json_encode($response), true);
         return $array;
     }

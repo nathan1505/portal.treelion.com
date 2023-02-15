@@ -254,6 +254,7 @@ class Kernel extends ConsoleKernel
             $toDate = Carbon::now()->endOfMonth()->format('Y-m-d');
             $monthwithoutzero = Carbon::now()->format('n');
             $monthwithzero = date('m');
+            $yearwithzero = date('Y');
             $fridays = [];
             $startDate = Carbon::parse($fromDate)->modify('this friday'); 
             $endDate = Carbon::parse($toDate);
@@ -263,13 +264,13 @@ class Kernel extends ConsoleKernel
             }
 //-------------------种子铅笔推广销售---------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "种子铅笔推广销售（".$monthwithoutzero."月）",
-                'performance_no' => "D01".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "种子铅笔推广销售（".$yearwithzero."年".$monthwithoutzero."月）",
+                'performance_no' => "D01".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "销售",
                 'difficulty' => "normal",
                 'leader' => 2,
-                'members' => "[\"9\",\"17\"]",
+                'members' => "[\"54\",\"17\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 4,
@@ -282,7 +283,7 @@ class Kernel extends ConsoleKernel
             //Generate nodes
             for ($i=1; $i<= 4; $i++){
                 DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D01".$monthwithzero, //$postContent["performance-no"], 
+                    'duty_performance_no' => "D01".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
@@ -291,7 +292,7 @@ class Kernel extends ConsoleKernel
             }
             
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D01'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D01'.$yearwithzero.$monthwithzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -300,13 +301,13 @@ class Kernel extends ConsoleKernel
 //-------------------end of 种子铅笔推广销售---------------//
 //-------------------社群宣发工作--------------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "社群宣发工作（".$monthwithoutzero."月）",
-                'performance_no' => "D03".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "社群宣发工作（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D03".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "宣发",
                 'difficulty' => "easy",
                 'leader' => 2,
-                'members' => "[\"9\",\"27\"]",
+                'members' => "[\"54\",\"27\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 4,
@@ -319,7 +320,7 @@ class Kernel extends ConsoleKernel
             //Generate nodes
             for ($i=1; $i<= 4; $i++){
                 DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D03".$monthwithzero, //$postContent["performance-no"], 
+                    'duty_performance_no' => "D03".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
@@ -329,7 +330,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D03'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D03'.$yearwithzero.$monthwithzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -338,8 +339,8 @@ class Kernel extends ConsoleKernel
 //-------------------end of 社群宣发工作--------------------------//
 //-------------------牌照公司业务推广-----------------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "牌照公司业务推广（".$monthwithoutzero."月）",
-                'performance_no' => "D04".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "牌照公司业务推广（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D04".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "宣发",
                 'difficulty' => "easy",
@@ -357,7 +358,7 @@ class Kernel extends ConsoleKernel
             //Generate nodes
             for ($i=1; $i<= 4; $i++){
                 DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D04".$monthwithzero, //$postContent["performance-no"], 
+                    'duty_performance_no' => "D04".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
@@ -367,7 +368,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D04'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D04'.$yearwithzero.$monthwithzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -376,12 +377,12 @@ class Kernel extends ConsoleKernel
 //-----------------end of 牌照公司业务推广------------------------//
 //-------------------抖音短视频制作-------------------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "抖音短视频制作（".$monthwithoutzero."月）",
-                'performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "抖音短视频制作（".$yearwithzero."年".$monthwithoutzero."月）",
+                'performance_no' => "D05".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                 'type' => "四类积分",
                 'property' => "宣发",
                 'difficulty' => "easy",
-                'leader' => 9,
+                'leader' => 54, //9 -> 54
                 'members' => "",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
@@ -394,7 +395,7 @@ class Kernel extends ConsoleKernel
 
                         //Generate nodes
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D05".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                 'node_id' => 1,
                 'node_date' => $fridays[1],
                 'node_point_percentage' => 50,
@@ -402,7 +403,7 @@ class Kernel extends ConsoleKernel
             ]);
             
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D05".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D05".$yearwithzero.$monthwithzero, //$postContent["performance-no"], 
                 'node_id' => 2,
                 'node_date' => $fridays[3],
                 'node_point_percentage' => 50,
@@ -411,7 +412,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D05'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D05'.$yearwithzero.$monthwithzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -420,8 +421,8 @@ class Kernel extends ConsoleKernel
 //-----------------end of 抖音短视频制作----------------------------//
 //-------------------政策新闻研究-------------------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "政策新闻研究（".$monthwithoutzero."月）",
-                'performance_no' => "D06".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "政策新闻研究（".$yearwithzero."年".$monthwithoutzero."月）",
+                'performance_no' => "D06".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'type' => "四类积分",
                 'property' => "行业研究",
                 'difficulty' => "normal",
@@ -439,7 +440,7 @@ class Kernel extends ConsoleKernel
             //Generate nodes
             for ($i=1; $i<= 4; $i++){
                 DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D06".$monthwithzero, //$postContent["performance-no"], 
+                    'duty_performance_no' => "D06".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
@@ -449,7 +450,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D06'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D06'.$yearwithzero.$monthwithoutzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -458,13 +459,13 @@ class Kernel extends ConsoleKernel
 //-----------------end of 政策新闻研究----------------------------//
 //-------------3060/Green Passport合作伙伴推进--------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "3060/Green Passport 合作伙伴推进（".$monthwithoutzero."月）",
-                'performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "3060/Green Passport 合作伙伴推进（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D08".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "商务拓展",
                 'difficulty' => "normal",
                 'leader' => 2,
-                'members' => "[\"9\",\"19\"]",
+                'members' => "[\"54\",\"19\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 2,
@@ -476,7 +477,7 @@ class Kernel extends ConsoleKernel
     
             //Generate nodes
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D08".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 1,
                 'node_date' => $fridays[1],
                 'node_point_percentage' => 50,
@@ -484,7 +485,7 @@ class Kernel extends ConsoleKernel
             ]);
             
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D08".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D08".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 2,
                 'node_date' => $fridays[3],
                 'node_point_percentage' => 50,
@@ -493,7 +494,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D08'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D08'.$yearwithzero.$monthwithoutzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -502,8 +503,8 @@ class Kernel extends ConsoleKernel
 //-------------end of 3060/Green Passport合作伙伴推进-------------//
 //-------------------牌照公司基金产品发行-------------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "牌照公司基金产品发行（".$monthwithoutzero."月）",
-                'performance_no' => "D09".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "牌照公司基金产品发行（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D09".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "销售",
                 'difficulty' => "normal",
@@ -522,7 +523,7 @@ class Kernel extends ConsoleKernel
             //Generate nodes
             for ($i=1; $i<= 4; $i++){
                 DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D09".$monthwithzero, //$postContent["performance-no"], 
+                    'duty_performance_no' => "D09".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
@@ -532,7 +533,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D09'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D09'.$yearwithzero.$monthwithoutzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -541,8 +542,8 @@ class Kernel extends ConsoleKernel
 //--------------------end of 牌照公司基金产品发行------------------//
 //--------------绿色金融联盟App前台会员反馈优化----------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "绿色金融联盟App前台会员反馈优化（".$monthwithoutzero."月）",
-                'performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "绿色金融联盟App前台会员反馈优化（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D13".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'type' => "三类积分",
                 'property' => "商务拓展",
                 'difficulty' => "normal",
@@ -559,7 +560,7 @@ class Kernel extends ConsoleKernel
     
             //Generate nodes
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D13".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 1,
                 'node_date' => $fridays[0],
                 'node_point_percentage' => 10,
@@ -567,7 +568,7 @@ class Kernel extends ConsoleKernel
             ]);
             
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D13".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 2,
                 'node_date' => $fridays[1],
                 'node_point_percentage' => 20,
@@ -575,7 +576,7 @@ class Kernel extends ConsoleKernel
             ]);
             
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D13".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 3,
                 'node_date' => $fridays[2],
                 'node_point_percentage' => 30,
@@ -583,7 +584,7 @@ class Kernel extends ConsoleKernel
             ]);
             
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D13".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D13".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 4,
                 'node_date' => $fridays[3],
                 'node_point_percentage' => 40,
@@ -592,7 +593,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D13'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D13'.$yearwithzero.$monthwithoutzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -601,13 +602,13 @@ class Kernel extends ConsoleKernel
 //--------------------end of 绿色金融联盟App前台会员反馈优化------------------//
 //-------------------每周文案編寫-----------------------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "每周文案編寫（".$monthwithoutzero."月）",
-                'performance_no' => "D14".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "每周文案編寫（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D14".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'type' => "四类积分",
                 'property' => "文件编写",
                 'difficulty' => "difficult",
                 'leader' => 17,
-                'members' => "[\"9\"]",
+                'members' => "[\"54\"]",
                 'start_date' => Carbon::now()->startOfMonth()->format('Y-m-d'),
                 'end_date' => Carbon::now()->endOfMonth()->format('Y-m-d'),
                 'node_no' => 4,
@@ -620,7 +621,7 @@ class Kernel extends ConsoleKernel
             //Generate nodes
             for ($i=1; $i<= 4; $i++){
                 DB::table('duty_node')->insert([
-                    'duty_performance_no' => "D14".$monthwithzero, //$postContent["performance-no"], 
+                    'duty_performance_no' => "D14".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                     'node_id' => $i,
                     'node_date' => $fridays[$i-1],
                     'node_point_percentage' => 25,
@@ -630,7 +631,7 @@ class Kernel extends ConsoleKernel
 
     
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D14'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D14'.$yearwithzero.$monthwithoutzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
@@ -639,8 +640,8 @@ class Kernel extends ConsoleKernel
 //------------------------end of 每周文案編寫------------------------//
 //-------区块链溯源方面的相关政府政策搜集，更新，支持业务推进--------//
             DB::table('performance_duty')->insert([
-                'performance_content' => "区块链溯源方面的相关政府政策搜集，更新，支持业务推进（".$monthwithoutzero."月）",
-                'performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                'performance_content' => "区块链溯源方面的相关政府政策搜集，更新，支持业务推进（".$yearwithzero."年".$monthwithzero."月）",
+                'performance_no' => "D15".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'type' => "四类积分",
                 'property' => "行业研究",
                 'difficulty' => "normal",
@@ -657,7 +658,7 @@ class Kernel extends ConsoleKernel
 
             //Generate nodes
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D15".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 1,
                 'node_date' => $fridays[1],
                 'node_point_percentage' => 50,
@@ -665,7 +666,7 @@ class Kernel extends ConsoleKernel
             ]);
             
             DB::table('duty_node')->insert([
-                'duty_performance_no' => "D15".$monthwithzero, //$postContent["performance-no"], 
+                'duty_performance_no' => "D15".$yearwithzero.$monthwithoutzero, //$postContent["performance-no"], 
                 'node_id' => 2,
                 'node_date' => $fridays[3],
                 'node_point_percentage' => 50,
@@ -673,7 +674,7 @@ class Kernel extends ConsoleKernel
             ]);
 
             //Create Announcement for the duty
-            $announcementContent = '【管理員】 创建了业绩事项 【D15'.$monthwithzero.'】，请主管领导尽快审批';
+            $announcementContent = '【管理員】 创建了业绩事项 【D15'.$yearwithzero.$monthwithoutzero.'】，请主管领导尽快审批';
             DB::table('announcements')->insert([
                 'name' => "管理員",
                 'content' =>  $announcementContent,
