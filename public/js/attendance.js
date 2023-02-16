@@ -1,5 +1,5 @@
 window.onload = function () {
-    $.get('/performance/get-users',function (data){
+    $.get('/performance/get-users-filtrated',function (data){
         $.get('/attendance/update/'+yearmonth, function(attendancedata){
             
             data = (Object.values(data));

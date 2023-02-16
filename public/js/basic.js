@@ -229,7 +229,6 @@ window.onload = function(){
     
     $.get('/performance/get-users',function(users){
         $.get('/get-basic-duties',function(data){
-
             data = (Object.values(data));
             data = data.filter(element => element.status != 'delete');
             data.sort((a, b) => {

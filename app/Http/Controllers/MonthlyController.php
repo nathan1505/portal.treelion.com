@@ -54,7 +54,7 @@ class MonthlyController extends Controller
         $endlastmonth = $endlastmonth->endOfDay()->format('Y-m-d');
         */
         
-        $eachuser = DB::table('users')->where('id', '!=', 1)->get();
+        $eachuser = DB::table('users')->where('is_disable', NULL)->where('id', '!=', 1)->get();
         $eachuser = json_decode($eachuser, true);
         
         $array = array();
